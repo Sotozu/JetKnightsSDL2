@@ -6,10 +6,14 @@ and may not be redistributed without written permission.*/
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <iostream>
+
+
+//#include "LTexture.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 840;
+const int SCREEN_HEIGHT = 580;
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 
@@ -101,7 +105,7 @@ class Dot
 		static const int DOT_HEIGHT = 20;
 
 		//Maximum axis velocity of the dot
-		static const int DOT_VEL = 100;
+		static const int DOT_VEL = 1;
 
 		//Initializes the variables
 		Dot();
@@ -119,13 +123,19 @@ class Dot
 		int getWidth();
 		int getHeight();
 
+
+		int getxDir();
+		int getyDir();
+
+		int getPosX();
+		int getPosY();
+
     private:
 		//The X and Y offsets of the dot
 		int mPosX, mPosY;
 
 		//The velocity of the dot
 		int mVelX, mVelY;
-
 
 		//Normalized directions
 		int xDir;
@@ -149,6 +159,10 @@ SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
 LTexture gDotTexture;
+
+
+//Game Controller 1 handler
+SDL_Joystick* gGameController = NULL;
 
 LTexture::LTexture()
 {
@@ -302,8 +316,8 @@ int LTexture::getHeight()
 Dot::Dot()
 {
     //Initialize the offsets
-    mPosX = 0;
-    mPosY = 0;
+    mPosX = 300;
+    mPosY = 300;
 
     //Initialize the velocity
     mVelX = 0;
@@ -319,82 +333,77 @@ void Dot::handleEvent( SDL_Event& e )
     //If a key was pressed
 	if(e.type == SDL_JOYAXISMOTION)
     {
+
+
 		if (e.jaxis.which == 0)
 		{
+
 			//X axis motion
 			if (e.jaxis.axis == 0)
 			{
+
 				//Left of dead zone
 				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 				{
+					mVelX -= DOT_VEL;
 					xDir = -1;
 				}
 				//Right of dead zone
 				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 				{
+					mVelX += DOT_VEL;
 					xDir = 1;
 				}
 				else
 				{
 					xDir = 0;
+					mVelX = 0;
+
 				}
 			}
 			//Y axis motion
 			else if (e.jaxis.axis == 1)
 			{
+
 				//Below of dead zone
 				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 				{
+					mVelY -= DOT_VEL;
+
 					yDir = -1;
 				}
 				//Above of dead zone
 				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 				{
+					mVelY += DOT_VEL;
 					yDir = 1;
+
 				}
-				else
+				else //dead zone
 				{
 					yDir = 0;
+					mVelY = 0;
+
 				}
 			}
 		}
-
-
-
-
-
-
 		                                                                                            
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
-        {
-            case SDLK_UP: mVelY -= DOT_VEL; break;
-            case SDLK_DOWN: mVelY += DOT_VEL; break;
-            case SDLK_LEFT: mVelX -= DOT_VEL; break;
-            case SDLK_RIGHT: mVelX += DOT_VEL; break;
-        }
     }
-    //If a key was released
-    else if( e.type == SDL_KEYUP && e.key.repeat == 0 )
-    {
-        //Adjust the velocity
-        switch( e.key.keysym.sym )
-        {
-            case SDLK_UP: mVelY += DOT_VEL; break;
-            case SDLK_DOWN: mVelY -= DOT_VEL; break;
-            case SDLK_LEFT: mVelX += DOT_VEL; break;
-            case SDLK_RIGHT: mVelX -= DOT_VEL; break;
-        }
-    }
+
+
+	
+
+
 }
 
 void Dot::move()
 {
+
     //Move the dot left or right
     mPosX += mVelX;
 
     //If the dot went too far to the left or right
-    if( ( mPosX < 0 ) || ( mPosX + DOT_WIDTH > SCREEN_WIDTH ) )
+    if( ( mPosX < 0 ) || ( mPosX > SCREEN_WIDTH ) )
     {
         //Move back
         mPosX -= mVelX;
@@ -402,9 +411,8 @@ void Dot::move()
 
     //Move the dot up or down
     mPosY += mVelY;
-
     //If the dot went too far up or down
-    if( ( mPosY < 0 ) || ( mPosY + DOT_HEIGHT > SCREEN_HEIGHT ) )
+    if( ( mPosY < 0 ) || ( mPosY > SCREEN_HEIGHT ) )
     {
         //Move back
         mPosY -= mVelY;
@@ -413,18 +421,28 @@ void Dot::move()
 
 void Dot::render()
 {
-    //Show the dot
+    //Show the arrow
 	gDotTexture.render( mPosX, mPosY );
 }
 
-int LTexture::getWidth()
+int Dot::getxDir()
 {
-	return mWidth;
+	return xDir;
 }
 
-int LTexture::getHeight()
+int Dot::getyDir()
 {
-	return mHeight;
+	return yDir;
+}
+
+int Dot::getPosX()
+{
+	return mPosX;
+}
+
+int Dot::getPosY()
+{
+	return mPosY;
 }
 
 bool init()
@@ -444,6 +462,21 @@ bool init()
 		if( !SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" ) )
 		{
 			printf( "Warning: Linear texture filtering not enabled!" );
+		}
+
+		//Check for joysticks
+		if (SDL_NumJoysticks() < 1)
+		{
+			printf("Warning: No joysticks connected!\n");
+		}
+		else
+		{
+			//Load joystick
+			gGameController = SDL_JoystickOpen(0);
+			if (gGameController == NULL)
+			{
+				printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
+			}
 		}
 
 		//Create window
@@ -487,7 +520,7 @@ bool loadMedia()
 	bool success = true;
 
 	//Load dot texture
-	if( !gDotTexture.loadFromFile( "26_motion/dot.bmp" ) )
+	if( !gDotTexture.loadFromFile( "images/arrow_small.png" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
@@ -500,6 +533,11 @@ void close()
 {
 	//Free loaded images
 	gDotTexture.free();
+
+
+	//Close game controller
+	SDL_JoystickClose(gGameController);
+	gGameController = NULL;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -534,10 +572,6 @@ int main( int argc, char* args[] )
 			//Event handler
 			SDL_Event e;
 
-			//Normalized direction
-			int xDir = 0;
-			int yDir = 0;
-
 			//The dot that will be moving around on the screen
 			Dot dot;
 
@@ -565,17 +599,16 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Calculate angle
-				double joystickAngle = atan2((double)yDir, (double)xDir) * (180.0 / M_PI);
-
+				double joystickAngle = atan2((double)dot.getyDir(), (double)dot.getxDir()) * (180.0 / M_PI);
 				//Correct angle
-				if (xDir == 0 && yDir == 0)
+				if (dot.getxDir() == 0 && dot.getyDir() == 0)
 				{
 					joystickAngle = 0;
 				}
 
 				//Render objects
-				gDotTexture.render((SCREEN_WIDTH - dot.getWidth()) / 2, (SCREEN_HEIGHT - dot.getHeight()) / 2, NULL, joystickAngle);
-
+				gDotTexture.render(dot.getPosX(), dot.getPosY(), NULL, joystickAngle);
+				std::cout << dot.getPosX() << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
