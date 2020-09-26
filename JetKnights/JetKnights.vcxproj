@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="26_motion\Source.cpp" />
+    <ClCompile Include="source.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\Robot.cpp" />
   </ItemGroup>

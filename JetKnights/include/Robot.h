@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include "LTexture.h"
 
 
 class Robot
@@ -24,13 +25,13 @@ public:
 	Robot();
 
 	//Takes key presses and adjusts the robot's velocity
-	void handleEvent(SDL_Event& e);
+	void handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE);
 
 	//Moves the dot
-	void move();
+	void move(int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 	//Shows the robot on the screen
-	void render();
+	void render(SDL_Renderer* gRenderer, LTexture gRobotTexture);
 
 
 	int getxDir();

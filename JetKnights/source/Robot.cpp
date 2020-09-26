@@ -5,8 +5,8 @@
 Robot::Robot()
 {
 	//Initialize the offsets
-	mPosX = 300;
-	mPosY = 300;
+	mPosX = 100;
+	mPosY = 100;
 
 	//Initialize the velocity
 	mVelX = 0;
@@ -17,7 +17,7 @@ Robot::Robot()
 	yDir = 0;
 }
 
-void Robot::handleEvent(SDL_Event& e)
+void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 {
 	//If a key was pressed
 	if (e.type == SDL_JOYAXISMOTION)
@@ -85,7 +85,7 @@ void Robot::handleEvent(SDL_Event& e)
 
 }
 
-void Robot::move()
+void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 {
 
 	//Move the dot left or right
@@ -108,7 +108,7 @@ void Robot::move()
 	}
 }
 
-void Robot::render()
+void Robot::render(SDL_Renderer* gRenderer, LTexture gRobotTexture)
 {
 	//Show the arrow
 	gRobotTexture.render(mPosX, mPosY, NULL, gRenderer);
