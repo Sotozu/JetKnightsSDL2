@@ -6,7 +6,7 @@ and may not be redistributed without written permission.*/
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
-#include <cmath>
+#include <cmath>                                                                 
 #include "LTexture.h"
 
 //Screen dimension constants
