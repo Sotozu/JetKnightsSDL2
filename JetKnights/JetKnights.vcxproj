@@ -19,7 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="26_motion\26_motion.cpp" />
+    <ClCompile Include="26_motion\Source.cpp" />
+    <ClCompile Include="source\LTexture.cpp" />
+    <ClCompile Include="source\Robot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\LTexture.h" />
+    <ClInclude Include="include\Robot.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
