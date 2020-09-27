@@ -24,60 +24,46 @@ Robot::Robot()
 	joyY = 0;
 }
 
+int sign(int x) {
+	if (x > 0) {
+		return 1;
+	}
+	if (x < 0) {
+		return -1;
+	}
+	if (x == 0) {
+		return 0;
+	}
+}
+
 void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE) {
 	//If a key was pressed
 	if (e.type == SDL_JOYAXISMOTION) {
 		if (e.jaxis.which == 0) {
 			//X axis motion
 			if (e.jaxis.axis == 0) {
-				joyX = e.jaxis.value;
-				//Left of dead zone
-				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE) {
-					mVelX -= DOT_VEL;
-					xDir = -1;
-				}
-				//Right of dead zone
-				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE) {
-					mVelX += DOT_VEL;
-					xDir = 1;
+				//Outside of dead zone
+				if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
+					joyX = e.jaxis.value;
+					mVelX = sign(joyX) * DOT_VEL;
 				}
 				else {
-					xDir = 0;
 					mVelX = 0;
 				}
 			}
 			//Y axis motion
 			else if (e.jaxis.axis == 1) {
-				joyY = e.jaxis.value;
-				//Below of dead zone
-				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
-				{
-					mVelY -= DOT_VEL;
-
-					yDir = -1;
+				//Outside of dead zone
+				if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
+					joyY = e.jaxis.value;
+					mVelY = sign(joyY) * DOT_VEL;
 				}
-				//Above of dead zone
-				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
-				{
-					mVelY += DOT_VEL;
-					yDir = 1;
-
-				}
-				else //dead zone
-				{
-					yDir = 0;
+				else {
 					mVelY = 0;
-
 				}
 			}
 		}
-
 	}
-
-
-
-
-
 }
 
 void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
@@ -139,7 +125,7 @@ float Robot::getAngle() {
 	std::cout << joyAngle << std::endl;
 	//Correct angle
 	if (getxDir() == 0 && getyDir() == 0) {
-		joyAngle = 0;
+		//joyAngle = 0;
 	}
 	return joyAngle;
 }

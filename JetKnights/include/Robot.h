@@ -19,7 +19,7 @@ public:
 	static const int HITBOX_HEIGHT = 32;
 
 	//Maximum axis velocity of the robot
-	static const int DOT_VEL = 1;
+	static const int DOT_VEL = 3;
 
 	//Initializes the variables
 	Robot();
