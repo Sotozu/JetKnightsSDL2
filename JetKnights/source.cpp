@@ -125,17 +125,9 @@ int main( int argc, char* args[] )
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				//Calculate angle
-				double joystickAngle = atan2((double)player.getyDir(), (double)player.getxDir()) * (180.0 / M_PI);
-				//Correct angle
-				if (player.getxDir() == 0 && player.getyDir() == 0)
-				{
-					joystickAngle = 0;
-				}
-
 				//Render objects
-				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, joystickAngle);
-				std::cout << player.getPosX() << std::endl;
+				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, player.getAngle());
+				//std::cout << player.getPosX() << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );

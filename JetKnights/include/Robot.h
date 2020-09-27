@@ -15,8 +15,8 @@ class Robot
 {
 public:
 	//The dimensions of the robot
-	static const int DOT_WIDTH = 20;
-	static const int DOT_HEIGHT = 20;
+	static const int HITBOX_WIDTH = 32;
+	static const int HITBOX_HEIGHT = 32;
 
 	//Maximum axis velocity of the robot
 	static const int DOT_VEL = 1;
@@ -37,8 +37,13 @@ public:
 	int getxDir();
 	int getyDir();
 
+	int getJoyX();
+	int getJoyY();
+
 	int getPosX();
 	int getPosY();
+
+	float getAngle();
 
 private:
 	//The X and Y offsets of the dot
@@ -50,4 +55,11 @@ private:
 	//Normalized directions
 	int xDir;
 	int yDir;
+	
+	//Precise Directions
+	int joyX;
+	int joyY;
+
+	//Dot's collision box
+	SDL_Rect mCollider;
 };

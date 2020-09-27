@@ -8,6 +8,10 @@ Robot::Robot()
 	mPosX = 100;
 	mPosY = 100;
 
+	//Set collision box dimension
+	mCollider.w = HITBOX_WIDTH;
+	mCollider.h = HITBOX_HEIGHT;
+
 	//Initialize the velocity
 	mVelX = 0;
 	mVelY = 0;
@@ -15,45 +19,36 @@ Robot::Robot()
 	//Normalized direction
 	xDir = 0;
 	yDir = 0;
+	//Precise Directions
+	joyX = 0;
+	joyY = 0;
 }
 
-void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
-{
+void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE) {
 	//If a key was pressed
-	if (e.type == SDL_JOYAXISMOTION)
-	{
-
-
-		if (e.jaxis.which == 0)
-		{
-
+	if (e.type == SDL_JOYAXISMOTION) {
+		if (e.jaxis.which == 0) {
 			//X axis motion
-			if (e.jaxis.axis == 0)
-			{
-
+			if (e.jaxis.axis == 0) {
+				joyX = e.jaxis.value;
 				//Left of dead zone
-				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
-				{
+				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE) {
 					mVelX -= DOT_VEL;
 					xDir = -1;
 				}
 				//Right of dead zone
-				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
-				{
+				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE) {
 					mVelX += DOT_VEL;
 					xDir = 1;
 				}
-				else
-				{
+				else {
 					xDir = 0;
 					mVelX = 0;
-
 				}
 			}
 			//Y axis motion
-			else if (e.jaxis.axis == 1)
-			{
-
+			else if (e.jaxis.axis == 1) {
+				joyY = e.jaxis.value;
 				//Below of dead zone
 				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 				{
@@ -114,22 +109,37 @@ void Robot::render(SDL_Renderer* gRenderer, LTexture gRobotTexture)
 	gRobotTexture.render(mPosX, mPosY, NULL, gRenderer);
 }
 
-int Robot::getxDir()
-{
+int Robot::getxDir() {
 	return xDir;
 }
 
-int Robot::getyDir()
-{
+int Robot::getyDir() {
 	return yDir;
 }
 
-int Robot::getPosX()
-{
+int Robot::getJoyX() {
+	return joyX;
+}
+
+int Robot::getJoyY() {
+	return joyY;
+}
+
+int Robot::getPosX() {
 	return mPosX;
 }
 
-int Robot::getPosY()
-{
+int Robot::getPosY() {
 	return mPosY;
+}
+
+float Robot::getAngle() {
+	//Calculate angle
+	double joyAngle = atan2((double)getJoyY(), (double)getJoyX()) * (180.0 / M_PI);
+	std::cout << joyAngle << std::endl;
+	//Correct angle
+	if (getxDir() == 0 && getyDir() == 0) {
+		joyAngle = 0;
+	}
+	return joyAngle;
 }
