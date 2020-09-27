@@ -10,6 +10,7 @@ and may not be redistributed without written permission.*/
 #include "LTexture.h"
 #include "Robot.h"
 #include "Weapon.h"
+#include "Projectile.h"
 
 //#include "LTexture.h"
 
@@ -73,6 +74,7 @@ SDL_Renderer* gRenderer = NULL;
 //Scene textures
 LTexture gRobotTexture;
 LTexture gWeapon1;
+LTexture gBullet;
 
 //Game Controller 1 handler
 SDL_Joystick* gGameController = NULL;
@@ -100,7 +102,9 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//The weapon class is initialized with its texture
-			Weapon slot1(&gWeapon1);
+			Projectile bullet(200, 200, 45, gRenderer, &gBullet);
+
+			Weapon slot1(&bullet, &gWeapon1);
 
 
 			//The player that will be moving around on the screen
@@ -134,8 +138,8 @@ int main( int argc, char* args[] )
 			
 
 				//Render objects
-
-
+				//const int particles_max = 100
+				bullet.update();
 				player.render(gRenderer);
 
 				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
@@ -235,6 +239,12 @@ bool loadMedia()
 	}
 
 	if (!gWeapon1.loadFromFile("assets/cannonsmall.png", gRenderer))
+	{
+		printf("Failed to load gun texture!\n");
+		success = false;
+	}
+
+	if (!gBullet.loadFromFile("assets/bullet.png", gRenderer))
 	{
 		printf("Failed to load gun texture!\n");
 		success = false;

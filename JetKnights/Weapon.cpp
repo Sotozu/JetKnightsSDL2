@@ -2,12 +2,10 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon(LTexture* wepTex)
+
+Weapon::Weapon(Projectile* bulletV, LTexture* texture )
 {
-	weaponTexture = wepTex;
-
-	//
-
+	
 	off_setX = 0;
 	off_setY = 0;
 
@@ -23,6 +21,8 @@ Weapon::Weapon(LTexture* wepTex)
 	//Normalized direction
 	xDir = 0;
 	yDir = 0;
+	mTexture = texture;
+	bullet = bulletV;
 }
 
 
@@ -30,10 +30,13 @@ void Weapon::render(SDL_Renderer* gRenderer, double joystickAngle)
 {
 	//Show the weapon
 	//off set it to not be directly on the robot
-	weaponTexture->render(mPosX + off_setX * cos(joystickAngle), mPosY + off_setY + off_setX * sin(joystickAngle), NULL, gRenderer, joystickAngle);
+	mTexture->render(mPosX + off_setX * cos(joystickAngle), mPosY + off_setY + off_setX * sin(joystickAngle), NULL, gRenderer, joystickAngle);
 
 }
 
+void Weapon::use() {
+
+}
 
 
 int Weapon::getxDir()

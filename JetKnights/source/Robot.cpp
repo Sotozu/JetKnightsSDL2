@@ -123,6 +123,12 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 
 	}
 
+	if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+		if (e.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
+			//weapon.use();
+		}
+	}
+
 
 
 

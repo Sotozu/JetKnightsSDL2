@@ -6,6 +6,7 @@
 #include <string>
 #include <iostream>
 #include "LTexture.h"
+#include "Projectile.h"
 
 class Texture;
 
@@ -16,11 +17,12 @@ public:
 	//The dimensions of the weapon
 	static const int DOT_WIDTH = 20;
 	static const int DOT_HEIGHT = 20;
+	static const int MAX_PARTICLES = 100;
 
 	//Maximum axis velocity of the weapon
 
 	//Initializes the variables
-	Weapon(LTexture* weaponTexture);
+	Weapon(Projectile* bulletV, LTexture* weaponTexture);
 
 
 	//Shows the weapon on the screen
@@ -45,8 +47,12 @@ public:
 	void setOffSetX(int);
 	void setOffSetY(int);
 
+	void use();
+
 private:
-	LTexture* weaponTexture;
+	LTexture* mTexture;
+
+	Projectile* bullet;
 
 	int off_setX;
 	int off_setY;
