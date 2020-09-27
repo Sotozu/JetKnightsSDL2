@@ -24,7 +24,7 @@ public:
 
 
 	//Shows the weapon on the screen
-	void render(SDL_Renderer* gRenderer);
+	void render(SDL_Renderer* gRenderer, double joystickAngle);
 
 
 	int getxDir();
@@ -42,9 +42,16 @@ public:
 	void setDirY(int);
 	void setDirX(int);
 
+	void setOffSetX(int);
+	void setOffSetY(int);
+
 private:
 	LTexture* weaponTexture;
-	//The X and Y offsets of the dot
+
+	int off_setX;
+	int off_setY;
+
+	//The X and Y positions
 	int mPosX, mPosY;
 
 	//The velocity of the dot

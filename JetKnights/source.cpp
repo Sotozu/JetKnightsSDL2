@@ -131,21 +131,15 @@ int main( int argc, char* args[] )
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
-
-				//Calculate angle
-				double joystickAngle = atan2((double)player.getyDir(), (double)player.getxDir()) * (180.0 / M_PI);
-				//Correct angle
-				if (player.getxDir() == 0 && player.getyDir() == 0)
-				{
-					joystickAngle = 0;
-				}
 			
 
-				//Render player and player weapons
+				//Render objects
+
+
 				player.render(gRenderer);
 
-
-				std::cout << player.getPosX() << std::endl;
+				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
+				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
@@ -234,17 +228,17 @@ bool loadMedia()
 	bool success = true;
 
 	//Load player texture
-	if (!gRobotTexture.loadFromFile("images/bestrobo.png", gRenderer))
+	if (!gRobotTexture.loadFromFile("images/robotrightnew.png", gRenderer))
 	{
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
 
-	//if (!gWeapon1.loadFromFile("images/gun2.png", gRenderer))
-	//{
-	//	printf("Failed to load gun texture!\n");
-	//	success = false;
-	//}
+	if (!gWeapon1.loadFromFile("images/cannonsmall.png", gRenderer))
+	{
+		printf("Failed to load gun texture!\n");
+		success = false;
+	}
 
 	
 

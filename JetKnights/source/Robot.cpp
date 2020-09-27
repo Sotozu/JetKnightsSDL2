@@ -19,6 +19,19 @@ Robot::Robot(Weapon* slot1, LTexture* robText)
 	//Normalized direction
 	xPlayerDir = 0;
 	yPlayerDir = 0;
+
+	//Keeps track of center of image
+
+	playerCenterAdjustmentX = 0;
+	playerCenterAdjustmentY = 0;
+
+	determineCenterPositions();
+
+}
+
+void Robot::determineCenterPositions() {
+	playerCenterAdjustmentY = robotTexture->getHeight()/2;
+	playerCenterAdjustmentX = robotTexture->getWidth()/2;
 }
 
 void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
@@ -123,7 +136,11 @@ void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 	mPlayerPosX += mPlayerVelX;
 
 	//Move the weapon left or right
+
 	s1->setPosX(mPlayerPosX);
+
+
+
 
 	//If the player went too far to the left or right
 	if ((mPlayerPosX < 0) || (mPlayerPosX > SCREEN_WIDTH))
@@ -157,8 +174,24 @@ void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 void Robot::render(SDL_Renderer* gRenderer)
 {
 	//Show the player
+	//Calculate angle
+
+	double joystickAngle = atan2((double)getyDir(), (double)getxDir()) * (180.0 / M_PI);
+
+	
+
+	//Correct angle
+	if (getxDir() == 0 && getyDir() == 0)
+
+	{
+		joystickAngle = 0;
+	}
+
+	s1->setOffSetX(playerCenterAdjustmentX);
+	s1->setOffSetY(playerCenterAdjustmentY);
+
 	robotTexture->render(mPlayerPosX, mPlayerPosY, NULL, gRenderer);
-	s1->render(gRenderer);
+	s1->render(gRenderer, joystickAngle);
 
 
 	//Show the weapon

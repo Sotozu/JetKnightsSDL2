@@ -51,10 +51,14 @@ private:
 
 	int mPlayerPosX, mPlayerPosY;
 
+	void determineCenterPositions();
+
 	//The velocity of the dot
 	int mPlayerVelX, mPlayerVelY;
 
 	//Normalized directions
 	int xPlayerDir;
 	int yPlayerDir;
+
+	int playerCenterAdjustmentX, playerCenterAdjustmentY;
 };
