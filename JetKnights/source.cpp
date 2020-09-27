@@ -228,13 +228,13 @@ bool loadMedia()
 	bool success = true;
 
 	//Load player texture
-	if (!gRobotTexture.loadFromFile("images/robotrightnew.png", gRenderer))
+	if (!gRobotTexture.loadFromFile("assets/robotrightnew.png", gRenderer))
 	{
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
 
-	if (!gWeapon1.loadFromFile("images/cannonsmall.png", gRenderer))
+	if (!gWeapon1.loadFromFile("assets/cannonsmall.png", gRenderer))
 	{
 		printf("Failed to load gun texture!\n");
 		success = false;
