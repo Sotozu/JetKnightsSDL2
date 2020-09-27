@@ -126,6 +126,10 @@ int Robot::getPosY() {
 	return mPosY;
 }
 
+const SDL_Rect* Robot::getHitbox() {
+	return &mCollider;
+}
+
 float Robot::getAngle() {
 	//Calculate angle
 	double joyAngle = atan2((double)getJoyY(), (double)getJoyX()) * (180.0 / M_PI);

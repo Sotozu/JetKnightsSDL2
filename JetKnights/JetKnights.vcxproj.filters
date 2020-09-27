@@ -24,12 +24,18 @@
     <ClCompile Include="source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\DmgObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\LTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DmgObj.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source.cpp" />
+    <ClCompile Include="source\DmgObj.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\DmgObj.h" />
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\Robot.h" />
   </ItemGroup>

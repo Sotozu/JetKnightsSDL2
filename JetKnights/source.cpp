@@ -9,6 +9,7 @@ and may not be redistributed without written permission.*/
 #include <iostream>
 #include "LTexture.h"
 #include "Robot.h"
+#include "DmgObj.h"
 
 
 //#include "LTexture.h"
@@ -101,6 +102,7 @@ int main( int argc, char* args[] )
 			//The player that will be moving around on the screen
 
 			Robot player;
+			DmgObj bullet;
 
 			//Set the wall
 			SDL_Rect wall;
@@ -125,8 +127,9 @@ int main( int argc, char* args[] )
 					player.handleEvent( e, JOYSTICK_DEAD_ZONE);
 				}
 
-				//Move the player
+				//Move the player and bullets
 				player.move(SCREEN_WIDTH, SCREEN_HEIGHT, wall);
+				bullet.move(SCREEN_WIDTH, SCREEN_HEIGHT, wall);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -138,8 +141,10 @@ int main( int argc, char* args[] )
 
 				//Render Robot
 				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, player.getAngle());
-				//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0x00);
-				//SDL_RenderDrawRect(gRenderer, player.mCollider);
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderDrawRect(gRenderer, bullet.getHitbox());
+				SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
+				SDL_RenderDrawRect(gRenderer, player.getHitbox());
 				//std::cout << player.getPosX() << std::endl;
 
 				//Update screen
