@@ -7,6 +7,7 @@
 #include <iostream>
 #include "LTexture.h"
 
+class Texture;
 
 
 class Weapon
@@ -19,11 +20,11 @@ public:
 	//Maximum axis velocity of the weapon
 
 	//Initializes the variables
-	Weapon();
+	Weapon(LTexture* weaponTexture);
 
 
 	//Shows the weapon on the screen
-	void render(SDL_Renderer* gRenderer, LTexture gWeaponTexture);
+	void render(SDL_Renderer* gRenderer);
 
 
 	int getxDir();
@@ -42,7 +43,7 @@ public:
 	void setDirX(int);
 
 private:
-
+	LTexture* weaponTexture;
 	//The X and Y offsets of the dot
 	int mPosX, mPosY;
 

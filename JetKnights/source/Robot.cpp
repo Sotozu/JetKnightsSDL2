@@ -3,9 +3,10 @@
 #include "Weapon.h"
 
 
-Robot::Robot(Weapon* slot1)
+Robot::Robot(Weapon* slot1, LTexture* robText)
 {
 	s1 = slot1;
+	robotTexture = robText;
 
 	//Initialize the offsets
 	mPlayerPosX = 100;
@@ -153,10 +154,12 @@ void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 	}
 }
 
-void Robot::render(SDL_Renderer* gRenderer, LTexture gRobotTexture, LTexture gWeapon1)
+void Robot::render(SDL_Renderer* gRenderer)
 {
 	//Show the player
-	gRobotTexture.render(mPlayerPosX, mPlayerPosY, NULL, gRenderer);
+	robotTexture->render(mPlayerPosX, mPlayerPosY, NULL, gRenderer);
+	s1->render(gRenderer);
+
 
 	//Show the weapon
     //Weapon1.render

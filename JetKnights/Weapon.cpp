@@ -2,8 +2,9 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon()
+Weapon::Weapon(LTexture* wepTex)
 {
+	weaponTexture = wepTex;
 	//Initialize the offsets
 	mPosX = 0;
 	mPosY = 0;
@@ -18,11 +19,14 @@ Weapon::Weapon()
 }
 
 
-void Weapon::render(SDL_Renderer* gRenderer, LTexture gWeaponTexture)
+void Weapon::render(SDL_Renderer* gRenderer)
 {
 	//Show the arrow
-	gWeaponTexture.render(mPosX, mPosY, NULL, gRenderer);
+	weaponTexture->render(mPosX, mPosY, NULL, gRenderer);
+
 }
+
+
 
 int Weapon::getxDir()
 {
