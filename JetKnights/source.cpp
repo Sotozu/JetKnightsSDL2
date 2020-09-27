@@ -9,7 +9,7 @@ and may not be redistributed without written permission.*/
 #include <iostream>
 #include "LTexture.h"
 #include "Robot.h"
-
+#include "Weapon.h"
 
 //#include "LTexture.h"
 
@@ -72,6 +72,7 @@ SDL_Renderer* gRenderer = NULL;
 
 //Scene textures
 LTexture gRobotTexture;
+LTexture gWeapon1;
 
 //Game Controller 1 handler
 SDL_Joystick* gGameController = NULL;
@@ -99,8 +100,10 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//The player that will be moving around on the screen
+			Weapon slot1;
 
-			Robot player;
+			Robot player(&slot1);
+			
 
 			//While application is running
 			while( !quit )
@@ -116,6 +119,7 @@ int main( int argc, char* args[] )
 
 					//Handle input for the player
 					player.handleEvent( e, JOYSTICK_DEAD_ZONE);
+
 				}
 
 				//Move the player
@@ -132,9 +136,15 @@ int main( int argc, char* args[] )
 				{
 					joystickAngle = 0;
 				}
+			
 
 				//Render objects
 				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, joystickAngle);
+
+
+
+				gWeapon1.render(player.getWeaponPosX(), player.getWeaponPosY(), NULL, gRenderer, joystickAngle);
+
 				std::cout << player.getPosX() << std::endl;
 
 				//Update screen
@@ -230,6 +240,24 @@ bool loadMedia()
 		success = false;
 	}
 
+	if (!gRobotTexture.loadFromFile("images/Roboto.png", gRenderer))
+	{
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
+	if (!gWeapon1.loadFromFile("images/gun1.png", gRenderer))
+	{
+		printf("Failed to load gun texture!\n");
+		success = false;
+	}
+
+	if (!gWeapon1.loadFromFile("images/gun1.png", gRenderer))
+	{
+		printf("Failed to load gun texture!\n");
+		success = false;
+	}
+
 	return success;
 }
 
@@ -237,6 +265,7 @@ void close()
 {
 	//Free loaded images
 	gRobotTexture.free();
+	gWeapon1.free();
 
 
 	//Close game controller

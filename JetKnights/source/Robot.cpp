@@ -1,20 +1,23 @@
 #pragma once
 #include "Robot.h"
+#include "Weapon.h"
 
 
-Robot::Robot()
+Robot::Robot(Weapon* slot1)
 {
+	s1 = slot1;
+
 	//Initialize the offsets
-	mPosX = 100;
-	mPosY = 100;
+	mPlayerPosX = 100;
+	mPlayerPosY = 100;
 
 	//Initialize the velocity
-	mVelX = 0;
-	mVelY = 0;
+	mPlayerVelX = 0;
+	mPlayerVelY = 0;
 
 	//Normalized direction
-	xDir = 0;
-	yDir = 0;
+	xPlayerDir = 0;
+	yPlayerDir = 0;
 }
 
 void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
@@ -34,19 +37,35 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 				//Left of dead zone
 				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 				{
-					mVelX -= DOT_VEL;
-					xDir = -1;
+
+
+					//player update
+					mPlayerVelX -= DOT_VEL;
+					xPlayerDir = -1;
+
+					//Weapon update
+					s1->setVelX(mPlayerVelX);
+					s1->setDirX(xPlayerDir);
+					
 				}
 				//Right of dead zone
 				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 				{
-					mVelX += DOT_VEL;
-					xDir = 1;
+					mPlayerVelX += DOT_VEL;
+					xPlayerDir = 1;
+
+					//Weapon update
+					s1->setVelX(mPlayerVelX);
+					s1->setDirX(xPlayerDir);
 				}
 				else
 				{
-					xDir = 0;
-					mVelX = 0;
+					xPlayerDir = 0;
+					mPlayerVelX = 0;
+
+					//Weapon update
+					s1->setVelX(mPlayerVelX);
+					s1->setDirX(xPlayerDir);
 
 				}
 			}
@@ -57,21 +76,32 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 				//Below of dead zone
 				if (e.jaxis.value < -JOYSTICK_DEAD_ZONE)
 				{
-					mVelY -= DOT_VEL;
+					mPlayerVelY -= DOT_VEL;
 
-					yDir = -1;
+					yPlayerDir = -1;
+
+					//Weapon update
+					s1->setVelY(mPlayerVelY);
+					s1->setDirY(yPlayerDir);
 				}
 				//Above of dead zone
 				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 				{
-					mVelY += DOT_VEL;
-					yDir = 1;
+					mPlayerVelY += DOT_VEL;
+					yPlayerDir = 1;
 
+					//Weapon update
+					s1->setVelY(mPlayerVelY);
+					s1->setDirY(yPlayerDir);
 				}
 				else //dead zone
 				{
-					yDir = 0;
-					mVelY = 0;
+					yPlayerDir = 0;
+					mPlayerVelY = 0;
+
+					//Weapon update
+					s1->setVelY(mPlayerVelY);
+					s1->setDirY(yPlayerDir);
 
 				}
 			}
@@ -88,48 +118,77 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 {
 
-	//Move the dot left or right
-	mPosX += mVelX;
+	//Move the player left or right
+	mPlayerPosX += mPlayerVelX;
 
-	//If the dot went too far to the left or right
-	if ((mPosX < 0) || (mPosX > SCREEN_WIDTH))
+	//Move the weapon left or right
+	s1->setPosX(mPlayerPosX);
+
+	//If the player went too far to the left or right
+	if ((mPlayerPosX < 0) || (mPlayerPosX > SCREEN_WIDTH))
 	{
-		//Move back
-		mPosX -= mVelX;
+		//Move player back
+		mPlayerPosX -= mPlayerVelX;
+
+		//Move Weapon back
+		s1->setPosX(mPlayerPosX);
+
 	}
 
-	//Move the dot up or down
-	mPosY += mVelY;
-	//If the dot went too far up or down
-	if ((mPosY < 0) || (mPosY > SCREEN_HEIGHT))
+	//Move the player up or down
+	mPlayerPosY += mPlayerVelY;
+
+
+	//Move the weapon up or down
+	s1->setPosY(mPlayerPosY);
+
+	//If the player went too far up or down
+	if ((mPlayerPosY < 0) || (mPlayerPosY > SCREEN_HEIGHT))
 	{
-		//Move back
-		mPosY -= mVelY;
+		//Move player back
+		mPlayerPosY -= mPlayerVelY;
+
+		//Move Weapon back
+		s1->setPosY(mPlayerPosY); 
 	}
 }
 
-void Robot::render(SDL_Renderer* gRenderer, LTexture gRobotTexture)
+void Robot::render(SDL_Renderer* gRenderer, LTexture gRobotTexture, LTexture gWeapon1)
 {
-	//Show the arrow
-	gRobotTexture.render(mPosX, mPosY, NULL, gRenderer);
+	//Show the player
+	gRobotTexture.render(mPlayerPosX, mPlayerPosY, NULL, gRenderer);
+
+	//Show the weapon
+    //Weapon1.render
+
+
 }
 
 int Robot::getxDir()
 {
-	return xDir;
+	return xPlayerDir;
 }
 
 int Robot::getyDir()
 {
-	return yDir;
+	return yPlayerDir;
 }
 
 int Robot::getPosX()
 {
-	return mPosX;
+	return mPlayerPosX;
 }
 
 int Robot::getPosY()
 {
-	return mPosY;
+	return mPlayerPosY;
 }
+
+int Robot::getWeaponPosX() {
+	return s1->getPosX();
+}
+int Robot::getWeaponPosY() {
+	return s1->getPosY();
+
+}
+

@@ -22,10 +22,12 @@
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\Robot.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\Robot.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
