@@ -15,11 +15,11 @@ class Robot
 {
 public:
 	//The dimensions of the robot
-	static const int DOT_WIDTH = 20;
-	static const int DOT_HEIGHT = 20;
+	static const int HITBOX_WIDTH = 32;
+	static const int HITBOX_HEIGHT = 32;
 
 	//Maximum axis velocity of the robot
-	static const int DOT_VEL = 1;
+	static const int DOT_VEL = 3;
 
 	//Initializes the variables
 	Robot();
@@ -28,7 +28,7 @@ public:
 	void handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE);
 
 	//Moves the dot
-	void move(int SCREEN_WIDTH, int SCREEN_HEIGHT);
+	void move(int SCREEN_WIDTH, int SCREEN_HEIGHT, SDL_Rect b);
 
 	//Shows the robot on the screen
 	void render(SDL_Renderer* gRenderer, LTexture gRobotTexture);
@@ -37,8 +37,14 @@ public:
 	int getxDir();
 	int getyDir();
 
+	int getJoyX();
+	int getJoyY();
+
 	int getPosX();
 	int getPosY();
+
+	float getAngle();
+	bool checkCollision(SDL_Rect a, SDL_Rect b);
 
 private:
 	//The X and Y offsets of the dot
@@ -50,4 +56,11 @@ private:
 	//Normalized directions
 	int xDir;
 	int yDir;
+	
+	//Precise Directions
+	int joyX;
+	int joyY;
+
+	//Dot's collision box
+	SDL_Rect mCollider;
 };

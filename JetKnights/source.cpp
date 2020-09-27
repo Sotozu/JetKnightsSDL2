@@ -17,7 +17,7 @@ and may not be redistributed without written permission.*/
 const int SCREEN_WIDTH = 840;
 const int SCREEN_HEIGHT = 580;
 
-const int JOYSTICK_DEAD_ZONE = 8000;
+const int JOYSTICK_DEAD_ZONE = 31000;
 
 
 
@@ -102,6 +102,13 @@ int main( int argc, char* args[] )
 
 			Robot player;
 
+			//Set the wall
+			SDL_Rect wall;
+			wall.x = 300;
+			wall.y = 40;
+			wall.w = 40;
+			wall.h = 400;
+
 			//While application is running
 			while( !quit )
 			{
@@ -119,23 +126,21 @@ int main( int argc, char* args[] )
 				}
 
 				//Move the player
-				player.move(SCREEN_WIDTH, SCREEN_HEIGHT);
+				player.move(SCREEN_WIDTH, SCREEN_HEIGHT, wall);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				//Calculate angle
-				double joystickAngle = atan2((double)player.getyDir(), (double)player.getxDir()) * (180.0 / M_PI);
-				//Correct angle
-				if (player.getxDir() == 0 && player.getyDir() == 0)
-				{
-					joystickAngle = 0;
-				}
+				//Render wall
+				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+				SDL_RenderDrawRect(gRenderer, &wall);
 
-				//Render objects
-				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, joystickAngle);
-				std::cout << player.getPosX() << std::endl;
+				//Render Robot
+				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, player.getAngle());
+				//SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0x00);
+				//SDL_RenderDrawRect(gRenderer, player.mCollider);
+				//std::cout << player.getPosX() << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
