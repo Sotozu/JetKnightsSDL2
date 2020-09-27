@@ -14,8 +14,8 @@ and may not be redistributed without written permission.*/
 //#include "LTexture.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 840;
-const int SCREEN_HEIGHT = 580;
+const int SCREEN_WIDTH = 1024;
+const int SCREEN_HEIGHT = 768;
 
 const int JOYSTICK_DEAD_ZONE = 8000;
 
@@ -99,10 +99,13 @@ int main( int argc, char* args[] )
 			//Event handler
 			SDL_Event e;
 
-			//The player that will be moving around on the screen
-			Weapon slot1;
+			//The weapon class is initialized with its texture
+			Weapon slot1(&gWeapon1);
 
-			Robot player(&slot1);
+
+			//The player that will be moving around on the screen
+			//Initializing with a weapon
+			Robot player(&slot1, &gRobotTexture);
 			
 
 			//While application is running
@@ -128,24 +131,15 @@ int main( int argc, char* args[] )
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
-
-				//Calculate angle
-				double joystickAngle = atan2((double)player.getyDir(), (double)player.getxDir()) * (180.0 / M_PI);
-				//Correct angle
-				if (player.getxDir() == 0 && player.getyDir() == 0)
-				{
-					joystickAngle = 0;
-				}
 			
 
 				//Render objects
-				gRobotTexture.render(player.getPosX(), player.getPosY(), NULL, gRenderer, joystickAngle);
 
 
+				player.render(gRenderer);
 
-				gWeapon1.render(player.getWeaponPosX(), player.getWeaponPosY(), NULL, gRenderer, joystickAngle);
-
-				std::cout << player.getPosX() << std::endl;
+				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
+				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
@@ -234,29 +228,19 @@ bool loadMedia()
 	bool success = true;
 
 	//Load player texture
-	if (!gRobotTexture.loadFromFile("images/Roboto.png", gRenderer))
+	if (!gRobotTexture.loadFromFile("assets/robotrightnew.png", gRenderer))
 	{
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
 
-	if (!gRobotTexture.loadFromFile("images/Roboto.png", gRenderer))
-	{
-		printf("Failed to load player texture!\n");
-		success = false;
-	}
-
-	if (!gWeapon1.loadFromFile("images/gun1.png", gRenderer))
+	if (!gWeapon1.loadFromFile("assets/cannonsmall.png", gRenderer))
 	{
 		printf("Failed to load gun texture!\n");
 		success = false;
 	}
 
-	if (!gWeapon1.loadFromFile("images/gun1.png", gRenderer))
-	{
-		printf("Failed to load gun texture!\n");
-		success = false;
-	}
+	
 
 	return success;
 }

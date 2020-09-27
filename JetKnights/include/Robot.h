@@ -2,11 +2,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Robot.h"
-#include "LTexture.h"
+//#include "LTexture.h"
 //#include "Weapon.h"
 
 //forward declaration
 class Weapon;
+class LTexture;
 
 class Robot
 {
@@ -16,11 +17,11 @@ public:
 	static const int DOT_HEIGHT = 20;
 
 	//Maximum axis velocity of the robot
-	static const int DOT_VEL = 3;
+	static const int DOT_VEL = 1;
 
 	//Initializes the variables
 
-	Robot(Weapon*);
+	Robot(Weapon*, LTexture*);
 
 	//Takes key presses and adjusts the robot's velocity
 	void handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE);
@@ -29,7 +30,7 @@ public:
 	void move(int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 	//Shows the robot on the screen
-	void render(SDL_Renderer* gRenderer, LTexture gRobotTexture, LTexture gWeapon1);
+	void render(SDL_Renderer* gRenderer);
 
 
 	int getxDir();
@@ -46,8 +47,11 @@ private:
 	//The X and Y offsets of the dot
 
 	Weapon* s1;
+	LTexture* robotTexture;
 
 	int mPlayerPosX, mPlayerPosY;
+
+	void determineCenterPositions();
 
 	//The velocity of the dot
 	int mPlayerVelX, mPlayerVelY;
@@ -55,4 +59,6 @@ private:
 	//Normalized directions
 	int xPlayerDir;
 	int yPlayerDir;
+
+	int playerCenterAdjustmentX, playerCenterAdjustmentY;
 };

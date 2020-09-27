@@ -2,9 +2,17 @@
 #include "Weapon.h"
 
 
-Weapon::Weapon()
+Weapon::Weapon(LTexture* wepTex)
 {
-	//Initialize the offsets
+	weaponTexture = wepTex;
+
+	//
+
+	off_setX = 0;
+	off_setY = 0;
+
+	//Initialize x and y positions
+	
 	mPosX = 0;
 	mPosY = 0;
 
@@ -18,11 +26,15 @@ Weapon::Weapon()
 }
 
 
-void Weapon::render(SDL_Renderer* gRenderer, LTexture gWeaponTexture)
+void Weapon::render(SDL_Renderer* gRenderer, double joystickAngle)
 {
-	//Show the arrow
-	gWeaponTexture.render(mPosX, mPosY, NULL, gRenderer);
+	//Show the weapon
+	//off set it to not be directly on the robot
+	weaponTexture->render(mPosX + off_setX * cos(joystickAngle), mPosY + off_setY + off_setX * sin(joystickAngle), NULL, gRenderer, joystickAngle);
+
 }
+
+
 
 int Weapon::getxDir()
 {
@@ -75,4 +87,12 @@ void Weapon::setDirX(int x) {
 }
 void Weapon::setDirY(int y) {
 	yDir = y;
+}
+
+
+void Weapon::setOffSetX(int x) {
+	off_setX = x;
+}
+void Weapon::setOffSetY(int y) {
+	off_setY = y;
 }
