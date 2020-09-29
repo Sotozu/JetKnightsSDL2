@@ -7,16 +7,14 @@
 class GameObject {
 public:
 	GameObject();
-	GameObject(int x, int y, float angle, int speed, SDL_Renderer* renderer);
+	GameObject(int x, int y, float angle, SDL_Renderer* renderer);
+	
 	void render();
-	void update();
 
 	void setHitbox(int h, int w, int offsetX, int offsetY);
 	void setTexture(LTexture* tex);
-
-	int getVelX();
-	int getVelY();
-private:
+	void setPos(int x, int y, float angle);
+protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;
 	Hitbox hitbox;
