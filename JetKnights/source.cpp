@@ -11,6 +11,7 @@ and may not be redistributed without written permission.*/
 #include "Robot.h"
 #include "Weapon.h"
 #include "Projectile.h"
+#include "Hitbox.h"
 
 //#include "LTexture.h"
 
@@ -110,6 +111,9 @@ int main( int argc, char* args[] )
 			//The player that will be moving around on the screen
 			//Initializing with a weapon
 			Robot player(&slot1, &gRobotTexture);
+
+			//Testing hitbox loading
+			Hitbox testHitbox(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, 50, gRenderer);
 			
 
 			//While application is running
@@ -141,6 +145,10 @@ int main( int argc, char* args[] )
 				//const int particles_max = 100
 				bullet.update();
 				player.render(gRenderer);
+
+				//testing hitbox render
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+				SDL_RenderDrawRect(gRenderer, testHitbox.getRect());
 
 				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
 				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;

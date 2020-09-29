@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Hitbox.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\Projectiles.cpp" />
@@ -26,6 +28,8 @@
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Hitbox.h" />
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Robot.h" />
