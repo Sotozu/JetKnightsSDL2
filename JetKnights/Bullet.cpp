@@ -1,7 +1,6 @@
 #include "Bullet.h"
 
 Bullet::Bullet() {
-	GameObject();
 	duration = 100;
 	mSpeed = 0;
 }

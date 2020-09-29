@@ -129,7 +129,7 @@ int main( int argc, char* args[] )
 			myBullet.setHitbox();
 
 			//---Testing use of Game object---
-			//Game game(gRenderer);
+			Game game(gRenderer);
 			
 
 			//While application is running
@@ -174,10 +174,10 @@ int main( int argc, char* args[] )
 				myBullet.render();
 
 				//Testing Game object and its rendering
-				//game.updateObjects();
+				game.updateObjects();
 
-				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
-				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
+				//std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
+				//std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
