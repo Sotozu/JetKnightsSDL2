@@ -28,9 +28,9 @@ void Game::updateObjects() {
 }
 
 void Game::genTestBullets() {
-	Bullet bullet1(10, 100, 0, 5, gRenderer);
-	Bullet bullet2(10, 200, 0, 5, gRenderer);
-	Bullet bullet3(10, 300, 0, 5, gRenderer);
+	Bullet bullet1(10, 100, 0, 1, gRenderer);
+	Bullet bullet2(10, 200, 0, 2, gRenderer);
+	Bullet bullet3(10, 300, 0, 4, gRenderer);
 
 	bullets.push_back(bullet1);
 	bullets.push_back(bullet2);

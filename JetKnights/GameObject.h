@@ -11,6 +11,7 @@ public:
 	
 	void render();
 
+	void setHitbox();
 	void setHitbox(int h, int w, int offsetX, int offsetY);
 	void setTexture(LTexture* tex);
 	void setPos(int x, int y, float angle);

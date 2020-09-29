@@ -124,6 +124,9 @@ int main( int argc, char* args[] )
 			knight.setHitbox(45, 78, 5, 15);
 
 			//---Testing use of Bullet object---
+			Bullet myBullet(10, 100, 0, 5, gRenderer);
+			myBullet.setTexture(&gBullet);
+			myBullet.setHitbox();
 
 			//---Testing use of Game object---
 			//Game game(gRenderer);
@@ -165,6 +168,10 @@ int main( int argc, char* args[] )
 
 				//testing gameobject rendering and update
 				knight.render();
+
+				//---Testing Bullet class--
+				myBullet.update();
+				myBullet.render();
 
 				//Testing Game object and its rendering
 				//game.updateObjects();

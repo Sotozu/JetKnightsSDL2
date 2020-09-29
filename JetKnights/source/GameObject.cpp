@@ -29,6 +29,12 @@ void GameObject::render() {
 	hitbox.render();
 }
 
+void GameObject::setHitbox() {
+	if (texture != NULL) {
+		hitbox = Hitbox(posX, posY, texture->getWidth(), texture->getHeight(), gRenderer);
+	}
+}
+
 void GameObject::setHitbox(int h, int w, int offsetX=0, int offsetY=0) {
 	hitboxOffsetX = offsetX;
 	hitboxOffsetY = offsetY;
