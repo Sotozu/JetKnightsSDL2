@@ -2,8 +2,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Robot.h"
-//#include "LTexture.h"
-//#include "Weapon.h"
+#include "LTexture.h"
+#include "Weapon.h"
 
 //forward declaration
 class Weapon;

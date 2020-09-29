@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source.cpp" />
-    <ClCompile Include="source\Controller.cpp" />
+    <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Hitbox.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\Projectiles.cpp" />
@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Controller.h" />
+    <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Hitbox.h" />
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\Projectile.h" />

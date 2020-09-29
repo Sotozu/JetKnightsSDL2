@@ -12,6 +12,7 @@ and may not be redistributed without written permission.*/
 #include "Weapon.h"
 #include "Projectile.h"
 #include "Hitbox.h"
+#include "GameObject.h"
 
 //#include "LTexture.h"
 
@@ -114,6 +115,11 @@ int main( int argc, char* args[] )
 
 			//Testing hitbox loading
 			Hitbox testHitbox(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, 50, gRenderer);
+
+			// ---Testing GameObject loading---
+			GameObject knight(50, 50, 45.0, 3, gRenderer);
+			knight.setTexture(&gRobotTexture);
+			knight.setHitbox(50, 50, 0, 0);
 			
 
 			//While application is running
@@ -149,6 +155,10 @@ int main( int argc, char* args[] )
 				//testing hitbox render
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
 				SDL_RenderDrawRect(gRenderer, testHitbox.getRect());
+
+				//testing gameobject rendering and update
+				knight.update();
+				knight.render();
 
 				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
 				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;

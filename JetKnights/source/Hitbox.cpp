@@ -1,12 +1,20 @@
 #include "Hitbox.h"
 
+Hitbox::Hitbox() {
+	gRenderer = NULL;
+	x = 0;
+	y = 0;
+	w = 0;
+	h = 0;
+}
+
 Hitbox::Hitbox(int posX, int posY, int width, int height, SDL_Renderer* renderer) {
 	gRenderer = renderer;
 	x = posX;
 	y = posY;
 	w = width;
 	h = height;
-};
+}
 
 bool Hitbox::chkCollision(Hitbox b) {
 	//The sides of the rectangles
@@ -52,6 +60,11 @@ int Hitbox::getHeight() {
 	return h;
 }
 
+void Hitbox::setPos(int posX, int posY) {
+	x = posX;
+	y = posY;
+}
+
 SDL_Rect* Hitbox::getRect() {
 	SDL_Rect rect;
 	rect.x = x;
@@ -59,4 +72,9 @@ SDL_Rect* Hitbox::getRect() {
 	rect.w = w;
 	rect.h = h;
 	return &rect;
+}
+
+void Hitbox::render() {
+	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
+	SDL_RenderDrawRect(gRenderer, getRect());
 }
