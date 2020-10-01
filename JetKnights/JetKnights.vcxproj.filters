@@ -45,6 +45,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NewWeapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\LTexture.h">
@@ -74,7 +77,11 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="GameObject.h">
+=======
+    <ClInclude Include="NewWeapon.h">
+>>>>>>> devel
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

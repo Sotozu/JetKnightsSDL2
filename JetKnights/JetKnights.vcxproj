@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="NewWeapon.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Hitbox.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\Weapon.h" />
     <ClInclude Include="NewRobot.h" />
+    <ClInclude Include="NewWeapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
