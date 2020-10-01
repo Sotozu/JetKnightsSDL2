@@ -13,6 +13,8 @@ and may not be redistributed without written permission.*/
 #include "Projectile.h"
 #include "Hitbox.h"
 #include "GameObject.h"
+#include "Bullet.h"
+#include "Game.h"
 
 //#include "LTexture.h"
 
@@ -125,10 +127,18 @@ int main( int argc, char* args[] )
 			//Testing hitbox loading
 			Hitbox testHitbox(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, 50, gRenderer);
 
-			// ---Testing GameObject loading---
-			GameObject knight(50, 50, 45.0, 3, gRenderer);
+			//---Testing GameObject loading---
+			GameObject knight(50, 50, 0, gRenderer);
 			knight.setTexture(&gRobotTexture);
-			knight.setHitbox(50, 50, 0, 0);
+			knight.setHitbox(45, 78, 5, 15);
+
+			//---Testing use of Bullet object---
+			Bullet myBullet(10, 100, 0, 5, gRenderer);
+			myBullet.setTexture(&gBullet);
+			myBullet.setHitbox();
+
+			//---Testing use of Game object---
+			Game game(gRenderer);
 			
 
 			//While application is running
@@ -166,9 +176,17 @@ int main( int argc, char* args[] )
 				SDL_RenderDrawRect(gRenderer, testHitbox.getRect());
 
 				//testing gameobject rendering and update
-				knight.update();
 				knight.render();
 
+				//---Testing Bullet class--
+				myBullet.update();
+				myBullet.render();
+
+				//Testing Game object and its rendering
+				game.updateObjects();
+
+				//std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
+				//std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
 				//Update screen
 				SDL_RenderPresent( gRenderer );
 			}
