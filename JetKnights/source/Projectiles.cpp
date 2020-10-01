@@ -28,8 +28,6 @@ void Projectile::update() {
 	if (!isDead) {
 		mPosX += speed * cos(mAngle * (3.14 / 180));
 		mPosY += speed * sin(mAngle * (3.14 / 180));
-		std::cout << mPosX << std::endl;
-		std::cout << mPosY << std::endl;
 		mTexture->render(mPosX, mPosY, NULL, mRenderer, mAngle);
 		counter += 1;
 	}

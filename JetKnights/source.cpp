@@ -56,8 +56,6 @@ class LTimer
 		bool mStarted;
 };
 
-//The robot that will move around on the screen
-
 //Starts up SDL and creates window
 bool init();
 
@@ -106,11 +104,22 @@ int main( int argc, char* args[] )
 			//The weapon class is initialized with its texture
 			Projectile bullet(200, 200, 45, gRenderer, &gBullet);
 
+			/*
+			The Weapon choice should determine the type of Projectile that will be used. Projectile is dependent on Weapon type.
+			-EXAMPLE-
+			Player chooses 'Shotgun'. The Weapon class is initialized with the 'Shotgun' texture AND should then load in appropriate projectile type for player.
+			-QUESTION-
+			How do we set up weapon to load in a specific projectile?F
+
+			*/
+
+
+			//Initializing with a weapon and takes in Projectile class.
 			Weapon slot1(&bullet, &gWeapon1);
 
 
 			//The player that will be moving around on the screen
-			//Initializing with a weapon
+			
 			Robot player(&slot1, &gRobotTexture);
 
 			//Testing hitbox loading
@@ -159,9 +168,6 @@ int main( int argc, char* args[] )
 				//testing gameobject rendering and update
 				knight.update();
 				knight.render();
-
-				std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
-				std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
 
 				//Update screen
 				SDL_RenderPresent( gRenderer );
