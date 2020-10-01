@@ -78,3 +78,11 @@ void Hitbox::render() {
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
 	SDL_RenderDrawRect(gRenderer, getRect());
 }
+
+void Hitbox::setParameters(int posX, int posY, int width, int height, SDL_Renderer* renderer) {
+	x = posX;
+	y = posY;
+	w = width;
+	h = height;
+	gRenderer = renderer;
+}

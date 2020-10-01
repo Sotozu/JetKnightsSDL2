@@ -5,18 +5,22 @@ Bullet::Bullet() {
 	mSpeed = 0;
 }
 
-Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) {
-	posX = x;
-	posY = y;
-	ang = angle;
-	gRenderer = renderer;
+
+Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : GameObject( x, y, angle, renderer) {
 	duration = 100;
 	mSpeed = speed;
 }
 
+Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+	duration = 100;
+	mSpeed = speed;
+}
+
+
+/*
+Updates the position of the texture and the hitbox of the bullet
+*/
 void Bullet::update() {
-	oldX = posX;
-	oldY = posY;
 	posX = posX + getVelX();
 	posY = posY + getVelY();
 	hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);

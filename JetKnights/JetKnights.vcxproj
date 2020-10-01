@@ -33,8 +33,8 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="include\Controller.h" />
-    <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Hitbox.h" />
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\Projectile.h" />

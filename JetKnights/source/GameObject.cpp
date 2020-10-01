@@ -1,25 +1,47 @@
 #include "GameObject.h"
 
 GameObject::GameObject() {
+	/*The 'hitbox' object requires a textures width and length
+	No texture is passesd here. This will intialized  'hitbox' by its default constructor. 
+	No need to explicitly set it here as C++ does that for us.
+	*/
+
 	gRenderer = NULL;
 	texture = NULL;
-	hitbox = Hitbox();
 	posX = 0;
 	posY = 0;
 	ang = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+
 }
 
+
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
+	/*The 'hitbox' object requires a textures width and length
+	No texture is passesd here. This will intialized  'hitbox' by its default constructor.
+	No need to explicitly set it here as C++ does that for us.
+	*/
 	gRenderer = renderer;
 	texture = NULL;
-	hitbox = Hitbox();
 	posX = x;
 	posY = y;
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+
+}
+
+GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) {
+	gRenderer = renderer;
+	texture = ltexture;
+	posX = x;
+	posY = y;
+	setHitbox(); //Will initialize the private member variables 'hitbox'
+	ang = angle;
+	hitboxOffsetX = 0;
+	hitboxOffsetY = 0;
+
 }
 
 void GameObject::render() {
@@ -31,7 +53,7 @@ void GameObject::render() {
 
 void GameObject::setHitbox() {
 	if (texture != NULL) {
-		hitbox = Hitbox(posX, posY, texture->getWidth(), texture->getHeight(), gRenderer);
+		hitbox.setParameters(posX, posY, texture->getWidth(), texture->getHeight(), gRenderer);
 	}
 }
 

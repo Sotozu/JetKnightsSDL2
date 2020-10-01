@@ -133,9 +133,7 @@ int main( int argc, char* args[] )
 			knight.setHitbox(45, 78, 5, 15);
 
 			//---Testing use of Bullet object---
-			Bullet myBullet(10, 100, 0, 5, gRenderer);
-			myBullet.setTexture(&gBullet);
-			myBullet.setHitbox();
+			Bullet myBullet(10, 100, 0, 5, gRenderer, &gBullet);
 
 			//---Testing use of Game object---
 			Game game(gRenderer);
