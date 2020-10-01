@@ -16,6 +16,9 @@ private:
 	int joyY;
 	int dirX;
 	int dirY;
+	int cenX;
+	int cenY;
+	int radius;
 	const int JOYSTICK_DEAD_ZONE = 20000;
 	bool inDeadCircle();
 };

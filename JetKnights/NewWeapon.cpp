@@ -11,11 +11,14 @@ NewWeapon::NewWeapon() {
 	hitboxOffsetY = 0;
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
+NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {	
 	joyX = 0;
 	joyY = 0;
 	dirX = 0;
 	dirY = 0;
+	radius = 40;
+	cenX = posX;
+	cenY = posY;
 }
 
 void NewWeapon::handleEvent( SDL_Event e ) {
@@ -54,7 +57,9 @@ int NewWeapon::getJoyY() {
 
 void NewWeapon::update() {
 	ang = getAngle();
-	std::cout << joyY << std::endl;
+	//std::cout << joyY << std::endl;
+	posX = cenX + radius * cos(ang * M_PI/180);
+	posY = cenY + radius * sin(ang * M_PI / 180);
 }
 
 bool NewWeapon::inDeadCircle() {

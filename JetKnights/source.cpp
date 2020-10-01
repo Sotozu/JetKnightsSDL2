@@ -183,7 +183,7 @@ int main( int argc, char* args[] )
 				//Testing Game object and its rendering
 				game.updateObjects();
 
-				//---Testing MyWeapon class---
+				//---Testing NewWeapon class---
 				myWeapon.update();
 				myWeapon.render();
 
