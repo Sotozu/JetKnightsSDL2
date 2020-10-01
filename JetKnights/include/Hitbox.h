@@ -14,6 +14,7 @@ public:
 	void render();
 	void setPos( int PosX, int posY);
 	void setParameters(int x, int y, int width, int height, SDL_Renderer* renderer);
+
 private:
 	SDL_Renderer* gRenderer;
 };

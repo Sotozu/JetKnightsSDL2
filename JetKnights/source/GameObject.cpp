@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+
+//CONSTRUCTORS
 GameObject::GameObject() {
 	/*The 'hitbox' object requires a textures width and length
 	No texture is passesd here. This will intialized  'hitbox' by its default constructor. 
@@ -73,6 +75,16 @@ void GameObject::setPos(int x, int y, float angle=0.0) {
 	ang = angle;
 }
 
+int  GameObject::getPosX() {
+	return posX;
+}
+int  GameObject::getPosY() {
+	return posY;
+}
+float  GameObject::getAng() {
+	return ang;
+
+}
 //update position
   //update hitbox position
   //upda
@@ -81,3 +93,4 @@ void GameObject::setPos(int x, int y, float angle=0.0) {
   //update hitbox position
   //update texture position
 //render
+

@@ -1,26 +1,54 @@
 #include "NewWeapon.h"
 
-NewWeapon::NewWeapon() {
+/*
+we need to 
+*/
+
+NewWeapon::NewWeapon() : GameObject() {
 	gRenderer = NULL;
 	texture = NULL;
-	hitbox = Hitbox();
+
 	posX = 0;
 	posY = 0;
+
+	dirX = 0;
+	dirY = 0;
+
+	joyX = 0;
+	joyY = 0;
+
+	radius = 0;
+
 	ang = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {	
+NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
+	/*
+	'joyX' and 'joyY' hold the all the value of the joystick +-320000
+	*/
+
 	joyX = 0;
 	joyY = 0;
+
+	/*
+	Hold the x and y values of the joystick only outside of the deadzone.
+	*/
 	dirX = 0;
 	dirY = 0;
+
+
 	radius = 40;
-	cenX = posX;
-	cenY = posY;
+
 }
 
+NewWeapon::NewWeapon(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+	
+}
+/*
+What variables from base object GameObject be used here? How can we 
+*/
 void NewWeapon::handleEvent( SDL_Event e ) {
 	if (e.type == SDL_JOYAXISMOTION) {							//Joystick input
 		if (e.jaxis.which == 0) {								//If player 1 input
@@ -58,8 +86,8 @@ int NewWeapon::getJoyY() {
 void NewWeapon::update() {
 	ang = getAngle();
 	//std::cout << joyY << std::endl;
-	posX = cenX + radius * cos(ang * M_PI/180);
-	posY = cenY + radius * sin(ang * M_PI / 180);
+	posX = posX + radius * cos(ang * M_PI/180);
+	posY = posY + radius * sin(ang * M_PI / 180);
 }
 
 bool NewWeapon::inDeadCircle() {

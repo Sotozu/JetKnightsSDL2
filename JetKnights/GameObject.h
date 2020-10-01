@@ -20,6 +20,10 @@ public:
 	void setHitbox(int h, int w, int offsetX, int offsetY);
 	void setTexture(LTexture* tex);
 	void setPos(int x, int y, float angle);
+
+	int getPosX();
+	int getPosY();
+	float getAng();
 protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;

@@ -129,9 +129,9 @@ int main( int argc, char* args[] )
 			Hitbox testHitbox(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, 50, gRenderer);
 
 			//---Testing GameObject loading---
-			GameObject knight(50, 50, 0, gRenderer);
-			knight.setTexture(&gRobotTexture);
-			knight.setHitbox(45, 78, 5, 15);
+			Bullet knight(50, 50, 0.0, 1, gRenderer, &gRobotTexture);
+			//.setTexture(&gRobotTexture);
+			//knight.setHitbox(45, 78, 5, 15);
 
 			//---Testing use of Bullet object---
 			Bullet myBullet(10, 100, 0, 5, gRenderer, &gBullet);
@@ -139,8 +139,12 @@ int main( int argc, char* args[] )
 			//---Testing use of Game object---
 			Game game(gRenderer);
 
-			//---Testing NewWeapon Class---
-			NewWeapon myWeapon(350, 350, 0, gRenderer);
+			/*
+			---Testing NewWeapon Class---
+			Initializing with the sarting positon of the GameObject Knight
+			*/
+			NewWeapon myWeapon(knight.getPosX(), knight.getPosY(), 0, gRenderer);
+
 			myWeapon.setTexture(&gWeapon1);
 			myWeapon.setHitbox();
 			
@@ -181,6 +185,7 @@ int main( int argc, char* args[] )
 				SDL_RenderDrawRect(gRenderer, testHitbox.getRect());
 
 				//testing gameobject rendering and update
+				knight.update();
 				knight.render();
 
 				//---Testing Bullet class--
@@ -191,6 +196,7 @@ int main( int argc, char* args[] )
 				game.updateObjects();
 
 				//---Testing NewWeapon class---
+				myWeapon.setPos(knight.getPosX(), knight.getPosY(), knight.getAng());
 				myWeapon.update();
 				myWeapon.render();
 
