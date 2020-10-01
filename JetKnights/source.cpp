@@ -15,6 +15,7 @@ and may not be redistributed without written permission.*/
 #include "GameObject.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "NewWeapon.h"
 
 //#include "LTexture.h"
 
@@ -130,6 +131,11 @@ int main( int argc, char* args[] )
 
 			//---Testing use of Game object---
 			Game game(gRenderer);
+
+			//---Testing NewWeapon Class---
+			NewWeapon myWeapon(350, 350, 0, gRenderer);
+			myWeapon.setTexture(&gWeapon1);
+			myWeapon.setHitbox();
 			
 
 			//While application is running
@@ -146,6 +152,7 @@ int main( int argc, char* args[] )
 
 					//Handle input for the player
 					player.handleEvent( e, JOYSTICK_DEAD_ZONE);
+					myWeapon.handleEvent(e);
 
 				}
 
@@ -175,6 +182,11 @@ int main( int argc, char* args[] )
 
 				//Testing Game object and its rendering
 				game.updateObjects();
+
+				//---Testing MyWeapon class---
+				myWeapon.update();
+				myWeapon.render();
+
 
 				//std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;
 				//std::cout << "Y-Axis: " << SDL_JoystickGetAxis(gGameController, 1) << std::endl;
