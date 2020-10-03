@@ -21,12 +21,12 @@
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="NewRobot.cpp" />
     <ClCompile Include="NewWeapon.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Hitbox.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
-    <ClCompile Include="source\NewRobot.cpp" />
     <ClCompile Include="source\Projectiles.cpp" />
     <ClCompile Include="source\Robot.cpp" />
     <ClCompile Include="source\Weapon.cpp" />

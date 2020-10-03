@@ -20,6 +20,7 @@ NewWeapon::NewWeapon() : GameObject() {
 	radius = 0;
 
 	ang = 0;
+
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 }
@@ -28,43 +29,54 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	/*
 	'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	*/
-
 	joyX = 0;
 	joyY = 0;
-
 	/*
 	Hold the x and y values of the joystick only outside of the deadzone.
 	*/
 	dirX = 0;
 	dirY = 0;
 
-
 	radius = 40;
 
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
-	
+NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+	/*
+'joyX' and 'joyY' hold the all the value of the joystick +-320000
+*/
+	joyX = 0;
+	joyY = 0;
+	/*
+	Hold the x and y values of the joystick only outside of the deadzone.
+	*/
+	dirX = 0;
+	dirY = 0;
+
+	radius = 40;
 }
 /*
 What variables from base object GameObject be used here? How can we 
 */
 void NewWeapon::handleEvent( SDL_Event e ) {
-	if (e.type == SDL_JOYAXISMOTION) {							//Joystick input
-		if (e.jaxis.which == 0) {								//If player 1 input
-			if (e.jaxis.axis == 0) {							//X axis motion
-				joyX = e.jaxis.value;
-				if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
-					dirX = e.jaxis.value;
+	if (e.type == SDL_CONTROLLERAXISMOTION) {							//Joystick input
+		if (e.type == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
+			if (e.caxis.which == 0) {								//If player 1 input
+				if (e.caxis.axis == 0) {							//X axis motion
+					joyX = e.caxis.value;
+					if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
+						dirX = e.caxis.value;
+					}
 				}
-			}
-			else if (e.jaxis.axis == 1) {						//Y axis motion
-				joyY = e.jaxis.value;
-				if (!inDeadCircle()) {							//Outside of dead zone
-					dirY = e.jaxis.value;
+				else if (e.caxis.axis == 1) {						//Y axis motion
+					joyY = e.caxis.value;
+					if (!inDeadCircle()) {							//Outside of dead zone
+						dirY = e.caxis.value;
+					}
 				}
 			}
 		}
+		
 	}	
 }
 
