@@ -86,4 +86,7 @@ int  GameObject::getPosY() {
 float  GameObject::getAng() {
 	return ang;
 }
+Hitbox* GameObject::getHitbox() {
+	return hitbox;
+}
 

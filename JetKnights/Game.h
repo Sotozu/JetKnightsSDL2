@@ -35,5 +35,7 @@ private:
 	void loadMedia();
 	void updateBullets();
 	void updateRobots();
+
+	bool chkRobotCollisions(Hitbox* b);
 };
 

@@ -56,7 +56,7 @@ void Game::updateBullets() {
 	}
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
-			if (bullets[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT)) {
+			if (bullets[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]->getHitbox())) {
 				delete bullets[i];
 				bullets[i] = NULL;
 			}
@@ -67,6 +67,17 @@ void Game::updateBullets() {
 			bullets[i]->render();
 		}
 	}
+}
+
+bool Game::chkRobotCollisions(Hitbox* b) {
+	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
+		if (robots[i] != NULL) {
+			if (b->chkCollision(robots[i]->getHitbox())) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 void Game::genTestBullets() {

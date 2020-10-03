@@ -21,7 +21,7 @@ private:
 	int radius;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 	bool inDeadCircle();
-
+	bool chkCollision(int screenW, int screenH, Hitbox* b = NULL);
 
 public:
 	NewRobot();

@@ -162,8 +162,6 @@ void NewRobot::update() {
 	if (hitbox != NULL){
 		hitbox->setPos(posX, posY);
 	}
-	
-
 }
 
 bool NewRobot::inDeadCircle() {
@@ -174,4 +172,17 @@ bool NewRobot::inDeadCircle() {
 	else {
 		return false;
 	}
+}
+
+bool NewRobot::chkCollision(int screenW, int screenH, Hitbox* b) {
+	if (hitbox != NULL) {
+		//Check if bullet hits screen boundaries
+		if ((hitbox->x < 0) || (hitbox->x + hitbox->w > screenW) || (hitbox->y < 0) || (hitbox->y + hitbox->h > screenH)) {
+			return true;
+		}
+		else if (b != NULL) {
+			return hitbox->chkCollision(b);
+		}
+	}
+	return false;
 }

@@ -28,6 +28,9 @@ public:
 
 	//Pocesses
 	void render();
+
+	//unknown
+	Hitbox* getHitbox();
 protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;
