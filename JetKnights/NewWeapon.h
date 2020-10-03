@@ -19,6 +19,7 @@ public:
 	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 
 
+
 	void handleEvent( SDL_Event e );
 	void update();
 	float getAngle();

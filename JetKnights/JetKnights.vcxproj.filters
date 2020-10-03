@@ -1,29 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="source.cpp" />
-    <ClCompile Include="source\GameObject.cpp" />
-    <ClCompile Include="source\Hitbox.cpp" />
-    <ClCompile Include="source\LTexture.cpp" />
-    <ClCompile Include="source\Projectiles.cpp" />
-    <ClCompile Include="source\Robot.cpp" />
-    <ClCompile Include="source\Weapon.cpp" />
-    <ClCompile Include="NewWeapon.cpp" />
-    <ClCompile Include="NewRobot.cpp" />
+    <ClCompile Include="source\Weapon.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\GameObject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Hitbox.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\LTexture.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewRobot.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="NewWeapon.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Projectiles.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Robot.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="include\Controller.h" />
-    <ClInclude Include="include\Hitbox.h" />
-    <ClInclude Include="include\LTexture.h" />
-    <ClInclude Include="include\Projectile.h" />
-    <ClInclude Include="include\Robot.h" />
-    <ClInclude Include="include\Weapon.h" />
-    <ClInclude Include="NewWeapon.h" />
-    <ClInclude Include="NewRobot.h" />
+    <ClInclude Include="Game.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Controller.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Hitbox.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LTexture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="NewRobot.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Robot.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Weapon.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Projectile.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="NewWeapon.h">
+      <Filter>source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{e7677267-d89b-488d-8e9f-4c71abd5436a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{a288d0dc-3c75-487f-85c1-8e4389ebe43b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

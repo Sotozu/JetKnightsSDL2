@@ -83,6 +83,8 @@ LTexture gBullet;
 
 //Game Controller 1 handler
 SDL_GameController* gGameController = NULL;
+SDL_Joystick* gJoyStick1 = NULL;
+SDL_Joystick* gJoyStick2 = NULL;
 
 int main( int argc, char* args[] )
 {
@@ -251,6 +253,9 @@ bool init()
 		{
 			//Load joystick
 			gGameController = SDL_GameControllerOpen(0);
+			gJoyStick1 = SDL_JoystickOpen(0);
+			gJoyStick1 = SDL_JoystickOpen(1);
+
 			if (gGameController == NULL)
 			{
 				printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());

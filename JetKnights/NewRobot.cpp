@@ -60,6 +60,8 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 
 	radius = 40;
 }
+
+
 /*
 What variables from base object GameObject be used here? How can we
 */
@@ -67,8 +69,7 @@ void NewRobot::handleEvent(SDL_Event e) {
 	//If a key was pressed
 	if (e.type == SDL_CONTROLLERAXISMOTION)
 	{
-		if (e.type == SDL_CONTROLLER_BUTTON_LEFTSTICK) {
-			if (e.caxis.which == 0)
+			if (e.caxis.which == 0) //Which controller ID
 			{
 
 				//X axis motion
@@ -132,10 +133,12 @@ void NewRobot::handleEvent(SDL_Event e) {
 				}
 			}
 
-		}
-
 	}
 }
+
+
+
+
 
 void NewRobot::getAngle() {
 	//Calculate angle

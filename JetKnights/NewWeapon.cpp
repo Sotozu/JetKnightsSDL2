@@ -59,23 +59,25 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture
 What variables from base object GameObject be used here? How can we 
 */
 void NewWeapon::handleEvent( SDL_Event e ) {
-	if (e.type == SDL_CONTROLLERAXISMOTION) {							//Joystick input
-		if (e.type == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
-			if (e.caxis.which == 0) {								//If player 1 input
-				if (e.caxis.axis == 0) {							//X axis motion
-					joyX = e.caxis.value;
-					if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
-						dirX = e.caxis.value;
-					}
+	if (e.type == SDL_CONTROLLERAXISMOTION) {	
+		//Joystick input
+
+		//If player 1 input
+		if (e.caxis.which == 0) {
+			if (e.caxis.axis == 2) {							//X axis motion
+				joyX = e.caxis.value;
+				if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
+					dirX = e.caxis.value;
 				}
-				else if (e.caxis.axis == 1) {						//Y axis motion
-					joyY = e.caxis.value;
-					if (!inDeadCircle()) {							//Outside of dead zone
-						dirY = e.caxis.value;
-					}
+			}
+			else if (e.caxis.axis == 3) {						//Y axis motion
+				joyY = e.caxis.value;
+				if (!inDeadCircle()) {							//Outside of dead zone
+					dirY = e.caxis.value;
 				}
 			}
 		}
+		
 		
 	}	
 }
