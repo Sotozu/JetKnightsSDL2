@@ -130,6 +130,8 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 			//weapon.use();
 		}
 	}
+
+	//std::cout << "Y: " << yPlayerDir << std::endl;
 }
 
 void Robot::update(int SCREEN_WIDTH, int SCREEN_HEIGHT)

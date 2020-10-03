@@ -5,17 +5,26 @@ Game::Game() {
 }
 
 Game::Game(SDL_Renderer* renderer) {
-	const int totalImages = 1;
-	std::string images[totalImages] = { "assets/bullet.png" };
+	//const int totalImages = 3;
+	//const int totalBullets = 3;
 	gRenderer = renderer;
+	for (int i = 0; i < TOTAL_BULLETS; i++) {
+		bullets[i] = NULL;
+	}
+	images =  { "assets/robotrightnew.png",
+				"assets/cannonsmall.png",
+				"assets/bullet.png" };
 	loadMedia();
 	genTestBullets();
 }
 
 void Game::updateObjects() {
-	for (int i = 0; i < totalBullets; ++i) {
-		bullets[i].update();
-		bullets[i].render();
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] != NULL) {
+			//std::cout << "UPDATE ATTEMPTED" << std::endl;
+			bullets[i]->update();
+			bullets[i]->render();
+		}
 	}
 	//for object in objects
 		//process events
@@ -31,25 +40,19 @@ void Game::updateObjects() {
 
 void Game::genTestBullets() {
 	int n = 1;
-
-	Bullet bullet1(10, 200, 0, n, gRenderer);
-	bullet1.setTexture(&textures[0]);
-	bullet1.setHitbox();
-	Bullet bullet2(10, 300, 0, 2*n, gRenderer);
-	bullet2.setTexture(&textures[0]);
-	bullet2.setHitbox();
-	Bullet bullet3(10, 400, 0, 4*n, gRenderer);
-	bullet3.setTexture(&textures[0]);
-	bullet3.setHitbox();
-
-	bullets[0] = bullet1;
-	bullets[1] = bullet2;
-	bullets[2] = bullet3;
+	int n_bullets = 3;
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] == NULL && n_bullets > 0) {
+			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0, n * pow(2, n_bullets), gRenderer, &textures[2]);
+			//std::cout << i << std::endl;
+			n_bullets--;
+		}
+	}
 }
 
 void Game::loadMedia() {
-	for (int i = 0; i < totalImages; ++i) {
-		textures[i].loadFromFile("assets/bullet.png", gRenderer);
-		std::cout << "Texture loaded!!!" << std::endl;
+	for (int i = 0; i < TOTAL_IMAGES; ++i) {
+		textures[i].loadFromFile(images[i], gRenderer);
+		//std::cout << "Texture loaded!!!" << std::endl;
 	}
 }

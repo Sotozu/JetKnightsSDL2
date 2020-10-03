@@ -1,6 +1,8 @@
 #pragma once
 #include <list>
 #include <iostream>
+#include <array>
+#include <vector>
 #include "Bullet.h"
 
 class Game {
@@ -11,13 +13,13 @@ public:
 	void updateObjects();
 	void genTestBullets();
 private:
-	const int totalImages = 1;
-	const int totalBullets = 3;
+	static const int TOTAL_IMAGES = 3;
+	static const int TOTAL_BULLETS = 100;
 	SDL_Renderer* gRenderer;
 	
-	std::string images[1];
-	LTexture textures[1];
-	Bullet bullets[3];
+	std::vector<std::string> images;
+	LTexture textures[TOTAL_IMAGES];
+	Bullet* bullets[TOTAL_BULLETS];
 	
 	void loadMedia();
 };

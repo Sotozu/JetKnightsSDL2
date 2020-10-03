@@ -141,7 +141,7 @@ int main( int argc, char* args[] )
 			//Bullet myBullet(10, 100, 0, 5, gRenderer, &gBullet);
 
 			//---Testing use of Game object---
-			//Game game(gRenderer);
+			Game game(gRenderer);
 
 			/*
 			---Testing NewWeapon Class---
@@ -198,9 +198,9 @@ int main( int argc, char* args[] )
 				//myBullet.render();
 
 				//Testing Game object and its rendering
-				//game.updateObjects();
 
-				
+				game.genTestBullets();
+				game.updateObjects();
 
 				//--Testing NewRobot class--
 				myRobot.update();
