@@ -11,13 +11,13 @@ public:
 	void updateObjects();
 	void genTestBullets();
 private:
-	const int totalImages = 1;
+	const int totalImages = 3;
 	const int totalBullets = 3;
 	SDL_Renderer* gRenderer;
 	
-	std::string images[1];
-	LTexture textures[1];
-	Bullet bullets[3];
+	std::string images[3];
+	LTexture textures[3];
+	Bullet* bullets[3];
 	
 	void loadMedia();
 };
