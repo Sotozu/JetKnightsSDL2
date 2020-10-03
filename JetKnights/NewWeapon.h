@@ -3,18 +3,9 @@
 #include "GameObject.h"
 
 class NewWeapon : public GameObject {
-	private:
-;
-
-	int dirX;
-	int dirY;
-
-	int radius;
-	const int JOYSTICK_DEAD_ZONE = 20000;
-	bool inDeadCircle();
 public:
 	int joyX;
-	int joyY
+	int joyY;
 	//Constructors
 	NewWeapon();
 	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer);
@@ -33,7 +24,15 @@ public:
 	//Proccesses
 	void handleEvent( SDL_Event e );
 
+private:
 
+
+	int dirX;
+	int dirY;
+
+	int radius;
+	const int JOYSTICK_DEAD_ZONE = 20000;
+	bool inDeadCircle();
 
 };
 

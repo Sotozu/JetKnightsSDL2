@@ -6,6 +6,22 @@
 
 
 class NewRobot : public GameObject{
+public:
+	//Constructors
+	NewRobot();
+	NewRobot(int x, int y, float angle, SDL_Renderer* renderer);
+	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
+
+	//Mutator
+	void handleEvent(SDL_Event e);
+	void update();
+
+
+	//Accessor
+	float getAngle();
+	int getJoyX();
+	int getJoyY();
+
 
 private:
 	static const int ROB_VEL = 1;
@@ -21,19 +37,6 @@ private:
 	int radius;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 	bool inDeadCircle();
-
-
-public:
-	NewRobot();
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer);
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
-
-
-	void handleEvent(SDL_Event e);
-	void update();
-	void getAngle();
-	int getJoyX();
-	int getJoyY();
 
 };
 

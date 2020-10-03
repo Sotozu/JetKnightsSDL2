@@ -140,11 +140,8 @@ void NewRobot::handleEvent(SDL_Event e) {
 
 
 
-void NewRobot::getAngle() {
-	//Calculate angle
-	double joyAngle = atan2((double)dirY, (double)dirX) * (180.0 / M_PI);
-	ang = joyAngle;
-	//return joyAngle;
+float NewRobot::getAngle() {
+	return ang;
 }
 
 int NewRobot::getJoyX() {
@@ -160,6 +157,8 @@ void NewRobot::update() {
 	//getAngle();
 	//std::cout << "VELOCITY Y:" <<robotVelY << std::endl;
 	//std::cout << "VELOCITY X:" << robotVelX << std::endl;
+
+	//ang = atan2((double)dirY, (double)dirX) * (180.0 / M_PI);
 
 	posX += robotVelX;
 	posY += robotVelY;

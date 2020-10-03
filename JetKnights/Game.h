@@ -18,23 +18,22 @@ public:
 	//Accessors
 
 	//Mutators
-	void moveWeapon(SDL_Event);
-	
-	//Processes
-
 	void updateObjects();
 	void genTestBullets();
+	void genTestWeapon();
 	void WeaponFiring();
 	void handlEvent(SDL_Event);
 
 private:
 
 	static const int TOTAL_IMAGES = 3;
+	static const int TOTAL_WEAPONS = 4;
 	static const int TOTAL_BULLETS = 100;
+
 
 	SDL_Renderer* gRenderer;
 
-	NewWeapon slot1player1;
+	NewWeapon* weapons[TOTAL_WEAPONS];
 	
 	std::vector<std::string> images;
 	LTexture textures[TOTAL_IMAGES];

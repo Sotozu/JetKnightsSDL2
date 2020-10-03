@@ -142,13 +142,14 @@ int main( int argc, char* args[] )
 
 			//---Testing use of Game object---
 			Game game(gRenderer);
-
+			game.genTestWeapon();
 			/*
 			---Testing NewWeapon Class---
 			Initializes with the sarting positon of the GameObject Knight
 			*/
 			NewRobot myRobot(500, 500, 0, gRenderer, &gRobotTexture);
 			NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
+
 
 
 

@@ -99,9 +99,10 @@ int NewWeapon::getJoyY() {
 
 void NewWeapon::update() {
 	ang = getAngle();
-	//std::cout << joyY << std::endl;
-	posX = posX + radius * cos(ang * M_PI/180);
+
+	posX = posX + radius * cos(ang * M_PI/180);  //If posX is not the position of a robot then the weapon will fly across the screen
 	posY = posY + radius * sin(ang * M_PI / 180);
+
 }
 
 bool NewWeapon::inDeadCircle() {
@@ -127,7 +128,7 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 
 	//GameObject Variables
 	posX = x;
-	posY = y
+	posY = y;
 	ang = angle;
 	renderer = gRenderer;
 	texture = ltexture;

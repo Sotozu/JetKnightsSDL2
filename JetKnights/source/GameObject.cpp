@@ -46,6 +46,7 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTextu
 	hitboxOffsetY = 0;
 }
 
+
 void GameObject::render() {
 	if (texture != NULL) {
 		texture->render(posX, posY, NULL, gRenderer, ang);
