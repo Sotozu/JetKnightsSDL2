@@ -18,11 +18,12 @@ private:
 	static const int TOTAL_IMAGES = 3;
 	static const int TOTAL_BULLETS = 100;
 	SDL_Renderer* gRenderer;
-	
+
 	std::vector<std::string> images;
 	LTexture textures[TOTAL_IMAGES];
 	Bullet* bullets[TOTAL_BULLETS];
 	
 	void loadMedia();
+	void updateBullets();
 };
 

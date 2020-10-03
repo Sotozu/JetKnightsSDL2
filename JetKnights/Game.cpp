@@ -19,17 +19,8 @@ Game::Game(SDL_Renderer* renderer) {
 }
 
 void Game::updateObjects() {
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] != NULL) {
-			//std::cout << "UPDATE ATTEMPTED" << std::endl;
-			bullets[i]->update();
-			/*if (bullets[i]->chkCollision()) {
-				delete bullets[i];
-				bullets[i] = NULL;
-			}*/
-			bullets[i]->render();
-		}
-	}
+	//updateRobots();
+	updateBullets();
 	//for object in objects
 		//process events
 		//gen
@@ -40,6 +31,27 @@ void Game::updateObjects() {
 	//for object in objects
 		//object.render
 	
+}
+
+void Game::updateBullets() {
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] != NULL) {
+			bullets[i]->update();
+		}
+	}
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] != NULL) {
+			if (bullets[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT)) {
+				delete bullets[i];
+				bullets[i] = NULL;
+			}
+		}
+	}
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] != NULL) {
+			bullets[i]->render();
+		}
+	}
 }
 
 void Game::genTestBullets() {

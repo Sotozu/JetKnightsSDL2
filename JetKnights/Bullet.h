@@ -15,7 +15,7 @@ public:
 	//Processes
 	void update();
 	void updateAll();
-	bool chkCollision(Hitbox b);
+	bool chkCollision(int screenW, int screenH, Hitbox* b = NULL);
 
 
 

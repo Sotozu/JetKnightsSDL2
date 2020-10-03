@@ -50,7 +50,9 @@ void GameObject::render() {
 	if (texture != NULL) {
 		texture->render(posX, posY, NULL, gRenderer, ang);
 	}
-	hitbox->render();
+	if (hitbox != NULL) {
+		hitbox->render();
+	}
 }
 
 void GameObject::setHitbox() {

@@ -16,7 +16,7 @@ Hitbox::Hitbox(int posX, int posY, int width, int height, SDL_Renderer* renderer
 	h = height;
 }
 
-bool Hitbox::chkCollision(Hitbox b) {
+bool Hitbox::chkCollision(Hitbox* b) {
 	//The sides of the rectangles
 	int leftA, leftB;
 	int rightA, rightB;
@@ -30,10 +30,10 @@ bool Hitbox::chkCollision(Hitbox b) {
 	bottomA = y + h;
 
 	//Calculate the sides of rect B
-	leftB = b.x;
-	rightB = b.x + b.w;
-	topB = b.y;
-	bottomB = b.y + b.h;
+	leftB = b->x;
+	rightB = b->x + b->w;
+	topB = b->y;
+	bottomB = b->y + b->h;
 
 	//If any of the sides from A are outside of B
 	if (bottomA <= topB) {
