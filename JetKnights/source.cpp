@@ -109,7 +109,7 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 
 			//The weapon class is initialized with its texture
-			Projectile bullet(200, 200, 45, gRenderer, &gBullet);
+			//Projectile bullet(200, 200, 45, gRenderer, &gBullet);
 
 			/*
 			The Weapon choice should determine the type of Projectile that will be used. Projectile is dependent on Weapon type.
@@ -149,6 +149,7 @@ int main( int argc, char* args[] )
 			*/
 			NewRobot myRobot(500, 500, 0, gRenderer, &gRobotTexture);
 			NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
+
 
 
 
