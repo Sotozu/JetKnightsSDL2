@@ -169,6 +169,7 @@ int main( int argc, char* args[] )
 					//player.handleEvent( e, JOYSTICK_DEAD_ZONE);
 					myWeapon.handleEvent(e);
 					myRobot.handleEvent(e);
+					game.handlEvent(e);
 
 				}
 
@@ -199,7 +200,6 @@ int main( int argc, char* args[] )
 
 				//Testing Game object and its rendering
 
-				game.genTestBullets();
 				game.updateObjects();
 
 				//--Testing NewRobot class--

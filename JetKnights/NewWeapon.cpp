@@ -114,3 +114,21 @@ bool NewWeapon::inDeadCircle() {
 	}
 }
 
+void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) {
+
+	//NewWeapon variables
+	joyX = 0;
+	joyY = 0;
+
+	dirX = 0;
+	dirY = 0;
+
+	radius = 40;
+
+	//GameObject Variables
+	posX = x;
+	posY = y
+	ang = angle;
+	renderer = gRenderer;
+	texture = ltexture;
+}

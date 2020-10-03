@@ -15,7 +15,9 @@ Game::Game(SDL_Renderer* renderer) {
 				"assets/cannonsmall.png",
 				"assets/bullet.png" };
 	loadMedia();
-	genTestBullets();
+	//Iniitialize Weapon
+	slot1player1.setAllParameters(0, 0, 0, gRenderer, &textures[1]);
+
 }
 
 void Game::updateObjects() {
@@ -40,7 +42,7 @@ void Game::updateObjects() {
 
 void Game::genTestBullets() {
 	int n = 1;
-	int n_bullets = 3;
+	int n_bullets = 1;
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL && n_bullets > 0) {
 			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0, n * pow(2, n_bullets), gRenderer, &textures[2]);
@@ -55,4 +57,36 @@ void Game::loadMedia() {
 		textures[i].loadFromFile(images[i], gRenderer);
 		//std::cout << "Texture loaded!!!" << std::endl;
 	}
+}
+
+
+void Game::WeaponFiring() {
+	genTestBullets();
+}
+void Game::moveWeapon(SDL_Event e) {
+	//If player 1 input
+	if (e.caxis.which == 0) {
+		if (e.caxis.axis == 2) {							//X axis motion
+			slot1player1.joyX = e.caxis.value;
+			if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
+				dirX = e.caxis.value;
+			}
+		}
+		else if (e.caxis.axis == 3) {						//Y axis motion
+			joyY = e.caxis.value;
+			if (!inDeadCircle()) {							//Outside of dead zone
+				dirY = e.caxis.value;
+			}
+		}
+	}
+}
+void Game::handlEvent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+		std::cout << "HELLO" << std::endl;
+		WeaponFiring();
+	}
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
+		moveWeapon(e);
+	}
+	
 }

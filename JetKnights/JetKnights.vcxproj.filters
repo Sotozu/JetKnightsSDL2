@@ -67,7 +67,7 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="NewWeapon.h">
-      <Filter>source</Filter>
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
