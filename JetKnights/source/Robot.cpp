@@ -65,6 +65,8 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 				//Right of dead zone
 				else if (e.jaxis.value > JOYSTICK_DEAD_ZONE)
 				{
+
+					//player update
 					mPlayerVelX += DOT_VEL;
 					xPlayerDir = 1;
 
@@ -130,38 +132,28 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 	}
 
 	//std::cout << "Y: " << yPlayerDir << std::endl;
-
-
-
 }
 
-void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
+void Robot::update(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 {
 
 	//Move the player left or right
 	mPlayerPosX += mPlayerVelX;
 
 	//Move the weapon left or right
-
 	s1->setPosX(mPlayerPosX);
-
-
-
 
 	//If the player went too far to the left or right
 	if ((mPlayerPosX < 0) || (mPlayerPosX > SCREEN_WIDTH))
 	{
 		//Move player back
 		mPlayerPosX -= mPlayerVelX;
-
 		//Move Weapon back
 		s1->setPosX(mPlayerPosX);
-
 	}
 
 	//Move the player up or down
 	mPlayerPosY += mPlayerVelY;
-
 
 	//Move the weapon up or down
 	s1->setPosY(mPlayerPosY);
@@ -171,7 +163,6 @@ void Robot::move(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 	{
 		//Move player back
 		mPlayerPosY -= mPlayerVelY;
-
 		//Move Weapon back
 		s1->setPosY(mPlayerPosY); 
 	}

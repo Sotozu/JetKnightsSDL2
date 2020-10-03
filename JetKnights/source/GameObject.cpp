@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 
+
 //CONSTRUCTORS
 GameObject::GameObject() {
 	/*The 'hitbox' object requires a textures width and length
@@ -43,7 +44,6 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTextu
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
-
 }
 
 void GameObject::render() {

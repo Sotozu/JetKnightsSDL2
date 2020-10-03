@@ -19,20 +19,10 @@ public:
 	//Maximum axis velocity of the robot
 	static const int DOT_VEL = 1;
 
-	//Initializes the variables
-
+	//Constructor
 	Robot(Weapon*, LTexture*);
 
-	//Takes key presses and adjusts the robot's velocity
-	void handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE);
-
-	//Moves the dot
-	void move(int SCREEN_WIDTH, int SCREEN_HEIGHT);
-
-	//Shows the robot on the screen
-	void render(SDL_Renderer* gRenderer);
-
-
+	//Accessors
 	int getxDir();
 	int getyDir();
 
@@ -41,6 +31,14 @@ public:
 
 	int getWeaponPosX();
 	int getWeaponPosY();
+
+	//Processes
+	void handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE);	//Takes key presses and adjusts the robot's velocity
+	void update(int SCREEN_WIDTH, int SCREEN_HEIGHT); //Moves the dot
+	void render(SDL_Renderer* gRenderer); //Shows the robot on the screen
+	
+
+	
 
 
 private:

@@ -16,6 +16,8 @@ and may not be redistributed without written permission.*/
 #include "Bullet.h"
 #include "Game.h"
 #include "NewWeapon.h"
+#include "NewRobot.h"
+
 
 //#include "LTexture.h"
 
@@ -80,7 +82,9 @@ LTexture gWeapon1;
 LTexture gBullet;
 
 //Game Controller 1 handler
-SDL_Joystick* gGameController = NULL;
+SDL_GameController* gGameController = NULL;
+SDL_Joystick* gJoyStick1 = NULL;
+SDL_Joystick* gJoyStick2 = NULL;
 
 int main( int argc, char* args[] )
 {
@@ -118,36 +122,35 @@ int main( int argc, char* args[] )
 
 
 			//Initializing with a weapon and takes in Projectile class.
-			Weapon slot1(&bullet, &gWeapon1);
+			//Weapon slot1(&bullet, &gWeapon1);
 
 
 			//The player that will be moving around on the screen
 			
-			Robot player(&slot1, &gRobotTexture);
+			//Robot player(&slot1, &gRobotTexture);
 
 			//Testing hitbox loading
 			Hitbox testHitbox(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 50, 50, gRenderer);
 
 			//---Testing GameObject loading---
-			Bullet knight(50, 50, 0.0, 1, gRenderer, &gRobotTexture);
+			//Bullet knight(50, 50, 0.0, 1, gRenderer, &gRobotTexture);
 			//.setTexture(&gRobotTexture);
 			//knight.setHitbox(45, 78, 5, 15);
 
 			//---Testing use of Bullet object---
-			Bullet myBullet(10, 100, 0, 5, gRenderer, &gBullet);
+			//Bullet myBullet(10, 100, 0, 5, gRenderer, &gBullet);
 
 			//---Testing use of Game object---
 			Game game(gRenderer);
 
 			/*
 			---Testing NewWeapon Class---
-			Initializing with the sarting positon of the GameObject Knight
+			Initializes with the sarting positon of the GameObject Knight
 			*/
-			NewWeapon myWeapon(knight.getPosX(), knight.getPosY(), 0, gRenderer);
+			NewRobot myRobot(500, 500, 0, gRenderer, &gRobotTexture);
+			NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
 
-			myWeapon.setTexture(&gWeapon1);
-			myWeapon.setHitbox();
-			
+
 
 			//While application is running
 			while( !quit )
@@ -162,13 +165,13 @@ int main( int argc, char* args[] )
 					}
 
 					//Handle input for the player
-					player.handleEvent( e, JOYSTICK_DEAD_ZONE);
+					//player.handleEvent( e, JOYSTICK_DEAD_ZONE);
 					myWeapon.handleEvent(e);
+					myRobot.handleEvent(e);
 
 				}
 
 				//Move the player
-				player.move(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -176,28 +179,34 @@ int main( int argc, char* args[] )
 			
 
 				//Render objects
-				//const int particles_max = 100
-				bullet.update();
-				player.render(gRenderer);
+				////const int particles_max = 100
+				//bullet.update();
+				//player.update(SCREEN_WIDTH, SCREEN_HEIGHT);
+				//player.render(gRenderer);
 
 				//testing hitbox render
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
 				SDL_RenderDrawRect(gRenderer, testHitbox.getRect());
 
 				//testing gameobject rendering and update
-				knight.update();
-				knight.render();
+				/*knight.update();
+				knight.render();*/
 
 				//---Testing Bullet class--
-				myBullet.update();
-				myBullet.render();
+				//myBullet.update();
+				//myBullet.render();
 
 				//Testing Game object and its rendering
+
 				game.genTestBullets();
 				game.updateObjects();
 
+				//--Testing NewRobot class--
+				myRobot.update();
+				myRobot.render();
+
 				//---Testing NewWeapon class---
-				myWeapon.setPos(knight.getPosX(), knight.getPosY(), knight.getAng());
+				myWeapon.setPos(myRobot.getPosX(), myRobot.getPosY(), myRobot.getAng());
 				myWeapon.update();
 				myWeapon.render();
 
@@ -243,7 +252,10 @@ bool init()
 		else
 		{
 			//Load joystick
-			gGameController = SDL_JoystickOpen(0);
+			gGameController = SDL_GameControllerOpen(0);
+			gJoyStick1 = SDL_JoystickOpen(0);
+			gJoyStick1 = SDL_JoystickOpen(1);
+
 			if (gGameController == NULL)
 			{
 				printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
@@ -322,7 +334,7 @@ void close()
 
 
 	//Close game controller
-	SDL_JoystickClose(gGameController);
+	SDL_GameControllerClose(gGameController);
 	gGameController = NULL;
 
 	//Destroy window	
