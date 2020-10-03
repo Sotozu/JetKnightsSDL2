@@ -157,14 +157,12 @@ int NewRobot::getJoyY() {
 
 
 void NewRobot::update() {
-	//getAngle();
-	//std::cout << "VELOCITY Y:" <<robotVelY << std::endl;
-	//std::cout << "VELOCITY X:" << robotVelX << std::endl;
-
 	posX += robotVelX;
 	posY += robotVelY;
-
-	hitbox.setPos(posX, posY);
+	if (hitbox != NULL){
+		hitbox->setPos(posX, posY);
+	}
+	
 
 }
 

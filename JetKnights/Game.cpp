@@ -23,6 +23,10 @@ void Game::updateObjects() {
 		if (bullets[i] != NULL) {
 			//std::cout << "UPDATE ATTEMPTED" << std::endl;
 			bullets[i]->update();
+			/*if (bullets[i]->chkCollision()) {
+				delete bullets[i];
+				bullets[i] = NULL;
+			}*/
 			bullets[i]->render();
 		}
 	}
@@ -43,7 +47,7 @@ void Game::genTestBullets() {
 	int n_bullets = 3;
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL && n_bullets > 0) {
-			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0, n * pow(2, n_bullets), gRenderer, &textures[2]);
+			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0.0, n * pow(2, n_bullets), gRenderer, &textures[2]);
 			//std::cout << i << std::endl;
 			n_bullets--;
 		}

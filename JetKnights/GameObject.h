@@ -31,7 +31,7 @@ public:
 protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;
-	Hitbox hitbox;
+	Hitbox* hitbox;
 
 	int posX;
 	int posY;

@@ -13,6 +13,8 @@ public:
 	void updateObjects();
 	void genTestBullets();
 private:
+	static const int SCREEN_WIDTH = 1024;
+	static const int SCREEN_HEIGHT = 768;
 	static const int TOTAL_IMAGES = 3;
 	static const int TOTAL_BULLETS = 100;
 	SDL_Renderer* gRenderer;

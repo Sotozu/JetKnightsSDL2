@@ -1,7 +1,5 @@
 #include "GameObject.h"
 
-
-
 //CONSTRUCTORS
 GameObject::GameObject() {
 	/*The 'hitbox' object requires a textures width and length
@@ -11,6 +9,7 @@ GameObject::GameObject() {
 
 	gRenderer = NULL;
 	texture = NULL;
+	hitbox = NULL;
 	posX = 0;
 	posY = 0;
 	ang = 0;
@@ -27,6 +26,7 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	*/
 	gRenderer = renderer;
 	texture = NULL;
+	hitbox = NULL;
 	posX = x;
 	posY = y;
 	ang = angle;
@@ -50,19 +50,19 @@ void GameObject::render() {
 	if (texture != NULL) {
 		texture->render(posX, posY, NULL, gRenderer, ang);
 	}
-	hitbox.render();
+	hitbox->render();
 }
 
 void GameObject::setHitbox() {
 	if (texture != NULL) {
-		hitbox.setParameters(posX, posY, texture->getWidth(), texture->getHeight(), gRenderer);
+		hitbox = new Hitbox(posX, posY, texture->getWidth(), texture->getHeight(), gRenderer);
 	}
 }
 
 void GameObject::setHitbox(int h, int w, int offsetX=0, int offsetY=0) {
 	hitboxOffsetX = offsetX;
 	hitboxOffsetY = offsetY;
-	hitbox = Hitbox(posX + offsetX, posY + offsetY, h, w, gRenderer);
+	hitbox = new Hitbox(posX + offsetX, posY + offsetY, h, w, gRenderer);
 }
 
 void GameObject::setTexture(LTexture* tex) {
@@ -83,14 +83,5 @@ int  GameObject::getPosY() {
 }
 float  GameObject::getAng() {
 	return ang;
-
 }
-//update position
-  //update hitbox position
-  //upda
-//check collision
-//adjust state
-  //update hitbox position
-  //update texture position
-//render
 

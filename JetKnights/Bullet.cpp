@@ -23,7 +23,9 @@ Updates the position of the texture and the hitbox of the bullet
 void Bullet::update() {
 	posX = posX + getVelX();
 	posY = posY + getVelY();
-	hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+	if (hitbox != NULL) {
+		hitbox->setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+	}
 }
 
 void Bullet::updateAll() {
@@ -31,7 +33,7 @@ void Bullet::updateAll() {
 }
 
 bool Bullet::chkCollision( Hitbox b ) {
-	return hitbox.chkCollision(b);
+	return hitbox->chkCollision(b);
 }
 
 int Bullet::getVelX() {
