@@ -193,6 +193,7 @@ int main( int argc, char* args[] )
 				myBullet.render();
 
 				//Testing Game object and its rendering
+				game.genTestBullets();
 				game.updateObjects();
 
 				//---Testing NewWeapon class---

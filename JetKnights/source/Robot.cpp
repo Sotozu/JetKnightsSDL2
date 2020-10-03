@@ -129,7 +129,7 @@ void Robot::handleEvent(SDL_Event& e, int JOYSTICK_DEAD_ZONE)
 		}
 	}
 
-	std::cout << "Y: " << yPlayerDir << std::endl;
+	//std::cout << "Y: " << yPlayerDir << std::endl;
 
 
 
