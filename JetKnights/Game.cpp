@@ -8,6 +8,9 @@ Game::Game(SDL_Renderer* renderer) {
 	//const int totalImages = 3;
 	//const int totalBullets = 3;
 	gRenderer = renderer;
+	for (int i = 0; i < TOTAL_ROBOTS; i++) {
+		robots[i] = NULL;
+	}
 	for (int i = 0; i < TOTAL_BULLETS; i++) {
 		bullets[i] = NULL;
 	}
@@ -16,21 +19,33 @@ Game::Game(SDL_Renderer* renderer) {
 				"assets/bullet.png" };
 	loadMedia();
 	genTestBullets();
+	genTestRobots();
+}
+
+void Game::handleEvent(SDL_Event e) {
+	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
+		if (robots[i] != NULL) {
+			robots[i]->handleEvent(e);
+		}
+	}
 }
 
 void Game::updateObjects() {
-	//updateRobots();
+	updateRobots();
 	updateBullets();
-	//for object in objects
-		//process events
-		//gen
-		//update position
-	//for object in objecs
-		//if(object.chkCollision())
-			//on_collision()
-	//for object in objects
-		//object.render
-	
+}
+
+void Game::updateRobots() {
+	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
+		if (robots[i] != NULL) {
+			robots[i]->update();
+		}
+	}
+	for (int i = 0; i < TOTAL_ROBOTS; ++i) {	
+		if (robots[i] != NULL) {
+			robots[i]->render();
+		}
+	}
 }
 
 void Game::updateBullets() {
@@ -60,10 +75,15 @@ void Game::genTestBullets() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL && n_bullets > 0) {
 			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0.0, n * pow(2, n_bullets), gRenderer, &textures[2]);
+			bullets[i]->setHitbox();
 			//std::cout << i << std::endl;
 			n_bullets--;
 		}
 	}
+}
+void Game::genTestRobots() {
+	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
+	robots[0]->setHitbox();
 }
 
 void Game::loadMedia() {

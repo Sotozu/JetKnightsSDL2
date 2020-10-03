@@ -147,7 +147,8 @@ int main( int argc, char* args[] )
 			---Testing NewWeapon Class---
 			Initializes with the sarting positon of the GameObject Knight
 			*/
-			NewRobot myRobot(500, 500, 0, gRenderer, &gRobotTexture);
+			NewRobot myRobot(400, 400, 0, gRenderer, &gRobotTexture);
+			myRobot.setHitbox();
 			NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
 
 
@@ -168,6 +169,7 @@ int main( int argc, char* args[] )
 					//player.handleEvent( e, JOYSTICK_DEAD_ZONE);
 					myWeapon.handleEvent(e);
 					myRobot.handleEvent(e);
+					game.handleEvent(e);
 
 				}
 

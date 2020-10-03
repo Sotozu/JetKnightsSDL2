@@ -38,9 +38,9 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) {
 	gRenderer = renderer;
 	texture = ltexture;
+	hitbox = NULL;
 	posX = x;
 	posY = y;
-	setHitbox(); //Will initialize the private member variables 'hitbox'
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
