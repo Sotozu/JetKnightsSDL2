@@ -18,23 +18,23 @@ public:
 
 
 	//Accessor
-	float getAngle();
 	int getJoyX();
 	int getJoyY();
 
+	int getVelX();
+	int getVelY();
+	float getJoyAngle();
+
 
 private:
+	const int MAX_SPEED = 8;
 	static const int ROB_VEL = 1;
 	static const int ROB_MAX_VEL = 10;
-	int robotVelX;
-	int robotVelY;
 	int joyX;
 	int joyY;
 
-	int dirX;
-	int dirY;
-
 	int radius;
+	int mSpeed;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 
 	bool inDeadCircle();
