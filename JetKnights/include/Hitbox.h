@@ -7,7 +7,7 @@ public:
 	Hitbox();
 	Hitbox(int posX, int posY, int width, int height, SDL_Renderer* renderer);
 
-	bool chkCollision(Hitbox b);
+	bool chkCollision(Hitbox* b);
 	int getWidth();
 	int getHeight();
 	SDL_Rect* getRect();

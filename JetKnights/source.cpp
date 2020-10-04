@@ -147,8 +147,9 @@ int main( int argc, char* args[] )
 			---Testing NewWeapon Class---
 			Initializes with the sarting positon of the GameObject Knight
 			*/
-			NewRobot myRobot(500, 500, 0, gRenderer, &gRobotTexture);
-			NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
+			//NewRobot myRobot(400, 400, 0, gRenderer, &gRobotTexture);
+			//myRobot.setHitbox();
+			//NewWeapon myWeapon(myRobot.getPosX(), myRobot.getPosY(), 0, gRenderer, &gWeapon1);
 
 
 
@@ -168,9 +169,10 @@ int main( int argc, char* args[] )
 
 					//Handle input for the player
 					//player.handleEvent( e, JOYSTICK_DEAD_ZONE);
-					myWeapon.handleEvent(e);
-					myRobot.handleEvent(e);
-					game.handlEvent(e);
+					//myWeapon.handleEvent(e);
+					//myRobot.handleEvent(e);
+
+					game.handleEvent(e);
 
 				}
 
@@ -200,17 +202,17 @@ int main( int argc, char* args[] )
 				//myBullet.render();
 
 				//Testing Game object and its rendering
-
+				game.genTestBullets();
 				game.updateObjects();
 
 				//--Testing NewRobot class--
-				myRobot.update();
-				myRobot.render();
+				//myRobot.update();
+				//myRobot.render();
 
 				//---Testing NewWeapon class---
-				myWeapon.setPos(myRobot.getPosX(), myRobot.getPosY(), myRobot.getAng());
-				myWeapon.update();
-				myWeapon.render();
+				//myWeapon.setPos(myRobot.getPosX(), myRobot.getPosY(), myRobot.getAng());
+				//myWeapon.update();
+				//myWeapon.render();
 
 
 				//std::cout << "X-Axis: "<< SDL_JoystickGetAxis(gGameController, 0) << std::endl;

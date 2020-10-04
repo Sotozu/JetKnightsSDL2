@@ -154,17 +154,11 @@ int NewRobot::getJoyY() {
 
 
 void NewRobot::update() {
-	//getAngle();
-	//std::cout << "VELOCITY Y:" <<robotVelY << std::endl;
-	//std::cout << "VELOCITY X:" << robotVelX << std::endl;
-
-	//ang = atan2((double)dirY, (double)dirX) * (180.0 / M_PI);
-
 	posX += robotVelX;
 	posY += robotVelY;
-
-	hitbox.setPos(posX, posY);
-
+	if (hitbox != NULL){
+		hitbox->setPos(posX, posY);
+	}
 }
 
 bool NewRobot::inDeadCircle() {
@@ -175,4 +169,17 @@ bool NewRobot::inDeadCircle() {
 	else {
 		return false;
 	}
+}
+
+bool NewRobot::chkCollision(int screenW, int screenH, Hitbox* b) {
+	if (hitbox != NULL) {
+		//Check if bullet hits screen boundaries
+		if ((hitbox->x < 0) || (hitbox->x + hitbox->w > screenW) || (hitbox->y < 0) || (hitbox->y + hitbox->h > screenH)) {
+			return true;
+		}
+		else if (b != NULL) {
+			return hitbox->chkCollision(b);
+		}
+	}
+	return false;
 }

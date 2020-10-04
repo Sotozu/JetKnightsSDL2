@@ -23,15 +23,26 @@ Updates the position of the texture and the hitbox of the bullet
 void Bullet::update() {
 	posX = posX + getVelX();
 	posY = posY + getVelY();
-	hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+	if (hitbox != NULL) {
+		hitbox->setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+	}
 }
 
 void Bullet::updateAll() {
 
 }
 
-bool Bullet::chkCollision( Hitbox b ) {
-	return hitbox.chkCollision(b);
+bool Bullet::chkCollision( int screenW, int screenH, Hitbox* b ) {
+	if (hitbox != NULL) {
+		//Check if bullet hits screen boundaries
+		if ((hitbox->x < 0) || (hitbox->x + hitbox->w > screenW) || (hitbox->y < 0) || (hitbox->y + hitbox->h > screenH)) {
+			return true;
+		}
+		else if (b != NULL) {
+			return hitbox->chkCollision(b);
+		}
+	}
+	return false;
 }
 
 int Bullet::getVelX() {
