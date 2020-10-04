@@ -50,6 +50,7 @@ private:
 	void loadMedia();
 	void updateBullets();
 	void updateRobots();
+	void updateWeapons();
 
 	
 };

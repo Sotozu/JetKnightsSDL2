@@ -39,6 +39,7 @@ void Game::handleEvent(SDL_Event e) {
 
 void Game::updateObjects() {
 	updateRobots();
+	updateWeapons();
 	updateBullets();
 }
 
@@ -74,13 +75,7 @@ void Game::updateBullets() {
 			bullets[i]->render();
 		}
 
-		for (int i = 0; i < TOTAL_WEAPONS; ++i) {
-			if (weapons[i] != NULL) {
-				weapons[i]->setPos(300, 300, 0);
-				weapons[i]->update();
-				weapons[i]->render();
-			}
-		}
+		
 	}
 }
 	
@@ -132,4 +127,15 @@ void Game::WeaponFiring() {
 
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
+}
+
+
+void Game::updateWeapons() {
+	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
+			if (weapons[i] != NULL) {
+				weapons[i]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0);
+				weapons[i]->update();
+				weapons[i]->render();
+			}
+		}
 }
