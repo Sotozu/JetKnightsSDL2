@@ -25,6 +25,8 @@ public:
 	int getVelY();
 	float getJoyAngle();
 
+	bool chkCollision(int screenW, int screenH, Hitbox* b = NULL);
+
 
 private:
 	const int MAX_SPEED = 8;
@@ -38,8 +40,7 @@ private:
 	const int JOYSTICK_DEAD_ZONE = 8000;
 
 	bool inDeadCircle();
-	bool chkCollision(int screenW, int screenH, Hitbox* b = NULL);
-
-
+	bool chkBorderCollisionX(int);
+	bool chkBorderCollisionY(int);
 };
 

@@ -19,8 +19,6 @@ NewWeapon::NewWeapon() : GameObject() {
 
 	radius = 0;
 
-	ang = 0;
-
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 }
@@ -37,7 +35,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	dirX = 0;
 	dirY = 0;
 
-	radius = 40;
+	radius = 0;
 
 }
 
@@ -102,6 +100,9 @@ void NewWeapon::update() {
 
 	posX = posX + radius * cos(ang * M_PI/180);  //If posX is not the position of a robot then the weapon will fly across the screen
 	posY = posY + radius * sin(ang * M_PI / 180);
+	if (hitbox != NULL) {
+		hitbox->setPos(posX, posY);
+	}
 
 }
 

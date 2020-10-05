@@ -47,11 +47,18 @@ void Game::updateRobots() {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
 			robots[i]->update();
+			robots[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+			robots[i]->render();
 		}
 	}
-	for (int i = 0; i < TOTAL_ROBOTS; ++i) {	
-		if (robots[i] != NULL) {
-			robots[i]->render();
+}
+
+void Game::updateWeapons() {
+	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
+		if (weapons[i] != NULL) {
+			weapons[i]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0);
+			weapons[i]->update();
+			weapons[i]->render();
 		}
 	}
 }
@@ -61,26 +68,29 @@ void Game::updateBullets() {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
 		}
-	}
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			if (bullets[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]->getHitbox())) {
 				delete bullets[i];
 				bullets[i] = NULL;
 			}
 		}
-	}
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->render();
 		}
-
-		
 	}
 }
 	
+bool Game::chkBorderCollision(Hitbox* b) {
+	if (b != NULL) {
+		//Check if bullet hits screen boundaries
+		if ((b->x < 0) || (b->x + b->w > SCREEN_WIDTH) || (b->y < 0) || (b->y + b->h > SCREEN_HEIGHT)) {
+			return true;
+		}
+	}
+	return false;
+}
 
-	//Compares hitbox b against all robots
+// Compares hitbox b against all robots
 bool Game::chkRobotCollisions(Hitbox* b) {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
@@ -90,7 +100,27 @@ bool Game::chkRobotCollisions(Hitbox* b) {
 		}
 	}
 	return false;
+}
 
+void Game::loadMedia() {
+	for (int i = 0; i < TOTAL_IMAGES; ++i) {
+		textures[i].loadFromFile(images[i], gRenderer);
+		//std::cout << "Texture loaded!!!" << std::endl;
+	}
+}
+
+void Game::WeaponFiring() {
+	genTestBullets();
+}
+
+void Game::genTestRobots() {
+	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
+	robots[0]->setHitbox();
+}
+
+void  Game::genTestWeapon() {
+	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
+	weapons[0]->setHitbox();
 }
 
 void Game::genTestBullets() {
@@ -104,38 +134,4 @@ void Game::genTestBullets() {
 			n_bullets--;
 		}
 	}
-}
-void Game::genTestRobots() {
-	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
-	robots[0]->setHitbox();
-}
-
-void Game::loadMedia() {
-	for (int i = 0; i < TOTAL_IMAGES; ++i) {
-		textures[i].loadFromFile(images[i], gRenderer);
-		//std::cout << "Texture loaded!!!" << std::endl;
-	}
-}
-
-
-void Game::WeaponFiring() {
-	genTestBullets();
-}
-
-
-
-
-void  Game::genTestWeapon() {
-	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-}
-
-
-void Game::updateWeapons() {
-	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
-			if (weapons[i] != NULL) {
-				weapons[i]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0);
-				weapons[i]->update();
-				weapons[i]->render();
-			}
-		}
 }
