@@ -11,16 +11,24 @@ Game::Game(SDL_Renderer* renderer) {
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		robots[i] = NULL;
 	}
+	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+		weapons[i] = NULL;
+	}
 	for (int i = 0; i < TOTAL_BULLETS; i++) {
 		bullets[i] = NULL;
 	}
+	for (int i = 0; i < TOTAL_OBSTACLES; i++) {
+		obstacles[i] = NULL;
+	}
 	images =  { "assets/robotrightnew.png",
 				"assets/cannonsmall.png",
-				"assets/bullet.png" };
+				"assets/bullet.png",
+				"assets/crate.png" };
 	loadMedia();
 
 	genTestBullets();
 	genTestRobots();
+	genTestObstacles();
 }
 
 void Game::handleEvent(SDL_Event e) {
@@ -28,7 +36,6 @@ void Game::handleEvent(SDL_Event e) {
 		if (robots[i] != NULL) {
 			robots[i]->handleEvent(e);
 		}
-
 	}
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL) {
@@ -41,6 +48,7 @@ void Game::updateObjects() {
 	updateRobots();
 	updateWeapons();
 	updateBullets();
+	updateObstacles();
 }
 
 void Game::updateRobots() {
@@ -76,6 +84,14 @@ void Game::updateBullets() {
 		}
 		if (bullets[i] != NULL) {
 			bullets[i]->render();
+		}
+	}
+}
+
+void Game::updateObstacles() {
+	for (int i = 0; i < TOTAL_OBSTACLES; ++i) {
+		if (obstacles[i] != NULL) {
+			obstacles[i]->render();
 		}
 	}
 }
@@ -134,4 +150,9 @@ void Game::genTestBullets() {
 			n_bullets--;
 		}
 	}
+}
+
+void  Game::genTestObstacles() {
+	obstacles[0] = new GameObject(300, 300, 0, gRenderer, &textures[3]);
+	obstacles[0]->setHitbox();
 }
