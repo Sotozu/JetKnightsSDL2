@@ -20,15 +20,16 @@ Game::Game(SDL_Renderer* renderer) {
 	for (int i = 0; i < TOTAL_OBSTACLES; i++) {
 		obstacles[i] = NULL;
 	}
-	images =  { "assets/robotrightnew.png",
+	images = { "assets/robotrightnew.png",
 				"assets/cannonsmall.png",
-				"assets/bullet.png",
+				"assets/bullet-2.png",
 				"assets/crate.png" };
+
 	loadMedia();
 
-	genTestBullets();
 	genTestRobots();
 	genTestObstacles();
+	genTestWeapon();
 }
 
 void Game::handleEvent(SDL_Event e) {
@@ -42,8 +43,15 @@ void Game::handleEvent(SDL_Event e) {
 			weapons[i]->handleEvent(e);
 		}
 	}
+	//Creates Bullets
+	WeaponFiring(e);
 }
-
+/*
+The update should be set in the following order because object are dependent on other objects updates
+1.Robot
+2.Weapon
+3.Bullet
+*/
 void Game::updateObjects() {
 	std::cout << "updating objects " << std::endl;
 	updateRobots();
@@ -124,6 +132,23 @@ bool Game::chkRobotCollisions(Hitbox* b) {
 	return false;
 }
 
+void Game::genTestBullets() {
+	int n = 1;
+	int n_bullets = 1;
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] == NULL && n_bullets > 0) {
+			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
+			bullets[i]->setHitbox();
+			//std::cout << i << std::endl;
+			n_bullets--;
+		}
+	}
+}
+void Game::genTestRobots() {
+	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
+	robots[0]->setHitbox();
+}
+
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
@@ -135,27 +160,9 @@ void Game::WeaponFiring() {
 	genTestBullets();
 }
 
-void Game::genTestRobots() {
-	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
-	robots[0]->setHitbox();
-}
-
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
 	weapons[0]->setHitbox();
-}
-
-void Game::genTestBullets() {
-	int n = 1;
-	int n_bullets = 1;
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] == NULL && n_bullets > 0) {
-			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0.0, n * pow(2, n_bullets), gRenderer, &textures[2]);
-			bullets[i]->setHitbox();
-			//std::cout << i << std::endl;
-			n_bullets--;
-		}
-	}
 }
 
 void  Game::genTestObstacles() {
@@ -163,4 +170,21 @@ void  Game::genTestObstacles() {
 	obstacles[0]->setHitbox();
 	obstacles[1] = new GameObject(600, 100, 0, gRenderer, &textures[3]);
 	obstacles[1]->setHitbox();
+}
+
+void Game::WeaponFiring(SDL_Event e) {
+
+	//Handle BUllet Creation
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
+		//Joystick input
+
+		//If player 1 input
+		if (e.caxis.which == 0) {
+			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+				genTestBullets();
+				std::cout << "BLAH" << std::endl;
+
+			}
+		}
+	}
 }

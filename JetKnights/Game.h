@@ -31,6 +31,7 @@ public:
 	void handleEvent(SDL_Event e);
 	bool chkBorderCollision(Hitbox* b);
 	bool chkRobotCollisions(Hitbox* b);
+	void WeaponFiring(SDL_Event e);
 
 	
 

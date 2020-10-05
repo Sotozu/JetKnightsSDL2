@@ -58,7 +58,7 @@ int main( int argc, char* args[] )
 			SDL_Event e;
 	
 			Game game(gRenderer);
-			game.genTestWeapon();
+			
 
 			//While application is running
 			while( !quit )
@@ -79,7 +79,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear( gRenderer );
 
 				//Testing Game object and its rendering
-				game.genTestBullets();
+				//game.genTestBullets();
 				game.updateObjects();
 
 				SDL_RenderPresent( gRenderer );

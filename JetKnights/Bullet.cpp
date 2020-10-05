@@ -52,3 +52,7 @@ int Bullet::getVelX() {
 int Bullet::getVelY() {
 	return mSpeed * sin(ang * (M_PI / 180));
 }
+
+void Bullet::handleEvent(SDL_Event e) {
+	
+}

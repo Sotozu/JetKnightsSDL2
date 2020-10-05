@@ -74,10 +74,9 @@ void NewWeapon::handleEvent( SDL_Event e ) {
 					dirY = e.caxis.value;
 				}
 			}
-		}
-		
-		
-	}	
+		}	
+	}
+	
 }
 
 float NewWeapon::getAngle() {
