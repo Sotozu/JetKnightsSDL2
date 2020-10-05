@@ -27,6 +27,7 @@ public:
 	void WeaponFiring();
 	void handleEvent(SDL_Event e);
 	bool chkRobotCollisions(Hitbox* b);
+	void WeaponFiring(SDL_Event e);
 
 	void genTestRobots();
 

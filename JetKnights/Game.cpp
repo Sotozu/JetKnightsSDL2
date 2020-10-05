@@ -16,11 +16,11 @@ Game::Game(SDL_Renderer* renderer) {
 	}
 	images =  { "assets/robotrightnew.png",
 				"assets/cannonsmall.png",
-				"assets/bullet.png" };
+				"assets/bullet-2.png" };
 	loadMedia();
 
-	genTestBullets();
 	genTestRobots();
+	genTestWeapon();
 }
 
 void Game::handleEvent(SDL_Event e) {
@@ -35,8 +35,15 @@ void Game::handleEvent(SDL_Event e) {
 			weapons[i]->handleEvent(e);
 		}
 	}
+	//Creates Bullets
+	WeaponFiring(e);
 }
-
+/*
+The update should be set in the following order because object are dependent on other objects updates
+1.Robot
+2.Weapon
+3.Bullet
+*/
 void Game::updateObjects() {
 	updateRobots();
 	updateWeapons();
@@ -98,7 +105,7 @@ void Game::genTestBullets() {
 	int n_bullets = 1;
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL && n_bullets > 0) {
-			bullets[i] = new Bullet(10, 200 + n_bullets * 100, 0.0, n * pow(2, n_bullets), gRenderer, &textures[2]);
+			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
 			//std::cout << i << std::endl;
 			n_bullets--;
@@ -122,9 +129,6 @@ void Game::WeaponFiring() {
 	genTestBullets();
 }
 
-
-
-
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
 }
@@ -138,4 +142,21 @@ void Game::updateWeapons() {
 				weapons[i]->render();
 			}
 		}
+}
+
+void Game::WeaponFiring(SDL_Event e) {
+
+	//Handle BUllet Creation
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
+		//Joystick input
+
+		//If player 1 input
+		if (e.caxis.which == 0) {
+			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+				genTestBullets();
+				std::cout << "BLAH" << std::endl;
+
+			}
+		}
+	}
 }

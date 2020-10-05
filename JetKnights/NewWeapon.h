@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include "GameObject.h"
+#include "Bullet.h"
+
 
 class NewWeapon : public GameObject {
 public:
@@ -29,6 +31,9 @@ private:
 
 	int dirX;
 	int dirY;
+	             
+	int muzzleX;
+	int muzzleY;
 
 	int radius;
 	const int JOYSTICK_DEAD_ZONE = 20000;
