@@ -45,6 +45,7 @@ void Game::handleEvent(SDL_Event e) {
 }
 
 void Game::updateObjects() {
+	std::cout << "updating objects " << std::endl;
 	updateRobots();
 	updateWeapons();
 	updateBullets();
@@ -55,7 +56,12 @@ void Game::updateRobots() {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
 			robots[i]->update();
-			robots[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+			for (int j = 0; j < TOTAL_OBSTACLES; ++j) {
+				if (obstacles[j] != NULL) {
+					robots[i]->updateCollision(SCREEN_WIDTH, SCREEN_HEIGHT, obstacles[j]->getHitbox());
+				}
+			}
+			
 			robots[i]->render();
 		}
 	}
@@ -155,4 +161,6 @@ void Game::genTestBullets() {
 void  Game::genTestObstacles() {
 	obstacles[0] = new GameObject(300, 300, 0, gRenderer, &textures[3]);
 	obstacles[0]->setHitbox();
+	obstacles[1] = new GameObject(600, 100, 0, gRenderer, &textures[3]);
+	obstacles[1]->setHitbox();
 }

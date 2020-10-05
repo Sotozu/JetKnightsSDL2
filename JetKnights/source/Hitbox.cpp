@@ -48,7 +48,8 @@ bool Hitbox::chkCollision(Hitbox* b) {
 	if (leftA >= rightB) {
 		return false;
 	}
-	//If none of the sides from A are outside B
+	// If none of the sides from A are outside B
+	std::cout << "collision detected!" << std::endl;
 	return true;
 }
 
@@ -62,6 +63,12 @@ int Hitbox::getHeight() {
 
 void Hitbox::setPos(int posX, int posY) {
 	x = posX;
+	y = posY;
+}
+void Hitbox::setPosX(int posX) {
+	x = posX;
+}
+void Hitbox::setPosY(int posY) {
 	y = posY;
 }
 
@@ -85,4 +92,18 @@ void Hitbox::setParameters(int posX, int posY, int width, int height, SDL_Render
 	w = width;
 	h = height;
 	gRenderer = renderer;
+}
+
+bool Hitbox::chkBorderCollisionX(int screenWidth) {
+	if ((x < 0) || (x + w > screenWidth)) {
+		return true;
+	}
+	return false;
+}
+
+bool Hitbox::chkBorderCollisionY(int screenHeight) {
+	if ((y < 0) || (y + h > screenHeight)) {
+			return true;
+	}
+	return false;
 }

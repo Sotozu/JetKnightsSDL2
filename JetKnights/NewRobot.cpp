@@ -100,36 +100,24 @@ void NewRobot::update() {
 	}
 }
 
-bool NewRobot::chkCollision(int screenWidth, int screenHeight, Hitbox* b) {
+void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
 	if (hitbox != NULL) {
+		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
+			posX -= getVelX();
+			hitbox->setPosX(posX);
+		}
+		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
+			posY -= getVelY();
+			hitbox->setPosY(posY);
+		}
+	}
+	else {
 		//Check if bullet hits screen boundaries
-		if (chkBorderCollisionX(screenWidth)) {
+		if (hitbox->chkBorderCollisionX(screenWidth)) {
 			posX -= getVelX();
 		}
-		if (chkBorderCollisionY(screenHeight)) {
+		if (hitbox->chkBorderCollisionY(screenHeight)) {
 			posY -= getVelY();
 		}
-		else if (b != NULL) {
-			return hitbox->chkCollision(b);
-		}
 	}
-	return false;
-}
-
-bool NewRobot::chkBorderCollisionX(int screenWidth) {
-	if (hitbox != NULL) {
-		if ((hitbox->x < 0) || (hitbox->x + hitbox->w > screenWidth)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-bool NewRobot::chkBorderCollisionY(int screenHeight) {
-	if (hitbox != NULL) {
-		if ((hitbox->y < 0) || (hitbox->y + hitbox->h > screenHeight)) {
-			return true;
-		}
-	}
-	return false;
 }
