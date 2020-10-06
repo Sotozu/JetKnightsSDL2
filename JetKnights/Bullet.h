@@ -15,9 +15,6 @@ public:
 	//Processes
 	void handleEvent(SDL_Event e);
 	void update();
-	bool chkCollision(int screenW, int screenH, Hitbox* b = NULL);
-
-
 
 private:
 	int duration;

@@ -32,28 +32,18 @@ public:
 	void handleEvent(SDL_Event e);
 	
 	//Templates
-	template<class T>
-	bool chkRobotCollisions(T* b) {
-		for (int i = 0; i < TOTAL_ROBOTS; ++i) {
-			if (robots[i] != NULL) {
-				if (b->chkClassCollision(robots[i])) {
+	template<class T, class B>
+	bool chkCollisions(B args[], int length, T* b) {
+		for (int i = 0; i < length; ++i) {
+			if (args[i] != NULL) {
+				if (b->chkCollision(args[i])) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	template<class T>
-	bool chkObstacleCollisions(T* b) {
-		for (int i = 0; i < TOTAL_OBSTACLES; ++i) {
-			if (obstacles[i] != NULL) {
-				if (b->chkClassCollision(obstacles[i])) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+
 	void WeaponFiring(SDL_Event e);
 
 	

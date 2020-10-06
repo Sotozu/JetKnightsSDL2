@@ -28,8 +28,9 @@ public:
 
 	//Pocesses
 	void render();
+
 	template <class T>
-	bool chkClassCollision(T* b) {
+	bool chkCollision(T* b) {
 		if (hitbox != NULL && b->hitbox != NULL) {
 			return hitbox->chkCollision(b->getHitbox());
 		}

@@ -29,18 +29,6 @@ void Bullet::update() {
 	}
 }
 
-bool Bullet::chkCollision( int screenW, int screenH, Hitbox* b ) {
-	if (hitbox != NULL) {
-		//Check if bullet hits screen boundaries
-		if ((hitbox->x < 0) || (hitbox->x + hitbox->w > screenW) || (hitbox->y < 0) || (hitbox->y + hitbox->h > screenH)) {
-			return true;
-		}
-		else if (b != NULL) {
-			return hitbox->chkCollision(b);
-		}
-	}
-	return false;
-}
 
 int Bullet::getVelX() {
 	return  mSpeed * cos(ang * (M_PI / 180));

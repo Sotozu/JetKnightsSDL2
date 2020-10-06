@@ -89,7 +89,10 @@ void Game::updateBullets() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
-			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]) || chkObstacleCollisions(bullets[i])) {
+			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) ||
+				chkCollisions(robots, TOTAL_ROBOTS, bullets[i]) || 
+				chkCollisions(obstacles, TOTAL_OBSTACLES, bullets[i]))
+			{
 				bullets[i]->isDead = true;
 			}
 			bullets[i]->render();
