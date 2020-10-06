@@ -1,10 +1,10 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "LTexture.h"
-#include "Hitbox.h"
 #include <iostream>
 #include <SDL_gamecontroller.h>
+#include "LTexture.h"
+#include "Hitbox.h"
 
 class GameObject {
 
@@ -29,7 +29,12 @@ public:
 	//Pocesses
 	void render();
 	template <class T>
-	bool chkClassCollision(T);
+	bool chkClassCollision(T* b) {
+		if (hitbox != NULL && b->hitbox != NULL) {
+			return hitbox->chkCollision(b->getHitbox());
+		}
+		return false;
+	}
 	bool chkBorderCollision(int, int);
 
 	//unknown

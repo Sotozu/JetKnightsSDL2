@@ -89,7 +89,7 @@ void Game::updateBullets() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
-			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]->getHitbox()) || chkObstacleCollisions(bullets[i]->getHitbox())) {
+			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]) || chkObstacleCollisions(bullets[i])) {
 				bullets[i]->isDead = true;
 			}
 			bullets[i]->render();
@@ -111,39 +111,6 @@ void Game::updateObstacles() {
 	}
 }
 	
-bool Game::chkBorderCollision(Hitbox* b) {
-	if (b != NULL) {
-		//Check if bullet hits screen boundaries
-		if ((b->x < 0) || (b->x + b->w > SCREEN_WIDTH) || (b->y < 0) || (b->y + b->h > SCREEN_HEIGHT)) {
-			return true;
-		}
-	}
-	return false;
-}
-
-// Compares hitbox b against all robots
-bool Game::chkRobotCollisions(Hitbox* b) {
-	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
-		if (robots[i] != NULL) {
-			if (b->chkCollision(robots[i]->getHitbox())) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool Game::chkObstacleCollisions(Hitbox* b) {
-	for (int i = 0; i < TOTAL_OBSTACLES; ++i) {
-		if (obstacles[i] != NULL) {
-			if (b->chkCollision(obstacles[i]->getHitbox())) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 void Game::genTestBullets() {
 	int n = 1;
 	int n_bullets = 1;

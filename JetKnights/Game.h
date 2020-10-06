@@ -3,13 +3,14 @@
 #include <iostream>
 #include <array>
 #include <vector>
-#include "Bullet.h"
 #include <string>
 #include <SDL_gamecontroller.h>
 #include <iomanip>
 
+#include "GameObject.h"
 #include "NewRobot.h"
 #include "NewWeapon.h"
+#include "Bullet.h"
 
 
 class Game {
@@ -29,9 +30,30 @@ public:
 
 	void WeaponFiring();
 	void handleEvent(SDL_Event e);
-	bool chkBorderCollision(Hitbox* b);
-	bool chkRobotCollisions(Hitbox* b);
-	bool chkObstacleCollisions(Hitbox* b);
+	
+	//Templates
+	template<class T>
+	bool chkRobotCollisions(T* b) {
+		for (int i = 0; i < TOTAL_ROBOTS; ++i) {
+			if (robots[i] != NULL) {
+				if (b->chkClassCollision(robots[i])) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	template<class T>
+	bool chkObstacleCollisions(T* b) {
+		for (int i = 0; i < TOTAL_OBSTACLES; ++i) {
+			if (obstacles[i] != NULL) {
+				if (b->chkClassCollision(obstacles[i])) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	void WeaponFiring(SDL_Event e);
 
 	

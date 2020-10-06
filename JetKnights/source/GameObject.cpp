@@ -98,14 +98,6 @@ Hitbox* GameObject::getHitbox() {
 	return hitbox;
 }
 
-template <class T>
-bool GameObject::chkClassCollision(T) {
-	if (hitbox != NULL && T->hitbox != NULL) {
-		return hitbox->chkCollision(T->getHitbox());
-	}
-	return false;
-}
-
 bool GameObject::chkBorderCollision(int screenWidth, int screenHeight) {
 	if (hitbox != NULL ) {
 		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkBorderCollisionY(screenHeight)) {
