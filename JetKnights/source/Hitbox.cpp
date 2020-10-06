@@ -29,7 +29,7 @@ bool Hitbox::chkCollision(Hitbox* b) {
 	topA = y;
 	bottomA = y + h;
 
-	//Calculate the sides of rect B
+	//Calculate the sides of rect B 
 	leftB = b->x;
 	rightB = b->x + b->w;
 	topB = b->y;

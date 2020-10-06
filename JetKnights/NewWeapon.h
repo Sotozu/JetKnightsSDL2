@@ -17,6 +17,7 @@ public:
 	//Mutators
 	void update();
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
+	bool WeaponFiring(SDL_Event e);
 
 	//Accessors
 	float getAngle();
@@ -38,6 +39,6 @@ private:
 	int radius;
 	const int JOYSTICK_DEAD_ZONE = 20000;
 	bool inDeadCircle();
-
+	
 };
 

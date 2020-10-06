@@ -1,8 +1,5 @@
 #include "Game.h"
 
-Game::Game() {
-	gRenderer = NULL;
-}
 
 Game::Game(SDL_Renderer* renderer) {
 	//const int totalImages = 3;
@@ -25,6 +22,11 @@ Game::Game(SDL_Renderer* renderer) {
 				"assets/bullet-2.png",
 				"assets/crate.png" };
 
+	//Sets all weapons at the beginning to a not firing state
+	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+		isWeaponFiring[i] = false;
+	}
+
 	loadMedia();
 
 	genTestRobots();
@@ -33,6 +35,7 @@ Game::Game(SDL_Renderer* renderer) {
 }
 
 void Game::handleEvent(SDL_Event e) {
+
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
 			robots[i]->handleEvent(e);
@@ -40,11 +43,24 @@ void Game::handleEvent(SDL_Event e) {
 	}
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL) {
+			//updates movement of the weapon
 			weapons[i]->handleEvent(e);
+			//updates if the weapon is firing
+			if (weapons[i]->WeaponFiring(e) == true) {
+				std::cout << "WORKS!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+
+				isWeaponFiring[i] = true;
+			}
+			else {
+				std::cout << "IS NOT FIRING" << std::endl;
+
+				isWeaponFiring[i] = false;
+			}
 		}
 	}
+
 	//Creates Bullets
-	WeaponFiring(e);
+
 }
 /*
 The update should be set in the following order because object are dependent on other objects updates
@@ -53,11 +69,21 @@ The update should be set in the following order because object are dependent on 
 3.Bullet
 */
 void Game::updateObjects() {
-	std::cout << "updating objects " << std::endl;
+	//std::cout << "updating objects " << std::endl;
+	
 	updateRobots();
 	updateWeapons();
+	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+		if (isWeaponFiring[i] == true) {
+			std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
+			genTestBullets();
+		}
+	}
+	
 	updateBullets();
 	updateObstacles();
+	
+
 }
 
 void Game::updateRobots() {
@@ -138,9 +164,6 @@ void Game::loadMedia() {
 	}
 }
 
-void Game::WeaponFiring() {
-	genTestBullets();
-}
 
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
