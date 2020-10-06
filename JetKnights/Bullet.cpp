@@ -3,6 +3,7 @@
 Bullet::Bullet() {
 	duration = 100;
 	mSpeed = 0;
+
 }
 
 
@@ -26,10 +27,6 @@ void Bullet::update() {
 	if (hitbox != NULL) {
 		hitbox->setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
 	}
-}
-
-void Bullet::updateAll() {
-
 }
 
 bool Bullet::chkCollision( int screenW, int screenH, Hitbox* b ) {

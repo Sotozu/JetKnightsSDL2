@@ -89,15 +89,16 @@ void Game::updateBullets() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
-		}
-		if (bullets[i] != NULL) {
-			if (bullets[i]->chkCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]->getHitbox()) || chkObstacleCollisions(bullets[i]->getHitbox()) ) {
-				delete bullets[i];
-				bullets[i] = NULL;
+			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) || chkRobotCollisions(bullets[i]->getHitbox()) || chkObstacleCollisions(bullets[i]->getHitbox())) {
+				bullets[i]->isDead = true;
 			}
-		}
-		if (bullets[i] != NULL) {
 			bullets[i]->render();
+		}
+	}
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] != NULL && bullets[i]->isDead) {
+			delete bullets[i];
+			bullets[i] = NULL;
 		}
 	}
 }
@@ -193,7 +194,7 @@ void Game::WeaponFiring(SDL_Event e) {
 		if (e.caxis.which == 0) {
 			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
 				genTestBullets();
-				std::cout << "BLAH" << std::endl;
+				//std::cout << "BLAH" << std::endl;
 
 			}
 		}

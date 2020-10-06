@@ -28,9 +28,15 @@ public:
 
 	//Pocesses
 	void render();
+	template <class T>
+	bool chkClassCollision(T);
+	bool chkBorderCollision(int, int);
 
 	//unknown
 	Hitbox* getHitbox();
+	bool isDead;
+	int team;
+
 protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;

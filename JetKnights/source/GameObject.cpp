@@ -15,6 +15,8 @@ GameObject::GameObject() {
 	ang = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+	isDead = false;
+	team = 0;
 
 }
 
@@ -32,7 +34,8 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
-
+	isDead = false;
+	team = 0;
 }
 
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) {
@@ -44,15 +47,19 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTextu
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+	isDead = false;
+	team = 0;
 }
 
 
 void GameObject::render() {
-	if (texture != NULL) {
-		texture->render(posX, posY, NULL, gRenderer, ang);
-	}
-	if (hitbox != NULL) {
-		hitbox->render();
+	if (!isDead) {
+		if (texture != NULL) {
+			texture->render(posX, posY, NULL, gRenderer, ang);
+		}
+		if (hitbox != NULL) {
+			hitbox->render();
+		}
 	}
 }
 
@@ -91,3 +98,22 @@ Hitbox* GameObject::getHitbox() {
 	return hitbox;
 }
 
+template <class T>
+bool GameObject::chkClassCollision(T) {
+	if (hitbox != NULL && T->hitbox != NULL) {
+		return hitbox->chkCollision(T->getHitbox());
+	}
+	return false;
+}
+
+bool GameObject::chkBorderCollision(int screenWidth, int screenHeight) {
+	if (hitbox != NULL ) {
+		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkBorderCollisionY(screenHeight)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	return false;
+}
