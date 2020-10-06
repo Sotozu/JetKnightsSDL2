@@ -15,7 +15,7 @@
 class Game {
 public:
 	//Constructor
-	Game();
+
 	Game(SDL_Renderer* renderer);
 
 	//Accessors
@@ -27,12 +27,12 @@ public:
 	void genTestWeapon();
 	void genTestObstacles();
 
-	void WeaponFiring();
+	
 	void handleEvent(SDL_Event e);
 	bool chkBorderCollision(Hitbox* b);
 	bool chkRobotCollisions(Hitbox* b);
 	bool chkObstacleCollisions(Hitbox* b);
-	void WeaponFiring(SDL_Event e);
+	
 
 	
 
@@ -42,9 +42,12 @@ private:
 	static const int TOTAL_IMAGES = 4;
 	static const int TOTAL_ROBOTS = 2;
 	static const int TOTAL_WEAPONS = 2;
-	static const int TOTAL_BULLETS = 100;
+	static const int TOTAL_BULLETS = 1000;
 	static const int TOTAL_OBSTACLES = 10;
 
+
+
+	bool isWeaponFiring[TOTAL_WEAPONS];
 
 	SDL_Renderer* gRenderer;
 	
@@ -60,6 +63,7 @@ private:
 	void updateRobots();
 	void updateWeapons();
 	void updateObstacles();
+	
 
 	
 };
