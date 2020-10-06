@@ -31,7 +31,7 @@ public:
 
 	template <class T>
 	bool chkCollision(T* b) {
-		if (hitbox != NULL && b->hitbox != NULL) {
+		if (hitbox != NULL && b->hitbox != NULL && team != b->team) {
 			return hitbox->chkCollision(b->getHitbox());
 		}
 		return false;

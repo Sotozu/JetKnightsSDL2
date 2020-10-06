@@ -9,7 +9,6 @@ NewRobot::NewRobot() : GameObject() {
 	radius = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
-	team = 0;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -19,8 +18,6 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 
 	mSpeed = 0;
 	radius = 40;
-	team = 0;
-
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -30,7 +27,6 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 
 	mSpeed = 0;
 	radius = 40;
-	team = 0;
 }
 
 void NewRobot::handleEvent(SDL_Event e) {

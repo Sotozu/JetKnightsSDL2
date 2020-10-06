@@ -31,12 +31,13 @@ public:
 	
 	void handleEvent(SDL_Event e);
 	
-	//Templates
+	//--Templates--
+	//Checks class against array of classes for collision 
 	template<class T, class B>
-	bool chkCollisions(B args[], int length, T* b) {
+	bool chkCollisions(B* array[], int length, T* b) {
 		for (int i = 0; i < length; ++i) {
-			if (args[i] != NULL) {
-				if (b->chkCollision(args[i])) {
+			if (array[i] != NULL) {
+				if (b->chkCollision(array[i])) {
 					return true;
 				}
 			}

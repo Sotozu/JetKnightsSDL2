@@ -38,7 +38,6 @@ private:
 	int radius;
 	int mSpeed;
 	const int JOYSTICK_DEAD_ZONE = 8000;
-	int team;
 
 	bool inDeadCircle();
 };

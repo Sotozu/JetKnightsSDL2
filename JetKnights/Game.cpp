@@ -147,6 +147,7 @@ void Game::genTestBullets() {
 		if (bullets[i] == NULL && n_bullets > 0) {
 			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
+			bullets[i]->team = 1;
 			//std::cout << i << std::endl;
 			n_bullets--;
 		}
@@ -155,6 +156,7 @@ void Game::genTestBullets() {
 void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
 	robots[0]->setHitbox();
+	robots[0]->team = 1;
 }
 
 void Game::loadMedia() {
@@ -168,6 +170,7 @@ void Game::loadMedia() {
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
 	weapons[0]->setHitbox();
+	weapons[0]->team = 1;
 }
 
 void  Game::genTestObstacles() {
