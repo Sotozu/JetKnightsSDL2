@@ -82,8 +82,13 @@ void Game::updateObjects2() {
 	//updateMovements(weapons, TOTAL_WEAPONS);
 	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
 		if ( weapons[i] != NULL ){
-			weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0); // temporary untill weapon movement is properly implemented
-			weapons[i]->update();
+			if (robots[i] == NULL) {
+				weapons[i]->isDead = true;
+			}
+			else {
+				weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0); // temporary untill weapon movement is properly implemented
+				weapons[i]->update();
+			}
 		}
 	}
 
@@ -107,9 +112,12 @@ void Game::updateObjects2() {
 	despawn(bullets, TOTAL_BULLETS);
 
 	//---COUT tests---
-	//if (robots[1] != NULL) {
-	//	std::cout << robots[1]->getHealth() << std::endl;
-	//}
+	for (int i = 0; i < TOTAL_ROBOTS; i++) {
+		if (robots[i] != NULL) {
+			std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
+		}
+	}
+
 	//std::cout << "game tick completed" << std::endl;
 	//std::cout << weapons[0]->isFiring << std::endl;
 }
