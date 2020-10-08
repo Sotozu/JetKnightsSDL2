@@ -30,34 +30,41 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 }
 
 void NewRobot::handleEvent(SDL_Event e) {
+
 	//Controller input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If player 1 input
 		if (e.caxis.which == 0) {
 			//X axis motion
-			if (e.caxis.axis == 0) {							
-				joyX = e.caxis.value;
-				// Set speed depending on dead zone
-				if (!inDeadCircle()) {
-					mSpeed = MAX_SPEED;
+			
+				std::cout << "BITCHES" << std::endl;
+				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
+					joyX = e.caxis.value;
+					// Set speed depending on dead zone
+					if (!inDeadCircle()) {
+						mSpeed = MAX_SPEED;
+					}
+					else {
+						mSpeed = 0;
+					}
 				}
-				else {
-					mSpeed = 0;
+				//Y axis motion
+				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
+					joyY = e.caxis.value;
+					// Set speed depending on dead zone
+					if (!inDeadCircle()) {
+						mSpeed = MAX_SPEED;
+					}
+					else {
+						mSpeed = 0;
+					}
 				}
-			}
-			//Y axis motion
-			else if (e.caxis.axis == 1) {						
-				joyY = e.caxis.value;
-				// Set speed depending on dead zone
-				if (!inDeadCircle()) {			
-					mSpeed = MAX_SPEED;
-				}
-				else {
-					mSpeed = 0;
-				}
-			}
+			
+			
 		}
 	}
+
+
 }
 
 bool NewRobot::inDeadCircle() {

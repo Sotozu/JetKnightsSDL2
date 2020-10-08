@@ -38,6 +38,7 @@ private:
 
 	int radius;
 	const int JOYSTICK_DEAD_ZONE = 20000;
+	const int TRIGGER_DEAD_ZONE = 4000;
 	bool inDeadCircle();
 	
 };
