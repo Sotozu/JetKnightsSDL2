@@ -47,12 +47,12 @@ void Game::handleEvent(SDL_Event e) {
 			weapons[i]->handleEvent(e);
 			//updates if the weapon is firing
 			if (weapons[i]->WeaponFiring(e) == true) {
-				std::cout << "WORKS!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
+				//std::cout << "WORKS!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
 
 				isWeaponFiring[i] = true;
 			}
 			else {
-				std::cout << "IS NOT FIRING" << std::endl;
+				//std::cout << "IS NOT FIRING" << std::endl;
 
 				isWeaponFiring[i] = false;
 			}
@@ -75,7 +75,7 @@ void Game::updateObjects() {
 	updateWeapons();
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (isWeaponFiring[i] == true) {
-			std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
+			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
 			genTestBullets();
 		}
 	}
@@ -90,12 +90,14 @@ void Game::updateRobots() {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
 			robots[i]->update();
-			for (int j = 0; j < TOTAL_OBSTACLES; ++j) {
-				if (obstacles[j] != NULL) {
-					robots[i]->updateCollision(SCREEN_WIDTH, SCREEN_HEIGHT, obstacles[j]->getHitbox());
+			if(robots[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT)){}
+			else {
+				for (int j = 0; j < TOTAL_OBSTACLES; ++j) {
+					if (obstacles[j] != NULL) {
+						robots[i]->updateCollision(obstacles[j]);
+					}
 				}
-			}
-			
+			}	
 			robots[i]->render();
 		}
 	}
@@ -157,6 +159,10 @@ void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
 	robots[0]->setHitbox();
 	robots[0]->team = 1;
+	robots[1] = new NewRobot(800, 600, 0, gRenderer, &textures[0]);
+	robots[1]->setHitbox();
+	robots[1]->team = 0;
+	robots[1]->setPlayer(1);
 }
 
 void Game::loadMedia() {

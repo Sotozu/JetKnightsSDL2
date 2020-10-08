@@ -1,8 +1,11 @@
 #pragma once
-#include "GameObject.h"
 #include <iostream>
 #include <cmath>
 #include <SDL_gamecontroller.h>
+#include <typeinfo>
+#include "GameObject.h"
+#include "Bullet.h"
+
 
 
 class NewRobot : public GameObject{
@@ -15,6 +18,7 @@ public:
 	//Mutator
 	void handleEvent(SDL_Event e);
 	void update();
+	void setPlayer(int);
 
 
 	//Accessor
@@ -25,7 +29,37 @@ public:
 	int getVelY();
 	float getJoyAngle();
 
-	void updateCollision(int screenW, int screenH, Hitbox* b = NULL);
+	bool updateBorderCollision(int, int);
+	void updateCollision(GameObject*);
+	void updateCollision(NewRobot*);
+	void updateCollision(Bullet*);
+	
+
+	template <class T>
+	void updateCollision2(int screenWidth, int screenHeight, T* b) {
+
+		if (hitbox->chkBorderCollisionX(screenWidth)) {
+			posX -= getVelX();
+			hitbox->setPosX(posX);
+		}
+		else if (hitbox->chkBorderCollisionY(screenHeight)) {
+			posY -= getVelY();
+			hitbox->setPosY(posY);
+		}
+		else if (chkCollision(b)) {
+			// Determine the type of class and decide form of update
+			std::string s = typeid(b).name();
+			std::cout << s << std::endl;
+			if (s == "class GameObject * __ptr64" || s == "class NewRobot * __ptr64") {
+				posX -= getVelX();
+				posY -= getVelY();
+			}
+			else if (s == "class Bullet * __ptr64") {
+				health -= b->getDamage();
+				//std::cout << "obj was bullet?" << std::endl;
+			}
+		}
+	}
 
 
 private:
@@ -37,6 +71,8 @@ private:
 
 	int radius;
 	int mSpeed;
+	int health;
+	int player;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 
 	bool inDeadCircle();

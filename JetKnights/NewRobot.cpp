@@ -9,6 +9,8 @@ NewRobot::NewRobot() : GameObject() {
 	radius = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+	health = 100;
+	player = 0;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -18,6 +20,8 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 
 	mSpeed = 0;
 	radius = 40;
+	health = 100;
+	player = 0;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -27,13 +31,15 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 
 	mSpeed = 0;
 	radius = 40;
+	health = 100;
+	player = 0;
 }
 
 void NewRobot::handleEvent(SDL_Event e) {
 	//Controller input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If player 1 input
-		if (e.caxis.which == 0) {
+		if (e.caxis.which == player) {
 			//X axis motion
 			if (e.caxis.axis == 0) {							
 				joyX = e.caxis.value;
@@ -92,31 +98,74 @@ int NewRobot::getVelY() {
 }
 
 void NewRobot::update() {
-	posX += getVelX();
-	posY += getVelY();
-	if (hitbox != NULL){
-		hitbox->setPos(posX, posY);
+	if (health < 0) {
+		isDead = true;
+	}
+	else {
+		posX += getVelX();
+		posY += getVelY();
+		if (hitbox != NULL) {
+			hitbox->setPos(posX, posY);
+		}
 	}
 }
 
-void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
-	if (hitbox != NULL) {
-		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
-			posX -= getVelX();
-			hitbox->setPosX(posX);
-		}
-		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
-			posY -= getVelY();
-			hitbox->setPosY(posY);
-		}
+//void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
+//	if (hitbox != NULL) {
+//		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
+//			posX -= getVelX();
+//			hitbox->setPosX(posX);
+//		}
+//		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
+//			posY -= getVelY();
+//			hitbox->setPosY(posY);
+//		}
+//	}
+//	else {
+//		//Check if bullet hits screen boundaries
+//		if (hitbox->chkBorderCollisionX(screenWidth)) {
+//			posX -= getVelX();
+//		}
+//		if (hitbox->chkBorderCollisionY(screenHeight)) {
+//			posY -= getVelY();
+//		}
+//	}
+//}
+
+void NewRobot::setPlayer(int p) {
+	player = p;
+}
+
+bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight) {
+	if (hitbox->chkBorderCollisionX(screenWidth)) {
+		posX -= getVelX();
+		hitbox->setPosX(posX);
+		return true;
 	}
-	else {
-		//Check if bullet hits screen boundaries
-		if (hitbox->chkBorderCollisionX(screenWidth)) {
+	else if (hitbox->chkBorderCollisionY(screenHeight)) {
+		posY -= getVelY();
+		hitbox->setPosY(posY);
+		return true;
+	}
+	return false;
+}
+
+void NewRobot::updateCollision(GameObject* b) {
+	if (chkCollision(b)) {
 			posX -= getVelX();
-		}
-		if (hitbox->chkBorderCollisionY(screenHeight)) {
 			posY -= getVelY();
-		}
+	}
+}
+
+void NewRobot::updateCollision(NewRobot* b) {
+	if (chkCollision(b)) {
+		posX -= getVelX();
+		posY -= getVelY();
+	}
+}
+
+void NewRobot::updateCollision(Bullet* b) {
+	if (chkCollision(b)) {
+		health -= b->getDamage();
 	}
 }

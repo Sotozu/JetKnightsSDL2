@@ -3,18 +3,20 @@
 Bullet::Bullet() {
 	duration = 100;
 	mSpeed = 0;
-
+	damage = 5;
 }
 
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : GameObject( x, y, angle, renderer) {
 	duration = 100;
 	mSpeed = speed;
+	damage = 5;
 }
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
 	duration = 100;
 	mSpeed = speed;
+	damage = 5;
 }
 
 
@@ -38,6 +40,6 @@ int Bullet::getVelY() {
 	return mSpeed * sin(ang * (M_PI / 180));
 }
 
-void Bullet::handleEvent(SDL_Event e) {
-	
+int Bullet::getDamage() {
+	return damage;
 }
