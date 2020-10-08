@@ -37,7 +37,8 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 
 //Game Controller 1 handler
-SDL_GameController* gGameController = NULL;
+SDL_GameController* gGameController0 = NULL;
+SDL_GameController* gGameController1 = NULL;
 SDL_Joystick* gJoyStick1 = NULL;
 SDL_Joystick* gJoyStick2 = NULL;
 
@@ -120,11 +121,12 @@ bool init()
 		else
 		{
 			//Load joystick
-			gGameController = SDL_GameControllerOpen(0);
+			gGameController0 = SDL_GameControllerOpen(0);
+			gGameController1 = SDL_GameControllerOpen(1);
 			gJoyStick1 = SDL_JoystickOpen(0);
 			gJoyStick1 = SDL_JoystickOpen(1);
 
-			if (gGameController == NULL)
+			if (gGameController0 == NULL || gGameController1 == NULL)
 			{
 				printf("Warning: Unable to open game controller! SDL Error: %s\n", SDL_GetError());
 			}

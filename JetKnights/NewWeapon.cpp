@@ -21,6 +21,8 @@ NewWeapon::NewWeapon() : GameObject() {
 
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+	player = 0;
+	isFiring = false;
 }
 
 NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -36,6 +38,8 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	dirY = 0;
 
 	radius = 0;
+	player = 0;
+	isFiring = false;
 
 }
 
@@ -52,32 +56,43 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture
 	dirY = 0;
 
 	radius = 40;
+	player = 0;
+	isFiring = false;
 }
-/*
-What variables from base object GameObject be used here? How can we 
-*/
+
+// How the weapon handles SDL events
 void NewWeapon::handleEvent( SDL_Event e ) {
-
-	//ONLY FOR MOVEMENT UPDATES
+	//Joystick input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {	
-		//Joystick input
-
-		//If player 1 input
-		if (e.caxis.which == 0) {
-			if (e.caxis.axis == 2) {							//X axis motion
+		//If event matches player
+		if (e.caxis.which == player) {
+			//X axis motion
+			if (e.caxis.axis == 2) {						
 				joyX = e.caxis.value;
-				if (!inDeadCircle()) {							//Outside of dead zone // abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE
+				if (!inDeadCircle()) {						
 					dirX = e.caxis.value;
 				}
 			}
-			else if (e.caxis.axis == 3) {						//Y axis motion
+			//Y axis motion
+			else if (e.caxis.axis == 3) {
 				joyY = e.caxis.value;
-				if (!inDeadCircle()) {							//Outside of dead zone
+				if (!inDeadCircle()) {	
 					dirY = e.caxis.value;
+				}
+			}
+			//Trigger press
+			else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+				std::cout << e.caxis.value << std::endl;
+				if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+					isFiring = true;
+				}
+				else {
+					isFiring = false;
 				}
 			}
 		}	
 	}
+	
 
 	
 }
@@ -137,37 +152,41 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 	texture = ltexture;
 }
 
-bool NewWeapon::WeaponFiring(SDL_Event e) {
-	//Handle Bullet Creation
-	static int num = 0;
+//bool NewWeapon::WeaponFiring(SDL_Event e) {
+//	//Handle Bullet Creation
+//	static int num = 0;
+//
+//	
+//	if (e.type == SDL_CONTROLLERAXISMOTION) {
+//		//Joystick input
+//
+//		//If player 1 input
+//		if (e.caxis.which == player) {
+//
+//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+//				//std::cout << "WHAT!!!" << std::endl;
+//				//std::cout << e.caxis.value << std::endl;
+//				if (e.caxis.value > 5000) {
+//					//std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
+//					num = e.caxis.value;
+//					return true;
+//				}
+//				else {
+//					num = e.caxis.value;
+//
+//					return false;
+//				}
+//			}
+//		}
+//	}
+//	else if (num > 5000) {
+//		return true;
+//	}
+//	else {
+//		return false;
+//	}
+//}
 
-	
-	if (e.type == SDL_CONTROLLERAXISMOTION) {
-		//Joystick input
-
-		//If player 1 input
-		if (e.caxis.which == 0) {
-
-			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				//std::cout << "WHAT!!!" << std::endl;
-				//std::cout << e.caxis.value << std::endl;
-				if (e.caxis.value > 5000) {
-					//std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
-					num = e.caxis.value;
-					return true;
-				}
-				else {
-					num = e.caxis.value;
-
-					return false;
-				}
-			}
-		}
-	}
-	else if (num > 5000) {
-		return true;
-	}
-	else {
-		return false;
-	}
+void NewWeapon::setPlayer(int a) {
+	player = a;
 }

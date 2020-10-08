@@ -25,7 +25,7 @@ public:
 	void updateObjects();
 	void updateObjects2();
 	void genTestRobots();
-	void genTestBullets();
+	void genTestBullets(int);
 	void genTestWeapon();
 	void genTestObstacles();
 
@@ -115,6 +115,8 @@ private:
 	void updateRobots();
 	void updateWeapons();
 	void updateObstacles();
+
+	void spawnBullets();
 	
 };
 

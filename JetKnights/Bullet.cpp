@@ -3,20 +3,20 @@
 Bullet::Bullet() {
 	duration = 100;
 	mSpeed = 0;
-	damage = 10;
+	damage = 1;
 }
 
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : GameObject( x, y, angle, renderer) {
 	duration = 100;
 	mSpeed = speed;
-	damage = 10;
+	damage = 1;
 }
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
 	duration = 100;
 	mSpeed = speed;
-	damage = 10;
+	damage = 1;
 }
 
 

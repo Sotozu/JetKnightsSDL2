@@ -43,64 +43,54 @@ void Game::handleEvent(SDL_Event e) {
 	}
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL) {
-			//updates movement of the weapon
 			weapons[i]->handleEvent(e);
-			//updates if the weapon is firing
-			if (weapons[i]->WeaponFiring(e) == true) {
-				//std::cout << "WORKS!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-
-				isWeaponFiring[i] = true;
-			}
-			else {
-				//std::cout << "IS NOT FIRING" << std::endl;
-
-				isWeaponFiring[i] = false;
-			}
 		}
 	}
-
-	//Creates Bullets
-
 }
+
 /*
 The update should be set in the following order because object are dependent on other objects updates
 1.Robot
 2.Weapon
 3.Bullet
 */
-void Game::updateObjects() {
-	//std::cout << "updating objects " << std::endl;
-	
-	updateRobots();
-	updateWeapons();
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		if (isWeaponFiring[i] == true) {
-			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
-			genTestBullets();
-		}
-	}
-	
-	updateBullets();
-	updateObstacles();
-	
 
-}
+//void Game::updateObjects() {
+//	//std::cout << "updating objects " << std::endl;
+//	
+//	updateRobots();
+//	updateWeapons();
+//	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+//		if (isWeaponFiring[i] == true) {
+//			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
+//			genTestBullets();
+//		}
+//	}
+//	
+//	updateBullets();
+//	updateObstacles();
+//	
+//
+//}
 
 void Game::updateObjects2() {
 	//---SPAWN NEW OBJECTS---
-	//spawn()
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		if (isWeaponFiring[i] == true) {
-			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
-			genTestBullets();
-		}
-	}
+	spawnBullets();
 
 	//---MOVE ALL OBJECTS---
 	updateMovements(robots, TOTAL_ROBOTS);
 	//updateMovements(weapons, TOTAL_WEAPONS);
-	weapons[0]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0); // temporary untill weapon movement is properly implemented
-	weapons[0]->update();
+	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
+		if ( weapons[i] != NULL ){
+			weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0); // temporary untill weapon movement is properly implemented
+			weapons[i]->update();
+		}
+	}
+
+	//weapons[0]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0); // temporary untill weapon movement is properly implemented
+	//weapons[0]->update();
+	//weapons[1]->setPos(robots[1]->getPosX(), robots[1]->getPosY(), 0); // temporary untill weapon movement is properly implemented
+	//weapons[1]->update();
 	updateMovements(bullets, TOTAL_BULLETS);
 
 	//---COLLIDE ALL OBJECTS---
@@ -117,11 +107,11 @@ void Game::updateObjects2() {
 	despawn(bullets, TOTAL_BULLETS);
 
 	//---COUT tests---
-	if (robots[1] != NULL) {
-		std::cout << robots[1]->getHealth() << std::endl;
-	}
+	//if (robots[1] != NULL) {
+	//	std::cout << robots[1]->getHealth() << std::endl;
+	//}
 	//std::cout << "game tick completed" << std::endl;
-	
+	//std::cout << weapons[0]->isFiring << std::endl;
 }
 
 void Game::updateRobots() {
@@ -178,23 +168,26 @@ void Game::updateObstacles() {
 	}
 }
 	
-void Game::genTestBullets() {
+
+void Game::genTestBullets(int team) {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
+			bullets[i] = new Bullet(weapons[team-1]->getPosX(), weapons[team-1]->getPosY(), weapons[team-1]->getAngle(), 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
-			bullets[i]->team = 1;
+			bullets[i]->setTeam(team);
 			return;
 		}
 	}
 }
+
 void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
 	robots[0]->setHitbox();
 	robots[0]->team = 1;
+	robots[0]->setPlayer(0);
 	robots[1] = new NewRobot(800, 600, 0, gRenderer, &textures[0]);
 	robots[1]->setHitbox();
-	robots[1]->team = 0;
+	robots[1]->team = 2;
 	robots[1]->setPlayer(1);
 }
 
@@ -210,6 +203,12 @@ void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
 	weapons[0]->setHitbox();
 	weapons[0]->team = 1;
+	weapons[0]->setPlayer(0);
+	weapons[1] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
+	weapons[1]->setHitbox();
+	weapons[1]->team = 2;
+	weapons[1]->setPlayer(1);
+
 }
 
 void  Game::genTestObstacles() {
@@ -219,22 +218,26 @@ void  Game::genTestObstacles() {
 	obstacles[1]->setHitbox();
 }
 
-void Game::WeaponFiring(SDL_Event e) {
-
-	//Handle BUllet Creation
-	if (e.type == SDL_CONTROLLERAXISMOTION) {
-		//Joystick input
-
-		//If player 1 input
-		if (e.caxis.which == 0) {
-			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				genTestBullets();
-				//std::cout << "BLAH" << std::endl;
-
-			}
-		}
-	}
-}
+////Handle BUllet Creation
+//void Game::WeaponFiring(SDL_Event e) {
+//	//Joystick input
+//	if (e.type == SDL_CONTROLLERAXISMOTION) {
+//		//If player 1 input
+//		if (e.caxis.which == 0) {
+//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+//				genTestBullets0();
+//				//std::cout << "BLAH" << std::endl;
+//
+//			}
+//		}
+//		else if (e.caxis.which == 1) {
+//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+//				genTestBullets1();
+//				//std::cout << "BLAH" << std::endl;
+//			}
+//		}
+//	}
+//}
 
 void Game::updateAllCollisions(NewRobot* array[], int length) {
 	for (int i = 0; i < length; ++i) {
@@ -258,3 +261,10 @@ void Game::updateAllCollisions(Bullet* array[], int length) {
 	}
 }
 
+void Game::spawnBullets() {
+	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+		if (weapons[i] != NULL && weapons[i]->isFiring) {
+			genTestBullets(weapons[i]->team);
+		}
+	}
+}
