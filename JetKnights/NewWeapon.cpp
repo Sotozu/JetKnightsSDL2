@@ -152,7 +152,7 @@ bool NewWeapon::WeaponFiring(SDL_Event e) {
 				//std::cout << "WHAT!!!" << std::endl;
 				//std::cout << e.caxis.value << std::endl;
 				if (e.caxis.value > 5000) {
-					std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
+					//std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
 					num = e.caxis.value;
 					return true;
 				}

@@ -98,7 +98,7 @@ int NewRobot::getVelY() {
 }
 
 void NewRobot::update() {
-	std::cout << health << std::endl;
+	//std::cout << health << std::endl;
 	if (health <= 0) {
 		isDead = true;
 	}
@@ -166,8 +166,14 @@ void NewRobot::updateCollision(NewRobot* b) {
 }
 
 void NewRobot::updateCollision(Bullet* b) {
+	//std::cout << "checking bullet collision" << std::endl;
 	if (chkCollision(b)) {
+		//std::cout << "bullet has collided" << std::endl;
 		health -= b->getDamage();
 		//b->isDead = true;
 	}
+}
+
+int NewRobot::getHealth() {
+	return health;
 }

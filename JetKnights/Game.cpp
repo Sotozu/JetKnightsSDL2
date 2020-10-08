@@ -95,12 +95,14 @@ void Game::updateObjects2() {
 			genTestBullets();
 		}
 	}
+
 	//---MOVE ALL OBJECTS---
 	updateMovements(robots, TOTAL_ROBOTS);
 	//updateMovements(weapons, TOTAL_WEAPONS);
 	weapons[0]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0); // temporary untill weapon movement is properly implemented
 	weapons[0]->update();
 	updateMovements(bullets, TOTAL_BULLETS);
+
 	//---COLLIDE ALL OBJECTS---
 	updateAllCollisions(robots, TOTAL_ROBOTS);
 	//updateAllCollisions(weapons, TOTAL_WEAPONS);  // There is no weapon collision
@@ -109,9 +111,17 @@ void Game::updateObjects2() {
 	updateRenders(weapons, TOTAL_WEAPONS);
 	updateRenders(bullets, TOTAL_BULLETS);
 	updateRenders(obstacles, TOTAL_OBSTACLES);
+
 	//---DESPAWN DEAD OBJECTS---
 	despawn(robots, TOTAL_ROBOTS);
 	despawn(bullets, TOTAL_BULLETS);
+
+	//---COUT tests---
+	if (robots[1] != NULL) {
+		std::cout << robots[1]->getHealth() << std::endl;
+	}
+	//std::cout << "game tick completed" << std::endl;
+	
 }
 
 void Game::updateRobots() {
@@ -169,15 +179,12 @@ void Game::updateObstacles() {
 }
 	
 void Game::genTestBullets() {
-	int n = 1;
-	int n_bullets = 1;
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] == NULL && n_bullets > 0) {
+		if (bullets[i] == NULL) {
 			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
 			bullets[i]->team = 1;
-			//std::cout << i << std::endl;
-			n_bullets--;
+			return;
 		}
 	}
 }
@@ -234,8 +241,8 @@ void Game::updateAllCollisions(NewRobot* array[], int length) {
 		if (array[i] != NULL) {
 			array[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
 			updateCollisions(array[i], robots, TOTAL_ROBOTS);
-			updateCollisions(array[i], obstacles, TOTAL_ROBOTS);
-			updateCollisions(array[i], bullets, TOTAL_ROBOTS);
+			updateCollisions(array[i], obstacles, TOTAL_OBSTACLES);
+			updateCollisions(array[i], bullets, TOTAL_BULLETS);
 		}
 	}
 }
@@ -246,7 +253,7 @@ void Game::updateAllCollisions(Bullet* array[], int length) {
 		if (array[i] != NULL) {
 			array[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
 			updateCollisions(array[i], robots, TOTAL_ROBOTS);
-			updateCollisions(array[i], obstacles, TOTAL_ROBOTS);
+			updateCollisions(array[i], obstacles, TOTAL_OBSTACLES);
 		}
 	}
 }
