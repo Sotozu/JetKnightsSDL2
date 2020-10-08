@@ -80,7 +80,7 @@ int main( int argc, char* args[] )
 
 				//Testing Game object and its rendering
 				//game.genTestBullets();
-				game.updateObjects();
+				game.updateObjects2();
 
 				SDL_RenderPresent( gRenderer );
 			}

@@ -23,10 +23,14 @@ public:
 
 	//Mutators
 	void updateObjects();
+	void updateObjects2();
 	void genTestRobots();
 	void genTestBullets();
 	void genTestWeapon();
 	void genTestObstacles();
+
+	void updateAllCollisions(Bullet* array[], int length);
+	void updateAllCollisions(NewRobot* array[], int length);
 
 	
 	void handleEvent(SDL_Event e);
@@ -43,6 +47,43 @@ public:
 			}
 		}
 		return false;
+	}
+
+	template<class T, class B>
+	void updateCollisions(T* b, B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				b->updateCollision(array[i]);
+			}
+		}
+	}
+
+	template<class B>
+	void updateMovements(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				array[i]->update();
+			}
+		}
+	}
+
+	template<class B>
+	void updateRenders(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				array[i]->render();
+			}
+		}
+	}
+
+	template<class B>
+	void despawn(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL && array[i]->isDead) {
+				delete array[i];
+				array[i] = NULL;
+			}
+		}
 	}
 
 	void WeaponFiring(SDL_Event e);
@@ -74,8 +115,6 @@ private:
 	void updateRobots();
 	void updateWeapons();
 	void updateObstacles();
-	
-
 	
 };
 

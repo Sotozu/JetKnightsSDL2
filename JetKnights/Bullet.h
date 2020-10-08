@@ -9,6 +9,15 @@ public:
 	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer);
 	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture);
 
+	//Mutators
+	template<class T>
+	void updateCollision(T* b) {
+		if (chkCollision(b)) {
+			isDead = true;
+		}
+	}
+	void updateBorderCollision(int, int);
+	
 	//Accessor
 	int getDamage();
 

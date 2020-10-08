@@ -98,7 +98,8 @@ int NewRobot::getVelY() {
 }
 
 void NewRobot::update() {
-	if (health < 0) {
+	std::cout << health << std::endl;
+	if (health <= 0) {
 		isDead = true;
 	}
 	else {
@@ -167,5 +168,6 @@ void NewRobot::updateCollision(NewRobot* b) {
 void NewRobot::updateCollision(Bullet* b) {
 	if (chkCollision(b)) {
 		health -= b->getDamage();
+		//b->isDead = true;
 	}
 }

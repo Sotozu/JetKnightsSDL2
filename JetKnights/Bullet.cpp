@@ -3,20 +3,20 @@
 Bullet::Bullet() {
 	duration = 100;
 	mSpeed = 0;
-	damage = 5;
+	damage = 10;
 }
 
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : GameObject( x, y, angle, renderer) {
 	duration = 100;
 	mSpeed = speed;
-	damage = 5;
+	damage = 10;
 }
 
 Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
 	duration = 100;
 	mSpeed = speed;
-	damage = 5;
+	damage = 10;
 }
 
 
@@ -42,4 +42,10 @@ int Bullet::getVelY() {
 
 int Bullet::getDamage() {
 	return damage;
+}
+
+void Bullet::updateBorderCollision(int screenWidth, int screenHeight) {
+	if (chkBorderCollision(screenWidth, screenHeight)) {
+		isDead = true;
+	}
 }
