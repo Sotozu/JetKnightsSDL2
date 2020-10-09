@@ -2,8 +2,6 @@
 
 
 Game::Game(SDL_Renderer* renderer) {
-	//const int totalImages = 3;
-	//const int totalBullets = 3;
 	gRenderer = renderer;
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		robots[i] = NULL;
@@ -22,11 +20,6 @@ Game::Game(SDL_Renderer* renderer) {
 				"assets/bullet-2.png",
 				"assets/crate.png" };
 
-	//Sets all weapons at the beginning to a not firing state
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		isWeaponFiring[i] = false;
-	}
-
 	loadMedia();
 
 	genTestRobots();
@@ -34,8 +27,15 @@ Game::Game(SDL_Renderer* renderer) {
 	genTestWeapon();
 }
 
-void Game::handleEvent(SDL_Event e) {
+void Game::loadMedia() {
+	for (int i = 0; i < TOTAL_IMAGES; ++i) {
+		textures[i].loadFromFile(images[i], gRenderer);
+		//std::cout << "Texture loaded!!!" << std::endl;
+	}
+}
 
+// Passes SDL events to classes that use them
+void Game::handleEvent(SDL_Event e) {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
 			robots[i]->handleEvent(e);
@@ -48,6 +48,7 @@ void Game::handleEvent(SDL_Event e) {
 	}
 }
 
+// Update order of the game
 void Game::updateObjects2() {
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
@@ -66,11 +67,6 @@ void Game::updateObjects2() {
 			}
 		}
 	}
-
-	//weapons[0]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0); // temporary untill weapon movement is properly implemented
-	//weapons[0]->update();
-	//weapons[1]->setPos(robots[1]->getPosX(), robots[1]->getPosY(), 0); // temporary untill weapon movement is properly implemented
-	//weapons[1]->update();
 	updateMovements(bullets, TOTAL_BULLETS);
 
 	//---COLLIDE ALL OBJECTS---
@@ -85,85 +81,17 @@ void Game::updateObjects2() {
 	//---DESPAWN DEAD OBJECTS---
 	despawn(robots, TOTAL_ROBOTS);
 	despawn(bullets, TOTAL_BULLETS);
+	despawn(weapons, TOTAL_WEAPONS);
 
-	//---COUT tests---
+	//---COUT INFO---
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		if (robots[i] != NULL) {
 			std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
 		}
 	}
-
-	//std::cout << "game tick completed" << std::endl;
-	//std::cout << weapons[0]->isFiring << std::endl;
-}
-
-void Game::updateRobots() {
-	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
-		if (robots[i] != NULL) {
-			//This updates robots position
-			robots[i]->update();
-			if(robots[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT)){}
-			else {
-				updateCollisions(robots[i], obstacles, TOTAL_OBSTACLES);
-				updateCollisions(robots[i], robots, TOTAL_ROBOTS);
-				updateCollisions(robots[i], bullets, TOTAL_BULLETS);
-			}	
-			robots[i]->render();
-		}
-	}
-}
-
-void Game::updateWeapons() {
-	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
-		if (weapons[i] != NULL) {
-			weapons[i]->setPos(robots[0]->getPosX(), robots[0]->getPosY(), 0);
-			weapons[i]->update();
-			weapons[i]->render();
-		}
-	}
-}
-
-void Game::updateBulletMovement() {
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] != NULL) {
-			bullets[i]->update();
-			if (bullets[i]->chkBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT) ||
-				chkCollisions(robots, TOTAL_ROBOTS, bullets[i]) || 
-				chkCollisions(obstacles, TOTAL_OBSTACLES, bullets[i]))
-			{
-				bullets[i]->isDead = true;
-			}
-			bullets[i]->render();
-		}
-	}
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] != NULL && bullets[i]->isDead) {
-			delete bullets[i];
-			bullets[i] = NULL;
-		}
-	}
-}
-
-void Game::updateObstacles() {
-	for (int i = 0; i < TOTAL_OBSTACLES; ++i) {
-		if (obstacles[i] != NULL) {
-			obstacles[i]->render();
-		}
-	}
 }
 	
-
-void Game::genTestBullets(int team) {
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[team-1]->getPosX(), weapons[team-1]->getPosY(), weapons[team-1]->getAngle(), 10, gRenderer, &textures[2]);
-			bullets[i]->setHitbox();
-			bullets[i]->setTeam(team);
-			return;
-		}
-	}
-}
-
+// Explicitly generates Robots
 void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
 	robots[0]->setHitbox();
@@ -175,14 +103,7 @@ void Game::genTestRobots() {
 	robots[1]->setPlayer(1);
 }
 
-void Game::loadMedia() {
-	for (int i = 0; i < TOTAL_IMAGES; ++i) {
-		textures[i].loadFromFile(images[i], gRenderer);
-		//std::cout << "Texture loaded!!!" << std::endl;
-	}
-}
-
-
+// Explicitly generates Weapons
 void  Game::genTestWeapon() {
 	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
 	weapons[0]->setHitbox();
@@ -195,6 +116,19 @@ void  Game::genTestWeapon() {
 
 }
 
+// Progressively generates bullets
+void Game::genTestBullets(int team) {
+	for (int i = 0; i < TOTAL_BULLETS; ++i) {
+		if (bullets[i] == NULL) {
+			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 10, gRenderer, &textures[2]);
+			bullets[i]->setHitbox();
+			bullets[i]->setTeam(team);
+			return;
+		}
+	}
+}
+
+// Explicitly generates obstacles
 void  Game::genTestObstacles() {
 	obstacles[0] = new GameObject(300, 300, 0, gRenderer, &textures[3]);
 	obstacles[0]->setHitbox();
@@ -202,6 +136,7 @@ void  Game::genTestObstacles() {
 	obstacles[1]->setHitbox();
 }
 
+// Updates entire robot array by checking thigs they collide with
 void Game::updateAllCollisions(NewRobot* array[], int length) {
 	for (int i = 0; i < length; ++i) {
 		if (array[i] != NULL) {
@@ -213,7 +148,7 @@ void Game::updateAllCollisions(NewRobot* array[], int length) {
 	}
 }
 
-
+// Updates entire bullet array by checking thigs they collide with
 void Game::updateAllCollisions(Bullet* array[], int length) {
 	for (int i = 0; i < length; ++i) {
 		if (array[i] != NULL) {
@@ -224,6 +159,7 @@ void Game::updateAllCollisions(Bullet* array[], int length) {
 	}
 }
 
+// Checks if a weapon is firing and spawns a bullet
 void Game::spawnBullets() {
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL && weapons[i]->isFiring) {

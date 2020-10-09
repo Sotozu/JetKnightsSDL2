@@ -15,27 +15,10 @@
 
 class Game {
 public:
-	//Constructor
-
+	//Constructors
 	Game(SDL_Renderer* renderer);
 
 	//Accessors
-
-	//Mutators
-	void updateObjects();
-	void updateObjects2();
-	void genTestRobots();
-	void genTestBullets(int);
-	void genTestWeapon();
-	void genTestObstacles();
-
-	void updateAllCollisions(Bullet* array[], int length);
-	void updateAllCollisions(NewRobot* array[], int length);
-
-	
-	void handleEvent(SDL_Event e);
-	
-	//--Templates--
 	//Checks class against array of classes for collision 
 	template<class T, class B>
 	bool chkCollisions(B* array[], int length, T* b) {
@@ -48,6 +31,42 @@ public:
 		}
 		return false;
 	}
+
+	//Mutators
+	void updateObjects2();
+	void genTestRobots();
+	void genTestBullets(int);
+	void genTestWeapon();
+	void genTestObstacles();
+	
+	void handleEvent(SDL_Event e);
+
+private:
+	static const int SCREEN_WIDTH = 1024;
+	static const int SCREEN_HEIGHT = 768;
+	static const int TOTAL_IMAGES = 4;
+	static const int TOTAL_ROBOTS = 2;
+	static const int TOTAL_WEAPONS = 2;
+	static const int TOTAL_BULLETS = 1000;
+	static const int TOTAL_OBSTACLES = 10;
+
+	SDL_Renderer* gRenderer;
+	
+	std::vector<std::string> images;
+	LTexture textures[TOTAL_IMAGES];
+	NewRobot* robots[TOTAL_ROBOTS];
+	NewWeapon* weapons[TOTAL_WEAPONS];
+	Bullet* bullets[TOTAL_BULLETS];
+	GameObject* obstacles[TOTAL_BULLETS];
+	
+	//Mutators
+
+	void loadMedia();
+
+	void spawnBullets();
+
+	void updateAllCollisions(Bullet* array[], int length);
+	void updateAllCollisions(NewRobot* array[], int length);
 
 	template<class T, class B>
 	void updateCollisions(T* b, B* array[], int length) {
@@ -85,38 +104,6 @@ public:
 			}
 		}
 	}
-
-	void WeaponFiring(SDL_Event e);
-
-private:
-	static const int SCREEN_WIDTH = 1024;
-	static const int SCREEN_HEIGHT = 768;
-	static const int TOTAL_IMAGES = 4;
-	static const int TOTAL_ROBOTS = 2;
-	static const int TOTAL_WEAPONS = 2;
-	static const int TOTAL_BULLETS = 1000;
-	static const int TOTAL_OBSTACLES = 10;
-
-
-
-	bool isWeaponFiring[TOTAL_WEAPONS];
-
-	SDL_Renderer* gRenderer;
-	
-	std::vector<std::string> images;
-	LTexture textures[TOTAL_IMAGES];
-	NewRobot* robots[TOTAL_ROBOTS];
-	NewWeapon* weapons[TOTAL_WEAPONS];
-	Bullet* bullets[TOTAL_BULLETS];
-	GameObject* obstacles[TOTAL_BULLETS];
-	
-	void loadMedia();
-	void updateBulletMovement();
-	void updateRobots();
-	void updateWeapons();
-	void updateObstacles();
-
-	void spawnBullets();
 	
 };
 
