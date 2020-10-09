@@ -52,7 +52,7 @@ protected:
 	int posX;
 	int posY;
 	float ang;
-	
+
 	int hitboxOffsetX = 0;
 	int hitboxOffsetY = 0;
 };

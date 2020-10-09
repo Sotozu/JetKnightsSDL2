@@ -152,41 +152,6 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 	texture = ltexture;
 }
 
-//bool NewWeapon::WeaponFiring(SDL_Event e) {
-//	//Handle Bullet Creation
-//	static int num = 0;
-//
-//	
-//	if (e.type == SDL_CONTROLLERAXISMOTION) {
-//		//Joystick input
-//
-//		//If player 1 input
-//		if (e.caxis.which == player) {
-//
-//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-//				//std::cout << "WHAT!!!" << std::endl;
-//				//std::cout << e.caxis.value << std::endl;
-//				if (e.caxis.value > 5000) {
-//					//std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
-//					num = e.caxis.value;
-//					return true;
-//				}
-//				else {
-//					num = e.caxis.value;
-//
-//					return false;
-//				}
-//			}
-//		}
-//	}
-//	else if (num > 5000) {
-//		return true;
-//	}
-//	else {
-//		return false;
-//	}
-//}
-
 void NewWeapon::setPlayer(int a) {
 	player = a;
 }

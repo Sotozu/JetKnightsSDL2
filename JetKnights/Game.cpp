@@ -48,31 +48,6 @@ void Game::handleEvent(SDL_Event e) {
 	}
 }
 
-/*
-The update should be set in the following order because object are dependent on other objects updates
-1.Robot
-2.Weapon
-3.Bullet
-*/
-
-//void Game::updateObjects() {
-//	//std::cout << "updating objects " << std::endl;
-//	
-//	updateRobots();
-//	updateWeapons();
-//	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-//		if (isWeaponFiring[i] == true) {
-//			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
-//			genTestBullets();
-//		}
-//	}
-//	
-//	updateBullets();
-//	updateObstacles();
-//	
-//
-//}
-
 void Game::updateObjects2() {
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
@@ -125,6 +100,7 @@ void Game::updateObjects2() {
 void Game::updateRobots() {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
+			//This updates robots position
 			robots[i]->update();
 			if(robots[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT)){}
 			else {
@@ -147,7 +123,7 @@ void Game::updateWeapons() {
 	}
 }
 
-void Game::updateBullets() {
+void Game::updateBulletMovement() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
@@ -225,27 +201,6 @@ void  Game::genTestObstacles() {
 	obstacles[1] = new GameObject(600, 100, 0, gRenderer, &textures[3]);
 	obstacles[1]->setHitbox();
 }
-
-////Handle BUllet Creation
-//void Game::WeaponFiring(SDL_Event e) {
-//	//Joystick input
-//	if (e.type == SDL_CONTROLLERAXISMOTION) {
-//		//If player 1 input
-//		if (e.caxis.which == 0) {
-//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-//				genTestBullets0();
-//				//std::cout << "BLAH" << std::endl;
-//
-//			}
-//		}
-//		else if (e.caxis.which == 1) {
-//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-//				genTestBullets1();
-//				//std::cout << "BLAH" << std::endl;
-//			}
-//		}
-//	}
-//}
 
 void Game::updateAllCollisions(NewRobot* array[], int length) {
 	for (int i = 0; i < length; ++i) {

@@ -111,7 +111,7 @@ private:
 	GameObject* obstacles[TOTAL_BULLETS];
 	
 	void loadMedia();
-	void updateBullets();
+	void updateBulletMovement();
 	void updateRobots();
 	void updateWeapons();
 	void updateObstacles();
