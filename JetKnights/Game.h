@@ -45,7 +45,6 @@ public:
 		return false;
 	}
 
-	void WeaponFiring(SDL_Event e);
 
 private:
 	static const int SCREEN_WIDTH = 1024;
@@ -59,6 +58,7 @@ private:
 
 
 	bool isWeaponFiring[TOTAL_WEAPONS];
+	bool isRobotBoosting[TOTAL_ROBOTS];
 
 	SDL_Renderer* gRenderer;
 	
@@ -70,6 +70,7 @@ private:
 	GameObject* obstacles[TOTAL_BULLETS];
 	
 	void loadMedia();
+	void updatePlayerBoost();
 	void updateBulletMovement();
 	void updateRobots();
 	void updateWeapons();

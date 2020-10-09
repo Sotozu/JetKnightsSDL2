@@ -9,6 +9,7 @@ NewRobot::NewRobot() : GameObject() {
 	radius = 0;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
+	boost = 0;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -18,6 +19,8 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 
 	mSpeed = 0;
 	radius = 40;
+	boost = 0;
+
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -27,9 +30,11 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 
 	mSpeed = 0;
 	radius = 40;
+	boost = 0;
+
 }
 
-void NewRobot::handleEvent(SDL_Event e) {
+void NewRobot::handleRobotMovement(SDL_Event e) {
 
 	//Controller input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
@@ -42,7 +47,7 @@ void NewRobot::handleEvent(SDL_Event e) {
 					joyX = e.caxis.value;
 					// Set speed depending on dead zone
 					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED;
+						mSpeed = MAX_SPEED + boost;
 					}
 					else {
 						mSpeed = 0;
@@ -53,7 +58,7 @@ void NewRobot::handleEvent(SDL_Event e) {
 					joyY = e.caxis.value;
 					// Set speed depending on dead zone
 					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED;
+						mSpeed = MAX_SPEED + boost;
 					}
 					else {
 						mSpeed = 0;
@@ -126,4 +131,44 @@ void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
 			posY -= getVelY();
 		}
 	}
+}
+
+bool NewRobot::isPlayerBoosting(SDL_Event e) {
+
+	static int num = 0;
+
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
+		//Controller input
+
+		//If player 1 input
+		if (e.caxis.which == 0) {
+
+			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+				//std::cout << "WHAT!!!" << std::endl;
+				//std::cout << e.caxis.value << std::endl;
+				if (e.caxis.value > RIGHT_TRIGGER_DEAD_ZONE) {
+					num = e.caxis.value;
+					return true;
+				}
+				else {
+					num = e.caxis.value;
+
+					return false;
+				}
+			}
+		}
+	}
+	else if (num > RIGHT_TRIGGER_DEAD_ZONE) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void NewRobot::boostOn() {
+	boost = 10;
+}
+void NewRobot::boostOff() {
+	boost = 0;
 }

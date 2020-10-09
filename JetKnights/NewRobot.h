@@ -13,8 +13,11 @@ public:
 	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 
 	//Mutator
-	void handleEvent(SDL_Event e);
+	void handleRobotMovement(SDL_Event e);
+	bool isPlayerBoosting(SDL_Event e);
 	void update();
+	void boostOn();
+	void boostOff();
 
 
 	//Accessor
@@ -38,7 +41,10 @@ private:
 
 	int radius;
 	int mSpeed;
+	int boost;
+
 	const int JOYSTICK_DEAD_ZONE = 8000;
+	const int RIGHT_TRIGGER_DEAD_ZONE = 5000;
 
 	bool inDeadCircle();
 };

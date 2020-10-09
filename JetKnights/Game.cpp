@@ -27,6 +27,11 @@ Game::Game(SDL_Renderer* renderer) {
 		isWeaponFiring[i] = false;
 	}
 
+	//Sets all robots at the beginning to not boosting
+	for (int i = 0; i < TOTAL_ROBOTS; i++) {
+		isRobotBoosting[i] = false;
+	}
+
 	loadMedia();
 
 	genTestRobots();
@@ -38,7 +43,17 @@ void Game::handleEvent(SDL_Event e) {
 
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
-			robots[i]->handleEvent(e);
+
+			robots[i]->handleRobotMovement(e);
+
+			//If the player presses the right trigger then this will come true
+			if (robots[i]->isPlayerBoosting(e) == true) {
+
+				isRobotBoosting[i] = true;
+			}
+			else {
+				isRobotBoosting[i] = false;
+			}
 		}
 	}
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
@@ -66,7 +81,7 @@ The update should be set in the following order because object are dependent on 
 */
 void Game::updateObjects() {
 	//std::cout << "updating objects " << std::endl;
-	
+	updatePlayerBoost();
 	updateRobots();
 	updateWeapons();
 	updateBulletCreation();
@@ -152,6 +167,19 @@ void Game::updateBulletCreation() {
 	}
 	
 }
+
+void Game::updatePlayerBoost() {
+	for (int i = 0; i < TOTAL_ROBOTS; i++) {
+		if (robots[i] != NULL) {
+			if (isRobotBoosting[i] == true) {
+				robots[i]->boostOn();
+			}
+			else {
+				robots[i]->boostOff();
+			}
+		}
+	}
+}
 void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
 	robots[0]->setHitbox();
@@ -179,19 +207,4 @@ void  Game::genTestObstacles() {
 	obstacles[1]->setHitbox();
 }
 
-void Game::WeaponFiring(SDL_Event e) {
 
-	//Handle BUllet Creation
-	if (e.type == SDL_CONTROLLERAXISMOTION) {
-		//Joystick input
-
-		//If player 1 input
-		if (e.caxis.which == 0) {
-			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				updateBulletCreation();
-				//std::cout << "BLAH" << std::endl;
-
-			}
-		}
-	}
-}
