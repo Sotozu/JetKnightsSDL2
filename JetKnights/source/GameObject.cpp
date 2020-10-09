@@ -109,3 +109,7 @@ bool GameObject::chkBorderCollision(int screenWidth, int screenHeight) {
 	}
 	return false;
 }
+
+void GameObject::setTeam(int a) {
+	team = a;
+}

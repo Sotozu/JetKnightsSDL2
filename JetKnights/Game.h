@@ -15,23 +15,10 @@
 
 class Game {
 public:
-	//Constructor
-
+	//Constructors
 	Game(SDL_Renderer* renderer);
 
 	//Accessors
-
-	//Mutators
-	void updateObjects();
-	void genTestRobots();
-	void updateBulletCreation();
-	void genTestWeapon();
-	void genTestObstacles();
-
-	
-	void handleEvent(SDL_Event e);
-	
-	//--Templates--
 	//Checks class against array of classes for collision 
 	template<class T, class B>
 	bool chkCollisions(B* array[], int length, T* b) {
@@ -45,6 +32,14 @@ public:
 		return false;
 	}
 
+	//Mutators
+	void updateObjects2();
+	void genTestRobots();
+	void genTestBullets(int);
+	void genTestWeapon();
+	void genTestObstacles();
+	
+	void handleEvent(SDL_Event e);
 
 private:
 	static const int SCREEN_WIDTH = 1024;
@@ -57,7 +52,6 @@ private:
 
 
 
-	bool isWeaponFiring[TOTAL_WEAPONS];
 	bool isRobotBoosting[TOTAL_ROBOTS];
 
 	SDL_Renderer* gRenderer;
@@ -69,6 +63,8 @@ private:
 	Bullet* bullets[TOTAL_BULLETS];
 	GameObject* obstacles[TOTAL_BULLETS];
 	
+	//Mutators
+
 	void loadMedia();
 	void updatePlayerBoost();
 	void updateBulletMovement();
@@ -77,6 +73,47 @@ private:
 	void updateObstacles();
 	
 
+	void spawnBullets();
+
+	void updateAllCollisions(Bullet* array[], int length);
+	void updateAllCollisions(NewRobot* array[], int length);
+
+	template<class T, class B>
+	void updateCollisions(T* b, B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				b->updateCollision(array[i]);
+			}
+		}
+	}
+
+	template<class B>
+	void updateMovements(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				array[i]->update();
+			}
+		}
+	}
+
+	template<class B>
+	void updateRenders(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL) {
+				array[i]->render();
+			}
+		}
+	}
+
+	template<class B>
+	void despawn(B* array[], int length) {
+		for (int i = 0; i < length; ++i) {
+			if (array[i] != NULL && array[i]->isDead) {
+				delete array[i];
+				array[i] = NULL;
+			}
+		}
+	}
 	
 };
 

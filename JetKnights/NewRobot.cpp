@@ -10,6 +10,9 @@ NewRobot::NewRobot() : GameObject() {
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 	boost = 0;
+	health = 100;
+	player = 0;
+
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -19,8 +22,10 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 
 	mSpeed = 0;
 	radius = 40;
-	boost = 0;
 
+	boost = 0;
+	health = 100;
+	player = 0;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -32,14 +37,16 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 	radius = 40;
 	boost = 0;
 
+	health = 100;
+	player = 0;
 }
 
-void NewRobot::handleRobotMovement(SDL_Event e) {
+void NewRobot::handleEvent(SDL_Event e) {
 
 	//Controller input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If player 1 input
-		if (e.caxis.which == 0) {
+		if (e.caxis.which == player) {
 			//X axis motion
 			
 				std::cout << "BITCHES" << std::endl;
@@ -64,8 +71,17 @@ void NewRobot::handleRobotMovement(SDL_Event e) {
 						mSpeed = 0;
 					}
 				}
-			
-			
+				//Trigger press
+				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+					std::cout << e.caxis.value << std::endl;
+					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+						boost = 7;
+					}
+					else {
+						boost = 0;
+					}
+
+				}
 		}
 	}
 
@@ -104,71 +120,122 @@ int NewRobot::getVelY() {
 }
 
 void NewRobot::update() {
-	posX += getVelX();
-	posY += getVelY();
-	if (hitbox != NULL){
-		hitbox->setPos(posX, posY);
-	}
-}
-
-void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
-	if (hitbox != NULL) {
-		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
-			posX -= getVelX();
-			hitbox->setPosX(posX);
-		}
-		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
-			posY -= getVelY();
-			hitbox->setPosY(posY);
-		}
+	//std::cout << health << std::endl;
+	if (health <= 0) {
+		isDead = true;
 	}
 	else {
-		//Check if bullet hits screen boundaries
-		if (hitbox->chkBorderCollisionX(screenWidth)) {
-			posX -= getVelX();
-		}
-		if (hitbox->chkBorderCollisionY(screenHeight)) {
-			posY -= getVelY();
+		posX += getVelX();
+		posY += getVelY();
+		if (hitbox != NULL) {
+			hitbox->setPos(posX, posY);
 		}
 	}
 }
 
-bool NewRobot::isPlayerBoosting(SDL_Event e) {
+//void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
+//	if (hitbox != NULL) {
+//		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
+//			posX -= getVelX();
+//			hitbox->setPosX(posX);
+//		}
+//		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
+//			posY -= getVelY();
+//			hitbox->setPosY(posY);
+//		}
+//	}
+//	else {
+//		//Check if bullet hits screen boundaries
+//		if (hitbox->chkBorderCollisionX(screenWidth)) {
+//			posX -= getVelX();
+//		}
+//		if (hitbox->chkBorderCollisionY(screenHeight)) {
+//			posY -= getVelY();
+//		}
+//	}
+//}
 
-	static int num = 0;
+void NewRobot::setPlayer(int p) {
+	player = p;
+}
 
-	if (e.type == SDL_CONTROLLERAXISMOTION) {
-		//Controller input
-
-		//If player 1 input
-		if (e.caxis.which == 0) {
-
-			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
-				//std::cout << "WHAT!!!" << std::endl;
-				//std::cout << e.caxis.value << std::endl;
-				if (e.caxis.value > RIGHT_TRIGGER_DEAD_ZONE) {
-					num = e.caxis.value;
-					return true;
-				}
-				else {
-					num = e.caxis.value;
-
-					return false;
-				}
-			}
-		}
-	}
-	else if (num > RIGHT_TRIGGER_DEAD_ZONE) {
+bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight) {
+	if (hitbox->chkBorderCollisionX(screenWidth)) {
+		posX -= getVelX();
+		hitbox->setPosX(posX);
 		return true;
 	}
-	else {
-		return false;
+	else if (hitbox->chkBorderCollisionY(screenHeight)) {
+		posY -= getVelY();
+		hitbox->setPosY(posY);
+		return true;
+	}
+	return false;
+}
+
+void NewRobot::updateCollision(GameObject* b) {
+	if (chkCollision(b)) {
+			posX -= getVelX();
+			posY -= getVelY();
 	}
 }
+
+//bool NewRobot::isPlayerBoosting(SDL_Event e) {
+//
+//	static int num = 0;
+//
+//	if (e.type == SDL_CONTROLLERAXISMOTION) {
+//		//Controller input
+//
+//		//If player 1 input
+//		if (e.caxis.which == 0) {
+//
+//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+//				//std::cout << "WHAT!!!" << std::endl;
+//				//std::cout << e.caxis.value << std::endl;
+//				if (e.caxis.value > RIGHT_TRIGGER_DEAD_ZONE) {
+//					num = e.caxis.value;
+//					return true;
+//				}
+//				else {
+//					num = e.caxis.value;
+//
+//					return false;
+//				}
+//			}
+//		}
+//	}
+//	else if (num > RIGHT_TRIGGER_DEAD_ZONE) {
+//		return true;
+//	}
+//	else {
+//		return false;
+//	}
+//}
 
 void NewRobot::boostOn() {
 	boost = 10;
 }
 void NewRobot::boostOff() {
 	boost = 0;
+}
+
+void NewRobot::updateCollision(NewRobot* b) {
+	if (chkCollision(b)) {
+		posX -= getVelX();
+		posY -= getVelY();
+	}
+}
+
+void NewRobot::updateCollision(Bullet* b) {
+	//std::cout << "checking bullet collision" << std::endl;
+	if (chkCollision(b)) {
+		//std::cout << "bullet has collided" << std::endl;
+		health -= b->getDamage();
+		//b->isDead = true;
+	}
+}
+
+int NewRobot::getHealth() {
+	return health;
 }
