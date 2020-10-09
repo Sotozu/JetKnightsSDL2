@@ -33,11 +33,11 @@ void Bullet::update() {
 
 
 int Bullet::getVelX() {
-	return  mSpeed * cos(ang * (M_PI / 180));
+	return  round(mSpeed * cos(ang * (M_PI / 180)));
 }
 
 int Bullet::getVelY() {
-	return mSpeed * sin(ang * (M_PI / 180));
+	return round(mSpeed * sin(ang * (M_PI / 180)));
 }
 
 int Bullet::getDamage() {

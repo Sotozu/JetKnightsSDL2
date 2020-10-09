@@ -47,20 +47,13 @@ void Game::handleEvent(SDL_Event e) {
 			weapons[i]->handleEvent(e);
 			//updates if the weapon is firing
 			if (weapons[i]->WeaponFiring(e) == true) {
-				//std::cout << "WORKS!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-
 				isWeaponFiring[i] = true;
 			}
 			else {
-				//std::cout << "IS NOT FIRING" << std::endl;
-
 				isWeaponFiring[i] = false;
 			}
 		}
 	}
-
-	//Creates Bullets
-
 }
 /*
 The update should be set in the following order because object are dependent on other objects updates
@@ -69,18 +62,10 @@ The update should be set in the following order because object are dependent on 
 3.Bullet
 */
 void Game::updateObjects() {
-	//std::cout << "updating objects " << std::endl;
-	
 	updateRobots();
 	updateWeapons();
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		if (isWeaponFiring[i] == true) {
-			//std::cout << "IS FIRING BITCHHHHHHHHHHHHHHHHHHHHHHHHHHHH" << std::endl;
-			genTestBullets();
-		}
-	}
-	
-	updateBullets();
+	updateBulletCreation();
+	updateBulletMovement();
 	updateObstacles();
 	
 
@@ -127,6 +112,7 @@ void Game::updateObjects2() {
 void Game::updateRobots() {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
+			//This updates robots position
 			robots[i]->update();
 			if(robots[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT)){}
 			else {
@@ -149,7 +135,7 @@ void Game::updateWeapons() {
 	}
 }
 
-void Game::updateBullets() {
+void Game::updateBulletMovement() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] != NULL) {
 			bullets[i]->update();
@@ -181,12 +167,32 @@ void Game::updateObstacles() {
 void Game::genTestBullets() {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle() , 10, gRenderer, &textures[2]);
+			bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle(), 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
 			bullets[i]->team = 1;
 			return;
 		}
 	}
+}
+
+//Iterates through each weapon in Game and if it is firing then it will generate bullets
+void Game::updateBulletCreation() {
+
+	for (int i = 0; i < TOTAL_WEAPONS; i++) {
+		if (isWeaponFiring[i] == true) {
+			int n = 1;
+			int n_bullets = 1;
+			for (int i = 0; i < TOTAL_BULLETS; ++i) {
+				if (bullets[i] == NULL && n_bullets > 0) {
+					bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle(), 10, gRenderer, &textures[2]);
+					bullets[i]->setHitbox();
+					bullets[i]->team = 1;
+					n_bullets--;
+				}
+			}
+		}
+	}
+	
 }
 void Game::genTestRobots() {
 	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
@@ -228,7 +234,7 @@ void Game::WeaponFiring(SDL_Event e) {
 		//If player 1 input
 		if (e.caxis.which == 0) {
 			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				genTestBullets();
+				updateBulletCreation();
 				//std::cout << "BLAH" << std::endl;
 
 			}

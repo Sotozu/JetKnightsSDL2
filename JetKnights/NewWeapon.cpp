@@ -149,10 +149,7 @@ bool NewWeapon::WeaponFiring(SDL_Event e) {
 		if (e.caxis.which == 0) {
 
 			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				//std::cout << "WHAT!!!" << std::endl;
-				//std::cout << e.caxis.value << std::endl;
-				if (e.caxis.value > 5000) {
-					//std::cout << "Greater than 5000: " << e.caxis.value << std::endl;
+				if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 					num = e.caxis.value;
 					return true;
 				}
@@ -164,7 +161,7 @@ bool NewWeapon::WeaponFiring(SDL_Event e) {
 			}
 		}
 	}
-	else if (num > 5000) {
+	else if (num > TRIGGER_DEAD_ZONE) {
 		return true;
 	}
 	else {

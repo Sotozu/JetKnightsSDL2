@@ -67,6 +67,7 @@ private:
 	const int MAX_SPEED = 8;
 	static const int ROB_VEL = 1;
 	static const int ROB_MAX_VEL = 10;
+	static const int ROB_BOOST_SPEED = 16;
 	int joyX;
 	int joyY;
 
