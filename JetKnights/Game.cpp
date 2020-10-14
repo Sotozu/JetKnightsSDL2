@@ -1,8 +1,12 @@
 #include "Game.h"
 
 
-Game::Game(SDL_Renderer* renderer) {
+//Constructor
+Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
+	SCREEN_HEIGHT = screenH;
+	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
+	//Sets array to null (empty)
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		robots[i] = NULL;
 	}
@@ -15,23 +19,22 @@ Game::Game(SDL_Renderer* renderer) {
 	for (int i = 0; i < TOTAL_OBSTACLES; i++) {
 		obstacles[i] = NULL;
 	}
+	//List of assets that we will be using in the game
 	images = { "assets/robotrightnew.png",
 				"assets/cannonsmall.png",
 				"assets/bullet-2.png",
 				"assets/crate.png" };
-
-	//Sets all robots at the beginning to not boosting
-	for (int i = 0; i < TOTAL_ROBOTS; i++) {
-		isRobotBoosting[i] = false;
-	}
 
 	loadMedia();
 
 	genTestRobots();
 	genTestObstacles();
 	genTestWeapon();
+
+
 }
 
+//Loads all the textures for the game
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
@@ -43,17 +46,7 @@ void Game::loadMedia() {
 void Game::handleEvent(SDL_Event e) {
 	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
 		if (robots[i] != NULL) {
-
 			robots[i]->handleEvent(e);
-
-			////If the player presses the right trigger then this will come true
-			//if (robots[i]->isPlayerBoosting(e) == true) {
-
-			//	isRobotBoosting[i] = true;
-			//}
-			//else {
-			//	isRobotBoosting[i] = false;
-			//}
 		}
 	}
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
@@ -71,19 +64,19 @@ void Game::updateObjects2() {
 
 	//---MOVE ALL OBJECTS---
 	updateMovements(robots, TOTAL_ROBOTS);
-	//updateMovements(weapons, TOTAL_WEAPONS);
-	//updatePlayerBoost();
+
 	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
 		if ( weapons[i] != NULL ){
 			if (robots[i] == NULL) {
 				weapons[i]->isDead = true;
 			}
 			else {
-				weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0); // temporary untill weapon movement is properly implemented
+				weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0);
 				weapons[i]->update();
 			}
 		}
 	}
+
 	updateMovements(bullets, TOTAL_BULLETS);
 
 	//---COLLIDE ALL OBJECTS---
@@ -104,42 +97,6 @@ void Game::updateObjects2() {
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		if (robots[i] != NULL) {
 			std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
-		}
-	}
-}
-	
-//<<<<<<< HEAD
-//
-////Iterates through each weapon in Game and if it is firing then it will generate bullets
-//void Game::updateBulletCreation() {
-//
-//	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-//		if (isWeaponFiring[i] == true) {
-//			int n = 1;
-//			int n_bullets = 1;
-//			for (int i = 0; i < TOTAL_BULLETS; ++i) {
-//				if (bullets[i] == NULL && n_bullets > 0) {
-//					bullets[i] = new Bullet(weapons[0]->getPosX(), weapons[0]->getPosY(), weapons[0]->getAngle(), 10, gRenderer, &textures[2]);
-//					bullets[i]->setHitbox();
-//					bullets[i]->team = 1;
-//					//std::cout << i << std::endl;
-//					n_bullets--;
-//				}
-//			}
-//		}
-//	}
-//	
-//}
-
-void Game::updatePlayerBoost() {
-	for (int i = 0; i < TOTAL_ROBOTS; i++) {
-		if (robots[i] != NULL) {
-			if (isRobotBoosting[i] == true) {
-				robots[i]->boostOn();
-			}
-			else {
-				robots[i]->boostOff();
-			}
 		}
 	}
 }

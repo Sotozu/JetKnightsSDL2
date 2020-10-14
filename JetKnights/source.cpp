@@ -8,27 +8,16 @@ and may not be redistributed without written permission.*/
 #include <string>
 #include <iostream>
 #include "LTexture.h"
-
 #include "Game.h"
 
-
-
-//#include "LTexture.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = 768;
 
-const int JOYSTICK_DEAD_ZONE = 8000;
-
 
 //Starts up SDL and creates window
 bool init();
-
-
-
-//Frees media and shuts down SDL
-//void close();
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
@@ -36,11 +25,9 @@ SDL_Window* gWindow = NULL;
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
-//Game Controller 1 handler
+//Game Controller 1 and 2 handler
 SDL_GameController* gGameController0 = NULL;
 SDL_GameController* gGameController1 = NULL;
-SDL_Joystick* gJoyStick1 = NULL;
-SDL_Joystick* gJoyStick2 = NULL;
 
 int main( int argc, char* args[] )
 {
@@ -58,7 +45,8 @@ int main( int argc, char* args[] )
 			//Event handler
 			SDL_Event e;
 	
-			Game game(gRenderer);
+			//Initialize Game object with gRenderer
+			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
 
 			//While application is running
@@ -72,6 +60,7 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					}
+					//Passes all events to game which parses and executes
 					game.handleEvent(e);
 				}
 
@@ -79,8 +68,9 @@ int main( int argc, char* args[] )
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
 
-				//Testing Game object and its rendering
-				//game.genTestBullets();
+				//Updates all objects in the game for every loop
+				/*Currently updates on each loop (process).
+				Will change to update at a certain fps (60).*/
 				game.updateObjects2();
 
 				SDL_RenderPresent( gRenderer );
@@ -88,8 +78,10 @@ int main( int argc, char* args[] )
 		
 	}
 
-	//Free resources and close SDL
-	//close();
+	/*
+	WILL CREATE A FUNCTION THAT CLOSES AND 
+	DELETES PROGRAMS THAT USE DYNAMIC MEMORY
+	*/
 
 	return 0;
 }
@@ -123,8 +115,7 @@ bool init()
 			//Load joystick
 			gGameController0 = SDL_GameControllerOpen(0);
 			gGameController1 = SDL_GameControllerOpen(1);
-			gJoyStick1 = SDL_JoystickOpen(0);
-			gJoyStick1 = SDL_JoystickOpen(1);
+
 
 			if (gGameController0 == NULL || gGameController1 == NULL)
 			{
@@ -167,6 +158,9 @@ bool init()
 	return success;
 }
 	
+/*
+NEED TO EXPAND ON THIS CLOSE FUNCTION
+*/
 
 //void close()
 //{
@@ -189,3 +183,18 @@ bool init()
 //	IMG_Quit();
 //	SDL_Quit();
 //}
+
+/*
+OTHER NOTES:
+1. Do we pass the assets (textures etc) into the Game object OR do we load these assets within Game object.
+	1a. Storing the textures into discriptively respective objects would make the program more atomic. but
+	would cost us memory.
+	1b. Given the size of the game memory usage is not a concern so the method in step 1a. is very viable.
+
+	- Current opinion on 1. is that we will move forward to make it more atomic and place textures into
+	respecitve object.
+
+
+2. Weapon will be initialized withing the Robot class. This way position information is correclty shared.
+
+*/

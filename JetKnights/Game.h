@@ -16,7 +16,7 @@
 class Game {
 public:
 	//Constructors
-	Game(SDL_Renderer* renderer);
+	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 	//Accessors
 	//Checks class against array of classes for collision 
@@ -42,17 +42,14 @@ public:
 	void handleEvent(SDL_Event e);
 
 private:
-	static const int SCREEN_WIDTH = 1024;
-	static const int SCREEN_HEIGHT = 768;
+	int SCREEN_WIDTH;
+	int SCREEN_HEIGHT;
+
 	static const int TOTAL_IMAGES = 4;
 	static const int TOTAL_ROBOTS = 2;
 	static const int TOTAL_WEAPONS = 2;
 	static const int TOTAL_BULLETS = 1000;
 	static const int TOTAL_OBSTACLES = 10;
-
-
-
-	bool isRobotBoosting[TOTAL_ROBOTS];
 
 	SDL_Renderer* gRenderer;
 	
@@ -116,4 +113,3 @@ private:
 	}
 	
 };
-
