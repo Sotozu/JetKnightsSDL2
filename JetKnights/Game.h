@@ -72,14 +72,14 @@ private:
 
 	void spawnBullets();
 
-	void updateAllCollisions(Bullet* array[], int length);
-	void updateAllCollisions(NewRobot* array[], int length);
+	void updateAllCollisions(Bullet* array[], int length, float timeStep);
+	void updateAllCollisions(NewRobot* array[], int length, float timeStep);
 
 	template<class T, class B>
-	void updateCollisions(T* b, B* array[], int length) {
+	void updateCollisions(T* b, B* array[], int length, float timeStep) {
 		for (int i = 0; i < length; ++i) {
 			if (array[i] != NULL) {
-				b->updateCollision(array[i]);
+				b->updateCollision(array[i], timeStep);
 			}
 		}
 	}

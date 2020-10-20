@@ -126,6 +126,9 @@ void NewRobot::update(float timeStep) {
 		posY += getVelY()*timeStep;
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
+			//std::cout << "POS X:" << hitbox->getPosX() << std::endl;
+			//std::cout << "POS Y:" << hitbox->getPosY() << std::endl;
+
 		}
 	}
 }
@@ -156,24 +159,24 @@ void NewRobot::setPlayer(int p) {
 	player = p;
 }
 
-bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight) {
+bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
 	if (hitbox->chkBorderCollisionX(screenWidth)) {
-		posX -= getVelX();
+		posX -= getVelX() * stepTimer;
 		hitbox->setPosX(posX);
 		return true;
 	}
 	else if (hitbox->chkBorderCollisionY(screenHeight)) {
-		posY -= getVelY();
+		posY -= getVelY() * stepTimer;
 		hitbox->setPosY(posY);
 		return true;
 	}
 	return false;
 }
 
-void NewRobot::updateCollision(GameObject* b) {
+void NewRobot::updateCollision(GameObject* b, float timeStep) {
 	if (chkCollision(b)) {
-			posX -= getVelX();
-			posY -= getVelY();
+			posX -= getVelX() * timeStep;
+			posY -= getVelY() * timeStep;
 	}
 }
 
@@ -217,14 +220,14 @@ void NewRobot::boostOff() {
 	boost = 0;
 }
 
-void NewRobot::updateCollision(NewRobot* b) {
+void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 	if (chkCollision(b)) {
-		posX -= getVelX();
-		posY -= getVelY();
+		posX -= getVelX() * timeStep;
+		posY -= getVelY() * timeStep;
 	}
 }
 
-void NewRobot::updateCollision(Bullet* b) {
+void NewRobot::updateCollision(Bullet* b, float timeStep) {
 	//std::cout << "checking bullet collision" << std::endl;
 	if (chkCollision(b)) {
 		//std::cout << "bullet has collided" << std::endl;

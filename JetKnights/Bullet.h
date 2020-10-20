@@ -11,7 +11,7 @@ public:
 
 	//Mutators
 	template<class T>
-	void updateCollision(T* b) {
+	void updateCollision(T* b, float timeStep) {
 		if (chkCollision(b)) {
 			isDead = true;
 		}

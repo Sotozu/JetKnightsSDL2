@@ -68,7 +68,7 @@ int main( int argc, char* args[] )
 				}
 				//Calculate time step
 				float timeStep = stepTimer.getTicks() / 1000.f;
-				std::cout << timeStep << std::endl;
+				//std::cout << timeStep << std::endl;
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );

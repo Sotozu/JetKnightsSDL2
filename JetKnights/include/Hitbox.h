@@ -22,6 +22,8 @@ public:
 	int getWidth();
 	int getHeight();
 	SDL_Rect* getRect();
+	int getPosX();
+	int getPosY();
 
 	void render();
 

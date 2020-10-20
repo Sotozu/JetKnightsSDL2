@@ -33,10 +33,10 @@ public:
 	float getJoyAngle();
 	int getHealth();
 
-	bool updateBorderCollision(int, int);
-	void updateCollision(GameObject*);
-	void updateCollision(NewRobot*);
-	void updateCollision(Bullet*);
+	bool updateBorderCollision(int, int, float);
+	void updateCollision(GameObject*, float);
+	void updateCollision(NewRobot*, float);
+	void updateCollision(Bullet*, float);
 	
 
 	//template <class T>

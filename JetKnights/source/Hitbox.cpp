@@ -107,3 +107,10 @@ bool Hitbox::chkBorderCollisionY(int screenHeight) {
 	}
 	return false;
 }
+
+int Hitbox::getPosX() {
+	return x;
+}
+int Hitbox::getPosY() {
+	return y;
+}
