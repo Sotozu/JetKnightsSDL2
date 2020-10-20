@@ -116,14 +116,14 @@ int NewRobot::getVelY() {
 	return mSpeed * sin(getJoyAngle() * (M_PI / 180));
 }
 
-void NewRobot::update(float stepTimer) {
-	//std::cout << stepTimer << std::endl;
+void NewRobot::update(float timeStep) {
+	//std::cout << timeStep << std::endl;
 	if (health <= 0) {
 		isDead = true;
 	}
 	else {
-		posX += getVelX()*stepTimer;
-		posY += getVelY()*stepTimer;
+		posX += getVelX()*timeStep;
+		posY += getVelY()*timeStep;
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
 		}

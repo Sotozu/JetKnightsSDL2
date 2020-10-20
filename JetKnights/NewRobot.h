@@ -67,7 +67,8 @@ public:
 
 
 private:
-	const int MAX_SPEED = 640;
+	// the robot speed is based on fps/1000; 
+	const int MAX_SPEED = 600;
 	static const int ROB_VEL = 1;
 	static const int ROB_MAX_VEL = 10;
 	static const int ROB_BOOST_SPEED = 4;

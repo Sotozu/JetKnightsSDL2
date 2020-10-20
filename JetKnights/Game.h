@@ -85,10 +85,10 @@ private:
 	}
 
 	template<class B>
-	void updateMovements(B* array[], int length, float timestep) {
+	void updateMovements(B* array[], int length, float timeStep) {
 		for (int i = 0; i < length; ++i) {
 			if (array[i] != NULL) {
-				array[i]->update(timestep);
+				array[i]->update(timeStep);
 			}
 		}
 	}

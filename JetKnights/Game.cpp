@@ -58,12 +58,12 @@ void Game::handleEvent(SDL_Event e) {
 }
 
 // Update order of the game
-void Game::updateObjects2(float steptimer) {
+void Game::updateObjects2(float timeStep) {
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
 
 	//---MOVE ALL OBJECTS---
-	updateMovements(robots, TOTAL_ROBOTS, steptimer);
+	updateMovements(robots, TOTAL_ROBOTS, timeStep);
 
 	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
 		if ( weapons[i] != NULL ){
@@ -77,7 +77,7 @@ void Game::updateObjects2(float steptimer) {
 		}
 	}
 
-	updateMovements(bullets, TOTAL_BULLETS, steptimer);
+	updateMovements(bullets, TOTAL_BULLETS, timeStep);
 
 	//---COLLIDE ALL OBJECTS---
 	updateAllCollisions(robots, TOTAL_ROBOTS);
@@ -107,7 +107,7 @@ void Game::genTestRobots() {
 	robots[0]->setHitbox();
 	robots[0]->team = 1;
 	robots[0]->setPlayer(0);
-	robots[1] = new NewRobot(800, 600, 0, gRenderer, &textures[0]);
+	robots[1] = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
 	robots[1]->setHitbox();
 	robots[1]->team = 2;
 	robots[1]->setPlayer(1);
@@ -130,7 +130,7 @@ void  Game::genTestWeapon() {
 void Game::genTestBullets(int team) {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 10, gRenderer, &textures[2]);
+			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 1200, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
 			bullets[i]->setTeam(team);
 			return;
