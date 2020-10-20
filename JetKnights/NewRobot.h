@@ -67,10 +67,10 @@ public:
 
 
 private:
-	const int MAX_SPEED = 8;
+	const int MAX_SPEED = 2;
 	static const int ROB_VEL = 1;
 	static const int ROB_MAX_VEL = 10;
-	static const int ROB_BOOST_SPEED = 16;
+	static const int ROB_BOOST_SPEED = 4;
 	int joyX;
 	int joyY;
 

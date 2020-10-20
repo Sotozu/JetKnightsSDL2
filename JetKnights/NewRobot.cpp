@@ -48,8 +48,6 @@ void NewRobot::handleEvent(SDL_Event e) {
 		//If player 1 input
 		if (e.caxis.which == player) {
 			//X axis motion
-			
-				std::cout << "BITCHES" << std::endl;
 				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
 					joyX = e.caxis.value;
 					// Set speed depending on dead zone

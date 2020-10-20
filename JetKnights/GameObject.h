@@ -49,8 +49,8 @@ protected:
 	LTexture* texture;
 	Hitbox* hitbox;
 
-	int posX;
-	int posY;
+	float posX;
+	float posY;
 	float ang;
 
 	int hitboxOffsetX = 0;

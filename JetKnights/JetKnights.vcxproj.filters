@@ -34,6 +34,9 @@
     <ClCompile Include="source.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\LTimer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -67,6 +70,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="NewWeapon.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LTimer.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

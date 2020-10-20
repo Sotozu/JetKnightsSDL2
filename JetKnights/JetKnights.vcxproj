@@ -27,6 +27,7 @@
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Hitbox.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
+    <ClCompile Include="source\LTimer.cpp" />
     <ClCompile Include="source\Projectiles.cpp" />
     <ClCompile Include="source\Robot.cpp" />
     <ClCompile Include="source\Weapon.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="include\Controller.h" />
     <ClInclude Include="include\Hitbox.h" />
     <ClInclude Include="include\LTexture.h" />
+    <ClInclude Include="include\LTimer.h" />
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\Weapon.h" />
