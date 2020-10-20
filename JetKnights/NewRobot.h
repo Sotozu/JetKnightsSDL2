@@ -18,7 +18,7 @@ public:
 	//Mutator
 	void handleEvent(SDL_Event e);
 	bool isPlayerBoosting(SDL_Event e);
-	void update();
+	void update(float);
 	void boostOn();
 	void boostOff();
 	void setPlayer(int);
@@ -67,7 +67,7 @@ public:
 
 
 private:
-	const int MAX_SPEED = 2;
+	const int MAX_SPEED = 640;
 	static const int ROB_VEL = 1;
 	static const int ROB_MAX_VEL = 10;
 	static const int ROB_BOOST_SPEED = 4;

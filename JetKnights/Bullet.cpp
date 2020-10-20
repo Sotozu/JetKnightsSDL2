@@ -23,7 +23,7 @@ Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTe
 /*
 Updates the position of the texture and the hitbox of the bullet
 */
-void Bullet::update() {
+void Bullet::update(float steptimer) {
 	posX = posX + getVelX();
 	posY = posY + getVelY();
 	if (hitbox != NULL) {

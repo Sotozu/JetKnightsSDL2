@@ -71,7 +71,6 @@ void NewRobot::handleEvent(SDL_Event e) {
 				}
 				//Trigger press
 				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
-					std::cout << e.caxis.value << std::endl;
 					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 						boost = 7;
 					}
@@ -117,14 +116,14 @@ int NewRobot::getVelY() {
 	return mSpeed * sin(getJoyAngle() * (M_PI / 180));
 }
 
-void NewRobot::update() {
-	//std::cout << health << std::endl;
+void NewRobot::update(float stepTimer) {
+	//std::cout << stepTimer << std::endl;
 	if (health <= 0) {
 		isDead = true;
 	}
 	else {
-		posX += getVelX();
-		posY += getVelY();
+		posX += getVelX()*stepTimer;
+		posY += getVelY()*stepTimer;
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
 		}

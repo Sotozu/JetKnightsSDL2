@@ -58,12 +58,12 @@ void Game::handleEvent(SDL_Event e) {
 }
 
 // Update order of the game
-void Game::updateObjects2() {
+void Game::updateObjects2(float steptimer) {
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
 
 	//---MOVE ALL OBJECTS---
-	updateMovements(robots, TOTAL_ROBOTS);
+	updateMovements(robots, TOTAL_ROBOTS, steptimer);
 
 	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
 		if ( weapons[i] != NULL ){
@@ -77,7 +77,7 @@ void Game::updateObjects2() {
 		}
 	}
 
-	updateMovements(bullets, TOTAL_BULLETS);
+	updateMovements(bullets, TOTAL_BULLETS, steptimer);
 
 	//---COLLIDE ALL OBJECTS---
 	updateAllCollisions(robots, TOTAL_ROBOTS);
@@ -96,7 +96,7 @@ void Game::updateObjects2() {
 	//---COUT INFO---
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		if (robots[i] != NULL) {
-			std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
+			//std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
 		}
 	}
 }

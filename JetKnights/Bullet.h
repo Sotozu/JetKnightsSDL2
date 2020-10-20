@@ -22,7 +22,7 @@ public:
 	int getDamage();
 
 	//Processes
-	void update();
+	void update(float);
 
 private:
 	int duration;

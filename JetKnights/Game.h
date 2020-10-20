@@ -33,7 +33,7 @@ public:
 	}
 
 	//Mutators
-	void updateObjects2();
+	void updateObjects2(float);
 	void genTestRobots();
 	void genTestBullets(int);
 	void genTestWeapon();
@@ -85,10 +85,10 @@ private:
 	}
 
 	template<class B>
-	void updateMovements(B* array[], int length) {
+	void updateMovements(B* array[], int length, float timestep) {
 		for (int i = 0; i < length; ++i) {
 			if (array[i] != NULL) {
-				array[i]->update();
+				array[i]->update(timestep);
 			}
 		}
 	}

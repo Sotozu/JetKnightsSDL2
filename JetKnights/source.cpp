@@ -9,6 +9,7 @@ and may not be redistributed without written permission.*/
 #include <iostream>
 #include "LTexture.h"
 #include "Game.h"
+#include "LTimer.h"
 
 
 //Screen dimension constants
@@ -44,6 +45,8 @@ int main( int argc, char* args[] )
 
 			//Event handler
 			SDL_Event e;
+
+			LTimer stepTimer;
 	
 			//Initialize Game object with gRenderer
 			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -63,7 +66,9 @@ int main( int argc, char* args[] )
 					//Passes all events to game which parses and executes
 					game.handleEvent(e);
 				}
-
+				//Calculate time step
+				float timeStep = stepTimer.getTicks() / 1000.f;
+				std::cout << timeStep << std::endl;
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 				SDL_RenderClear( gRenderer );
@@ -71,7 +76,11 @@ int main( int argc, char* args[] )
 				//Updates all objects in the game for every loop
 				/*Currently updates on each loop (process).
 				Will change to update at a certain fps (60).*/
-				game.updateObjects2();
+				game.updateObjects2(timeStep);
+
+				//Restart step timer
+
+				stepTimer.start();
 
 				SDL_RenderPresent( gRenderer );
 			}
