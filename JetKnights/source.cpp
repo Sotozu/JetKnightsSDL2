@@ -69,6 +69,7 @@ int main( int argc, char* args[] )
 				}
 				//Calculate time step
 				float timeStep = stepTimer.getTicks() / 1000.f;
+				std::cout << stepTimer.getTicks()/1000.f << std::endl;
 				//std::cout << timeStep << std::endl;
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -80,7 +81,6 @@ int main( int argc, char* args[] )
 				game.updateObjects2(timeStep);
 
 				//Restart step timer
-
 				stepTimer.start();
 
 				SDL_RenderPresent( gRenderer );
