@@ -10,6 +10,7 @@ and may not be redistributed without written permission.*/
 #include "LTexture.h"
 #include "Game.h"
 #include "LTimer.h"
+#include <SDL_mixer.h>
 
 
 //Screen dimension constants
