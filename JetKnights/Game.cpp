@@ -130,7 +130,7 @@ void  Game::genTestWeapon() {
 void Game::genTestBullets(int team) {
 	for (int i = 0; i < TOTAL_BULLETS; ++i) {
 		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 1200, gRenderer, &textures[2]);
+			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 10, gRenderer, &textures[2]);
 			bullets[i]->setHitbox();
 			bullets[i]->setTeam(team);
 			return;
