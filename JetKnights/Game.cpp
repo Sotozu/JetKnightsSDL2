@@ -20,10 +20,10 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 		obstacles[i] = NULL;
 	}
 	//List of assets that we will be using in the game
-	images = { "assets/robotrightnew.png",
-				"assets/cannonsmall.png",
-				"assets/bullet-2.png",
-				"assets/crate.png" };
+	images = { "C:/source/JetKnights/JetKnights/assets/robotrightnew.png",
+				"C:/source/JetKnights/JetKnights/assets/cannonsmall.png",
+				"C:/source/JetKnights/JetKnights/assets/bullet-2.png",
+				"C:/source/JetKnights/JetKnights/assets/crate.png" };
 
 	loadMedia();
 
