@@ -40,7 +40,7 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-			
+	
 			//Main loop flag
 			bool quit = false;
 
@@ -69,7 +69,11 @@ int main( int argc, char* args[] )
 				}
 				//Calculate time step
 				float timeStep = stepTimer.getTicks() / 1000.f;
-				
+
+				if (stepTimer.testGunFire()) {
+					//std::cout << "FIRE!" << std::endl;
+				}
+
 				//std::cout << timeStep << std::endl;
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );

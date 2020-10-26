@@ -11,6 +11,7 @@
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
+#include "LTimer.h"
 
 
 class Game {
@@ -59,7 +60,7 @@ private:
 	NewWeapon* weapons[TOTAL_WEAPONS];
 	Bullet* bullets[TOTAL_BULLETS];
 	GameObject* obstacles[TOTAL_BULLETS];
-	
+	LTimer timeTracker;
 	//Mutators
 
 	void loadMedia();

@@ -38,7 +38,6 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
-		//std::cout << "Texture loaded!!!" << std::endl;
 	}
 }
 
@@ -96,7 +95,6 @@ void Game::updateObjects2(float timeStep) {
 	//---COUT INFO---
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		if (robots[i] != NULL) {
-			//std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
 		}
 	}
 }
@@ -174,7 +172,11 @@ void Game::updateAllCollisions(Bullet* array[], int length, float timeStep) {
 void Game::spawnBullets() {
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL && weapons[i]->isFiring) {
-			genTestBullets(weapons[i]->team);
+			//std::cout << SDL_GetTicks() << std::endl; 
+			if (timeTracker.testGunFire()) {
+				genTestBullets(weapons[i]->team);
+			}
+			
 		}
 	}
 }

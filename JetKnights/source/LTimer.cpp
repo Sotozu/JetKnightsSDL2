@@ -1,5 +1,6 @@
 #include "LTimer.h"
 
+
 LTimer::LTimer()
 {
     //Initialize the variables
@@ -8,6 +9,10 @@ LTimer::LTimer()
 
     mPaused = false;
     mStarted = false;
+
+    number_check = 0;
+    isFirstCheck = true;
+
 }
 
 void LTimer::start()
@@ -100,4 +105,31 @@ bool LTimer::isPaused()
 {
     //Timer is running and paused
     return mPaused && mStarted;
+}
+
+
+//DISCALIMER THIS IS A JANK SOLUTIOIN TO THE TIMER. NEEDS TONS OF REWORK
+bool LTimer::testGunFire() {
+    static int number_check = 0;
+    int num = (SDL_GetTicks() % 10000 - SDL_GetTicks() % 100);
+    if (num % 1000 == 0) {
+
+        setNumberCheck(num);
+
+        if (isFirstCheck) { //first time
+            std::cout << num << std::endl;
+            return true;
+        }
+    }
+    return false;
+}
+
+void LTimer::setNumberCheck(int num) {
+    if (num != number_check) {
+        number_check = num;
+        isFirstCheck = true;
+    }
+    else {
+        isFirstCheck = false;
+    }
 }
