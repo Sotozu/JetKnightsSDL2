@@ -112,7 +112,7 @@ bool LTimer::isPaused()
 bool LTimer::testGunFire() {
     static int number_check = 0;
     int num = (SDL_GetTicks() % 10000 - SDL_GetTicks() % 100);
-    if (num % 1000 == 0) {
+    if (num % 100 == 0) {
 
         setNumberCheck(num);
 
