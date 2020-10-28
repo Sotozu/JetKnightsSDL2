@@ -82,7 +82,6 @@ void NewWeapon::handleEvent( SDL_Event e ) {
 			}
 			//Trigger press
 			else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				std::cout << e.caxis.value << std::endl;
 				if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 					isFiring = true;
 				}

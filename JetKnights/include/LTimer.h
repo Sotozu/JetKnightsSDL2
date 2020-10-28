@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <stdio.h>
 #include <string>
+#include <iostream>
 
 class LTimer
 {
@@ -23,8 +24,11 @@ public:
 	//Checks the status of the timer
 	bool isStarted();
 	bool isPaused();
+	bool testGunFire();
 
 private:
+	
+	void setNumberCheck(int);
 	//The clock time when the timer started
 	Uint32 mStartTicks;
 
@@ -34,4 +38,7 @@ private:
 	//The timer status
 	bool mPaused;
 	bool mStarted;
+
+	int number_check;
+	bool isFirstCheck;
 };

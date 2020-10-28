@@ -6,11 +6,16 @@
 #include <string>
 #include <SDL_gamecontroller.h>
 #include <iomanip>
+#include <SDL_mixer.h>
+#include <windows.h>
 
 #include "GameObject.h"
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
+#include "LTimer.h"
+#include "Sound.h"
+
 
 
 class Game {
@@ -41,10 +46,12 @@ public:
 	
 	void handleEvent(SDL_Event e);
 
+	std::string findWorkingDir();
+
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
-
+	
 	static const int TOTAL_IMAGES = 4;
 	static const int TOTAL_ROBOTS = 2;
 	static const int TOTAL_WEAPONS = 2;
@@ -53,13 +60,18 @@ private:
 
 	SDL_Renderer* gRenderer;
 	
+	std::string workingDir;
 	std::vector<std::string> images;
+
 	LTexture textures[TOTAL_IMAGES];
+
+	Sound soundEffects;
+
 	NewRobot* robots[TOTAL_ROBOTS];
 	NewWeapon* weapons[TOTAL_WEAPONS];
 	Bullet* bullets[TOTAL_BULLETS];
 	GameObject* obstacles[TOTAL_BULLETS];
-	
+	LTimer timeTracker;
 	//Mutators
 
 	void loadMedia();
@@ -111,5 +123,7 @@ private:
 			}
 		}
 	}
+
+	
 	
 };

@@ -71,11 +71,13 @@ void NewRobot::handleEvent(SDL_Event e) {
 				}
 				//Trigger press
 				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+					Mix_PlayMusic(robotSounds.getThruster(), -1);
 					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 						boost = 600;
 					}
 					else {
 						boost = 0;
+						Mix_HaltMusic();
 					}
 
 				}
@@ -117,7 +119,6 @@ int NewRobot::getVelY() {
 }
 
 void NewRobot::update(float timeStep) {
-	//std::cout << timeStep << std::endl;
 	if (health <= 0) {
 		isDead = true;
 	}
@@ -126,8 +127,6 @@ void NewRobot::update(float timeStep) {
 		posY += getVelY()*timeStep;
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
-			//std::cout << "POS X:" << hitbox->getPosX() << std::endl;
-			//std::cout << "POS Y:" << hitbox->getPosY() << std::endl;
 
 		}
 	}
@@ -214,7 +213,6 @@ void NewRobot::updateCollision(GameObject* b, float timeStep) {
 //}
 
 void NewRobot::boostOn() {
-	std::cout << "BOOSTING" << std::endl;
 	boost = 600;
 }
 void NewRobot::boostOff() {
@@ -229,11 +227,8 @@ void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 }
 
 void NewRobot::updateCollision(Bullet* b, float timeStep) {
-	//std::cout << "checking bullet collision" << std::endl;
 	if (chkCollision(b)) {
-		//std::cout << "bullet has collided" << std::endl;
 		health -= b->getDamage();
-		//b->isDead = true;
 	}
 }
 

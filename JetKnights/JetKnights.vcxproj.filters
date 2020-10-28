@@ -37,6 +37,9 @@
     <ClCompile Include="source\LTimer.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -73,6 +76,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\LTimer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,10 +1,12 @@
 #pragma once
 #include <iostream>
+#include <SDL_mixer.h>
 #include <cmath>
 #include <SDL_gamecontroller.h>
 #include <typeinfo>
 #include "GameObject.h"
 #include "Bullet.h"
+#include "Sound.h"
 
 
 
@@ -83,7 +85,7 @@ private:
 	int player;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 	const int TRIGGER_DEAD_ZONE = 5000;
-
+	Sound robotSounds;
 	bool inDeadCircle();
 };
 

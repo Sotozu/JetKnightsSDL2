@@ -49,7 +49,6 @@ bool Hitbox::chkCollision(Hitbox* b) {
 		return false;
 	}
 	// If none of the sides from A are outside B
-	//std::cout << "collision detected!" << std::endl;
 	return true;
 }
 
