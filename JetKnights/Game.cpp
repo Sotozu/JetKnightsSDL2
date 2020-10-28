@@ -3,9 +3,12 @@
 
 //Constructor
 Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
+
+	workingDir = findWorkingDir();
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
+
 	//Sets array to null (empty)
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		robots[i] = NULL;
@@ -20,10 +23,10 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 		obstacles[i] = NULL;
 	}
 	//List of assets that we will be using in the game
-	images = { "C:/source/JetKnights/JetKnights/assets/images/robotrightnew.png",
-				"C:/source/JetKnights/JetKnights/assets/images/cannonsmall.png",
-				"C:/source/JetKnights/JetKnights/assets/images/bullet-2.png",
-				"C:/source/JetKnights/JetKnights/assets/images/crate.png" };
+	images = { workingDir + "/assets/images/robotrightnew.png",
+				 workingDir + "/assets/images/cannonsmall.png",
+				 workingDir + "/assets/images/bullet-2.png",
+				workingDir + "/assets/images/crate.png" };
 
 	//List of sounds that we will be using in the game
 
@@ -186,4 +189,10 @@ void Game::spawnBullets() {
 			
 		}
 	}
+}
+
+std::string Game::findWorkingDir() {
+	char buf[256];
+	GetCurrentDirectoryA(256, buf);
+	return std::string(buf) + '\\';
 }

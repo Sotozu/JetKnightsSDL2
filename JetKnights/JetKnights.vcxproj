@@ -108,11 +108,11 @@
     <LibraryPath>C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;C:\SDL2\SDL2_image-2.0.5\lib\x64;C:\SDL2\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;C:\source\JetKnights\JetKnights\include\SDL head;$(IncludePath)</IncludePath>
+    <IncludePath>C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;C:\source\JetKnights\JetKnights\include\SDL head;C:\source\JetKnights\JetKnights\assets\images;$(IncludePath)</IncludePath>
     <LibraryPath>C:\source\JetKnights\x64\Debug;C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;C:\source\JetKnights\JetKnights\include\SDL head;$(IncludePath)</IncludePath>
+    <IncludePath>C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;C:\source\JetKnights\JetKnights\include\SDL head;C:\source\JetKnights\JetKnights\assets\images;$(IncludePath)</IncludePath>
     <LibraryPath>C:\source\JetKnights\x64\Debug;C:\source\JetKnights\JetKnights;C:\source\JetKnights\JetKnights\source;C:\source\JetKnights\JetKnights\include;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,6 +133,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -163,6 +164,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
