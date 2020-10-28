@@ -71,11 +71,13 @@ void NewRobot::handleEvent(SDL_Event e) {
 				}
 				//Trigger press
 				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+					Mix_PlayMusic(robotSounds.getThruster(), -1);
 					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 						boost = 600;
 					}
 					else {
 						boost = 0;
+						Mix_HaltMusic();
 					}
 
 				}

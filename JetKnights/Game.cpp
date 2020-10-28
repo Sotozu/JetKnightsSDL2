@@ -20,10 +20,13 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 		obstacles[i] = NULL;
 	}
 	//List of assets that we will be using in the game
-	images = { "C:/source/JetKnights/JetKnights/assets/robotrightnew.png",
-				"C:/source/JetKnights/JetKnights/assets/cannonsmall.png",
-				"C:/source/JetKnights/JetKnights/assets/bullet-2.png",
-				"C:/source/JetKnights/JetKnights/assets/crate.png" };
+	images = { "C:/source/JetKnights/JetKnights/assets/images/robotrightnew.png",
+				"C:/source/JetKnights/JetKnights/assets/images/cannonsmall.png",
+				"C:/source/JetKnights/JetKnights/assets/images/bullet-2.png",
+				"C:/source/JetKnights/JetKnights/assets/images/crate.png" };
+
+	//List of sounds that we will be using in the game
+
 
 	loadMedia();
 
@@ -38,8 +41,11 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
+		//soundEffects[i].loadSound(sounds[i]);
 	}
 }
+
+
 
 // Passes SDL events to classes that use them
 void Game::handleEvent(SDL_Event e) {
@@ -175,6 +181,7 @@ void Game::spawnBullets() {
 			//std::cout << SDL_GetTicks() << std::endl; 
 			if (timeTracker.testGunFire()) {
 				genTestBullets(weapons[i]->team);
+				soundEffects.playgLow();
 			}
 			
 		}

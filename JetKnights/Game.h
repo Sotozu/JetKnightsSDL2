@@ -6,12 +6,15 @@
 #include <string>
 #include <SDL_gamecontroller.h>
 #include <iomanip>
+#include <SDL_mixer.h>
 
 #include "GameObject.h"
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
 #include "LTimer.h"
+#include "Sound.h"
+
 
 
 class Game {
@@ -55,7 +58,11 @@ private:
 	SDL_Renderer* gRenderer;
 	
 	std::vector<std::string> images;
+
 	LTexture textures[TOTAL_IMAGES];
+
+	Sound soundEffects;
+
 	NewRobot* robots[TOTAL_ROBOTS];
 	NewWeapon* weapons[TOTAL_WEAPONS];
 	Bullet* bullets[TOTAL_BULLETS];
@@ -112,5 +119,7 @@ private:
 			}
 		}
 	}
+
+	
 	
 };
