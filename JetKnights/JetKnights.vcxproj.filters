@@ -37,6 +37,7 @@
     <ClCompile Include="source\NewWeapon.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Controller.h">
@@ -75,6 +76,7 @@
     <ClInclude Include="include\NewWeapon.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="StatusBar.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">

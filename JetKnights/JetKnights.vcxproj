@@ -31,6 +31,7 @@
     <ClCompile Include="source\Projectiles.cpp" />
     <ClCompile Include="source\Robot.cpp" />
     <ClCompile Include="source\Weapon.cpp" />
+    <ClCompile Include="StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\Weapon.h" />
+    <ClInclude Include="StatusBar.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

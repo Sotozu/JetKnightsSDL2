@@ -37,34 +37,9 @@ public:
 	void updateCollision(GameObject*, float);
 	void updateCollision(NewRobot*, float);
 	void updateCollision(Bullet*, float);
-	
 
-	//template <class T>
-	//void updateCollision2(int screenWidth, int screenHeight, T* b) {
-
-	//	if (hitbox->chkBorderCollisionX(screenWidth)) {
-	//		posX -= getVelX();
-	//		hitbox->setPosX(posX);
-	//	}
-	//	else if (hitbox->chkBorderCollisionY(screenHeight)) {
-	//		posY -= getVelY();
-	//		hitbox->setPosY(posY);
-	//	}
-	//	else if (chkCollision(b)) {
-	//		// Determine the type of class and decide form of update
-	//		std::string s = typeid(b).name();
-	//		std::cout << s << std::endl;
-	//		if (s == "class GameObject * __ptr64" || s == "class NewRobot * __ptr64") {
-	//			posX -= getVelX();
-	//			posY -= getVelY();
-	//		}
-	//		else if (s == "class Bullet * __ptr64") {
-	//			health -= b->getDamage();
-	//			//std::cout << "obj was bullet?" << std::endl;
-	//		}
-	//	}
-	//}
-
+	int health;
+	//int energy;
 
 private:
 	// the robot speed is based on fps/1000; 
@@ -79,7 +54,6 @@ private:
 	int mSpeed;
 	int boost;
 
-	int health;
 	int player;
 	const int JOYSTICK_DEAD_ZONE = 8000;
 	const int TRIGGER_DEAD_ZONE = 5000;

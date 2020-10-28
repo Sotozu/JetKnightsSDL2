@@ -11,6 +11,7 @@
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
+#include "StatusBar.h"
 
 
 class Game {
@@ -59,6 +60,8 @@ private:
 	NewWeapon* weapons[TOTAL_WEAPONS];
 	Bullet* bullets[TOTAL_BULLETS];
 	GameObject* obstacles[TOTAL_BULLETS];
+
+	std::list<StatusBar*> bars;
 	
 	//Mutators
 

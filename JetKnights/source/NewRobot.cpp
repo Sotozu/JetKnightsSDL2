@@ -229,11 +229,8 @@ void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 }
 
 void NewRobot::updateCollision(Bullet* b, float timeStep) {
-	//std::cout << "checking bullet collision" << std::endl;
 	if (chkCollision(b)) {
-		//std::cout << "bullet has collided" << std::endl;
 		health -= b->getDamage();
-		//b->isDead = true;
 	}
 }
 
