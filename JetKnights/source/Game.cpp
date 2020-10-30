@@ -122,7 +122,12 @@ void Game::genTestRobots() {
 	robots[1]->setPlayer(1);
 	
 	//StatusBar* healthbar = new StatusBar(25, 25, &robots[1]->health, gRenderer);
-	bars.push_back(new StatusBar(25, 25, &robots[1]->health, gRenderer));
+	StatusBar* health_bar1 = new StatusBar(25, 25, &robots[1]->health, gRenderer);
+	bars.push_back(health_bar1);
+	StatusBar* health_bar2 = new StatusBar(SCREEN_WIDTH - 25, 25, &robots[0]->health, gRenderer);
+	health_bar2->reverse();
+	bars.push_back(health_bar2);
+
 }
 
 // Explicitly generates Weapons

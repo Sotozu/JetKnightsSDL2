@@ -16,16 +16,22 @@ public:
 	// Accesors
 	int getX();
 	int getY();
+
+	void reverse();
 	
 private:
 	static const int WIDTH = 300;
-	static const int HEIGHT = 15;
+	static const int HEIGHT = 10;
 
 	int x, y;
 	int* status;
 	int max_bar;
 	int val;
 	SDL_Renderer* renderer;
-	SDL_Rect rect;	
+	SDL_Rect status_rect;
+	SDL_Rect casing_rect;
+
+	int direction = 1;
+	bool show_casing = true;
 };
 
