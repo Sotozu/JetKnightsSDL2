@@ -40,7 +40,7 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-			
+	
 			//Main loop flag
 			bool quit = false;
 
@@ -69,7 +69,11 @@ int main( int argc, char* args[] )
 				}
 				//Calculate time step
 				float timeStep = stepTimer.getTicks() / 1000.f;
-				//std::cout << stepTimer.getTicks()/1000.f << std::endl;
+
+				if (stepTimer.testGunFire()) {
+					//std::cout << "FIRE!" << std::endl;
+				}
+
 				//std::cout << timeStep << std::endl;
 				//Clear screen
 				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
@@ -162,6 +166,12 @@ bool init()
 					success = false;
 				}
 			}
+		}
+		//Initialize SDL Mixer
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+			success = false;
 		}
 	}
 

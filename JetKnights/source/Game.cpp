@@ -3,9 +3,12 @@
 
 //Constructor
 Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
+
+	workingDir = findWorkingDir();
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
+
 	//Sets array to null (empty)
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		robots[i] = NULL;
@@ -20,10 +23,13 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 		obstacles[i] = NULL;
 	}
 	//List of assets that we will be using in the game
-	images = { "assets/robotrightnew.png",
-				"assets/cannonsmall.png",
-				"assets/bullet-2.png",
-				"assets/crate.png" };
+	images = { workingDir + "/assets/images/robotrightnew.png",
+				 workingDir + "/assets/images/cannonsmall.png",
+				 workingDir + "/assets/images/bullet-2.png",
+				workingDir + "/assets/images/crate.png" };
+
+	//List of sounds that we will be using in the game
+
 
 	loadMedia();
 
@@ -38,9 +44,11 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
-		//std::cout << "Texture loaded!!!" << std::endl;
+		//soundEffects[i].loadSound(sounds[i]);
 	}
 }
+
+
 
 // Passes SDL events to classes that use them
 void Game::handleEvent(SDL_Event e) {
@@ -104,7 +112,6 @@ void Game::updateObjects2(float timeStep) {
 	//---COUT INFO---
 	for (int i = 0; i < TOTAL_ROBOTS; i++) {
 		if (robots[i] != NULL) {
-			//std::cout << "Player" << i << " HP = " << robots[i]->getHealth() << std::endl;
 		}
 	}
 }
@@ -191,7 +198,18 @@ void Game::updateAllCollisions(Bullet* array[], int length, float timeStep) {
 void Game::spawnBullets() {
 	for (int i = 0; i < TOTAL_WEAPONS; i++) {
 		if (weapons[i] != NULL && weapons[i]->isFiring) {
-			genTestBullets(weapons[i]->team);
+			//std::cout << SDL_GetTicks() << std::endl; 
+			if (timeTracker.testGunFire()) {
+				genTestBullets(weapons[i]->team);
+				soundEffects.playgLow();
+			}
+			
 		}
 	}
+}
+
+std::string Game::findWorkingDir() {
+	char buf[256];
+	GetCurrentDirectoryA(256, buf);
+	return std::string(buf) + '\\';
 }

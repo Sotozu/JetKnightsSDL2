@@ -38,6 +38,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="StatusBar.cpp" />
+    <ClCompile Include="Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Controller.h">
@@ -77,6 +80,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="StatusBar.h" />
+    <ClInclude Include="Sound.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
