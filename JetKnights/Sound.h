@@ -3,8 +3,7 @@
 #include <string>
 #include <SDL.h>
 #include <stdio.h>
-#include <cmath>
-#include <filesystem>
+#include <windows.h>
 
 class Sound {
 
@@ -31,6 +30,9 @@ public:
 private:
 	void loadSound();
 
+	std::string findWorkingDir();
+	std::string workingDir;
+
 	//The sound effects that will be used
 	Mix_Chunk* gScratch = NULL;
 	Mix_Chunk* gHigh = NULL;
@@ -38,4 +40,6 @@ private:
 	Mix_Chunk* gLow = NULL;
 
 	Mix_Music* gThruster = NULL;
+
+
 };
