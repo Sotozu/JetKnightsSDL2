@@ -19,33 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="NewRobot.cpp" />
-    <ClCompile Include="NewWeapon.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="source.cpp" />
+    <ClCompile Include="source\Bullet.cpp" />
+    <ClCompile Include="source\Game.cpp" />
     <ClCompile Include="source\GameObject.cpp" />
     <ClCompile Include="source\Hitbox.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\LTimer.cpp" />
+    <ClCompile Include="source\NewRobot.cpp" />
+    <ClCompile Include="source\NewWeapon.cpp" />
     <ClCompile Include="source\Projectiles.cpp" />
     <ClCompile Include="source\Robot.cpp" />
     <ClCompile Include="source\Weapon.cpp" />
+    <ClCompile Include="StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="include\Bullet.h" />
     <ClInclude Include="include\Controller.h" />
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Hitbox.h" />
     <ClInclude Include="include\LTexture.h" />
     <ClInclude Include="include\LTimer.h" />
+    <ClInclude Include="include\NewRobot.h" />
+    <ClInclude Include="include\NewWeapon.h" />
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\Weapon.h" />
-    <ClInclude Include="NewRobot.h" />
-    <ClInclude Include="NewWeapon.h" />
+    <ClInclude Include="StatusBar.h" />
     <ClInclude Include="Sound.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

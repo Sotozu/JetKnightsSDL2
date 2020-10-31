@@ -91,10 +91,18 @@ void Game::updateObjects2(float timeStep) {
 	updateAllCollisions(robots, TOTAL_ROBOTS, timeStep);
 	//updateAllCollisions(weapons, TOTAL_WEAPONS);  // There is no weapon collision
 	updateAllCollisions(bullets, TOTAL_BULLETS, timeStep);
+	
+	//---Render All OBJECTS---
 	updateRenders(robots, TOTAL_ROBOTS);
 	updateRenders(weapons, TOTAL_WEAPONS);
 	updateRenders(bullets, TOTAL_BULLETS);
 	updateRenders(obstacles, TOTAL_OBSTACLES);
+
+	//---UPDATE VISUALS---
+	for (auto item : bars) {
+		item->update();
+		item->render();
+	}
 
 	//---DESPAWN DEAD OBJECTS---
 	despawn(robots, TOTAL_ROBOTS);
@@ -114,10 +122,19 @@ void Game::genTestRobots() {
 	robots[0]->setHitbox();
 	robots[0]->team = 1;
 	robots[0]->setPlayer(0);
+
 	robots[1] = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
 	robots[1]->setHitbox();
 	robots[1]->team = 2;
 	robots[1]->setPlayer(1);
+	
+	//StatusBar* healthbar = new StatusBar(25, 25, &robots[1]->health, gRenderer);
+	StatusBar* health_bar1 = new StatusBar(25, 25, &robots[1]->health, gRenderer);
+	bars.push_back(health_bar1);
+	StatusBar* health_bar2 = new StatusBar(SCREEN_WIDTH - 25, 25, &robots[0]->health, gRenderer);
+	health_bar2->reverse();
+	bars.push_back(health_bar2);
+
 }
 
 // Explicitly generates Weapons

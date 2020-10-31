@@ -4,12 +4,6 @@
     <ClCompile Include="source\Weapon.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\GameObject.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -17,12 +11,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\LTexture.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewRobot.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="NewWeapon.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\Projectiles.cpp">
@@ -37,17 +25,24 @@
     <ClCompile Include="source\LTimer.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\NewRobot.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Bullet.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\NewWeapon.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="Sound.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\Controller.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -55,9 +50,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\LTexture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="NewRobot.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\Robot.h">
@@ -69,15 +61,25 @@
     <ClInclude Include="include\Projectile.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="NewWeapon.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\LTimer.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Bullet.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NewRobot.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NewWeapon.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusBar.h" />
     <ClInclude Include="Sound.h">
       <Filter>include</Filter>
     </ClInclude>

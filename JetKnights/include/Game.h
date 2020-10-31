@@ -13,6 +13,7 @@
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
+#include "StatusBar.h"
 #include "LTimer.h"
 #include "Sound.h"
 
@@ -71,7 +72,11 @@ private:
 	NewWeapon* weapons[TOTAL_WEAPONS];
 	Bullet* bullets[TOTAL_BULLETS];
 	GameObject* obstacles[TOTAL_BULLETS];
+
+	std::list<StatusBar*> bars;
+	
 	LTimer timeTracker;
+
 	//Mutators
 
 	void loadMedia();
