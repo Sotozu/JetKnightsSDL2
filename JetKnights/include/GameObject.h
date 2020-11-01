@@ -34,9 +34,11 @@ public:
 	int getPosX();
 	int getPosY();
 	float getAng();
+	Hitbox* getHitbox();
 
 	//Pocesses
 	void render();
+	bool chkBorderCollision(int, int);
 
 	template <class T>
 	bool chkCollision(T* b) {
@@ -45,10 +47,8 @@ public:
 		}
 		return false;
 	}
-	bool chkBorderCollision(int, int);
-
-	//unknown
-	Hitbox* getHitbox();
+	
+	//Data
 	bool isDead;
 	int team;
 

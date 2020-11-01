@@ -52,27 +52,15 @@ void Game::handleEvent(SDL_Event e) {
 }
 
 // Update order of the game
-void Game::updateObjects2(float timeStep) {
+void Game::updateObjects(float timeStep) {
 
 	//---MOVE ALL OBJECTS---
 	updateMovements(robots, TOTAL_ROBOTS, timeStep);
-	
-	/*int N = 0;
-	for (auto weapon : weapons) {
-		std::list<NewRobot*>::iterator it = robots.begin();
-		NewRobot* kek = *it;
-		weapon->setPos(kek->getPosX(), kek->getPosY(), 0);
-		weapon->update();
-		N++;
-	}*/
-
 	updateMovements(weapons, TOTAL_WEAPONS, timeStep);
-
 	updateMovements(bullets, TOTAL_BULLETS, timeStep);
 
 	//---COLLIDE ALL OBJECTS---
 	updateAllCollisions(robots, TOTAL_ROBOTS, timeStep);
-	//updateAllCollisions(weapons, TOTAL_WEAPONS);  // There is no weapon collision
 	updateAllCollisions(bullets, TOTAL_BULLETS, timeStep);
 	
 	//---SPAWN NEW OBJECTS---
@@ -93,8 +81,10 @@ void Game::updateObjects2(float timeStep) {
 	//---DESPAWN DEAD OBJECTS---
 	despawn(&robots, TOTAL_ROBOTS);
 	despawn(&bullets, TOTAL_BULLETS);
-	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
 	despawn(&weapons, TOTAL_WEAPONS);
+
+	//--cout info--
+	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
 
 }
 

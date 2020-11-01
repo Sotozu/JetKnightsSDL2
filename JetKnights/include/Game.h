@@ -24,29 +24,15 @@ public:
 	//Constructors
 	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
-	//Accessors
-	//Checks class against array of classes for collision 
-	template<class T, class B>
-	bool chkCollisions(B* array[], int length, T* b) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				if (b->chkCollision(array[i])) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	//Mutators
-	void updateObjects2(float);
+	void updateObjects(float);
 	void genTestRobots();
 	void genTestBullets(NewWeapon*);
 	void genTestWeapon();
 	void genTestObstacles();
-	
 	void handleEvent(SDL_Event e);
 
+	//Accessors
 	std::string findWorkingDir();
 
 private:
@@ -80,46 +66,38 @@ private:
 	//Mutators
 
 	void loadMedia();
-
 	void spawnBullets();
-
 	void updateAllCollisions(std::list<Bullet*> bullets, int length, float timeStep);
 	void updateAllCollisions(std::list<NewRobot*> robots, int length, float timeStep);
 
 	template<class T, class B>
 	void updateCollisions(T* b, B items, int length, float timeStep) {
 		for (auto item : items) {
-			if (item != NULL) {
-				b->updateCollision(item, timeStep);
-			}
+			b->updateCollision(item, timeStep);
 		}
 	}
 
 	template<class B>
 	void updateMovements(B items, int length, float timeStep) {
 		for (auto item : items) {
-			if (item != NULL) {
-				item->update(timeStep);
-			}
+			item->update(timeStep);
 		}
 	}
 
 	template<class B>
 	void updateRenders(B items, int length) {
 		for (auto item : items) {
-			if (item != NULL) {
-				item->render();
-			}
+			item->render();
 		}
 	}
 
+	// Removes dead items from the list
 	template<class B>
 	void despawn(B* items, int length) {
 		class B::iterator it = items->begin();
 		while (it != items->end()) {
 			if ( (*it)->isDead ) {
-				//std::cout << *it << " isDead" << std::endl;
-				it = items->erase(it);  // alternatively, i = items.erase(i);
+				it = items->erase(it);
 			}
 			else {
 				++it;

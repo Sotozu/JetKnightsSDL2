@@ -13,6 +13,7 @@ StatusBar::StatusBar() {
 }
 
 // Warning: This pointer based data access is prone to garbage data once the object in question is deleted
+// It is a dirty way to get relative objects, create nested objects instead.
 StatusBar::StatusBar(int x, int y, int* st, SDL_Renderer* renderer){
 	this->status = st;
 	this->renderer = renderer;

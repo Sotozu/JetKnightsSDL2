@@ -82,7 +82,7 @@ int main( int argc, char* args[] )
 				//Updates all objects in the game for every loop
 				/*Currently updates on each loop (process).
 				Will change to update at a certain fps (60).*/
-				game.updateObjects2(timeStep);
+				game.updateObjects(timeStep);
 
 				//Restart step timer
 				stepTimer.start();

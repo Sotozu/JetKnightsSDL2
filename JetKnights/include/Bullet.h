@@ -10,19 +10,18 @@ public:
 	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture);
 
 	//Mutators
+	void update(float);
+	void updateBorderCollision(int, int);
+	
 	template<class T>
 	void updateCollision(T* b, float timeStep) {
 		if (chkCollision(b)) {
 			isDead = true;
 		}
 	}
-	void updateBorderCollision(int, int);
 	
-	//Accessor
+	//Accessors
 	int getDamage();
-
-	//Processes
-	void update(float);
 
 private:
 	int duration;

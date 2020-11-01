@@ -6,9 +6,6 @@
 
 class NewWeapon : public GameObject {
 public:
-	int joyX;
-	int joyY;
-	bool isFiring;
 	//Constructors
 	NewWeapon();
 	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer);
@@ -16,6 +13,7 @@ public:
 
 
 	//Mutators
+	void handleEvent(SDL_Event e);
 	void update(float);
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 	bool WeaponFiring(SDL_Event e);
@@ -26,8 +24,10 @@ public:
 	int getJoyX();
 	int getJoyY();
 
-	//Proccesses
-	void handleEvent( SDL_Event e );
+	//Data
+	int joyX;
+	int joyY;
+	bool isFiring;
 
 private:
 	int dirX;

@@ -26,14 +26,12 @@ NewWeapon::NewWeapon() : GameObject() {
 }
 
 NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
-	/*
-	'joyX' and 'joyY' hold the all the value of the joystick +-320000
-	*/
+	
+	//'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;
-	/*
-	Hold the x and y values of the joystick only outside of the deadzone.
-	*/
+
+	//Hold the x and y values of the joystick only outside of the deadzone.
 	dirX = 0;
 	dirY = 0;
 
@@ -44,14 +42,12 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 }
 
 NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
-	/*
-'joyX' and 'joyY' hold the all the value of the joystick +-320000
-*/
+
+	//'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;
-	/*
-	Hold the x and y values of the joystick only outside of the deadzone.
-	*/
+
+	//Hold the x and y values of the joystick only outside of the deadzone.
 	dirX = 0;
 	dirY = 0;
 
@@ -114,7 +110,6 @@ int NewWeapon::getJoyY() {
 void NewWeapon::update(float timestep) {
 	ang = getAngle();
 
-
 	//again this relX buisness is a dirty way to get relative objects
 	if (relX != NULL && relY != NULL) {
 		posX = static_cast<int>(round(*relX + radius * cos(ang * M_PI / 180)));
@@ -130,8 +125,8 @@ void NewWeapon::update(float timestep) {
 
 }
 
+//Calculates a dead zone circle as opposed to dead zone cross
 bool NewWeapon::inDeadCircle() {
-	//Calculates a dead zone circle as opposed to dead zone cross
 	if (JOYSTICK_DEAD_ZONE > sqrt(pow(joyX, 2) + pow(joyY, 2))) {
 		return true;
 	}
