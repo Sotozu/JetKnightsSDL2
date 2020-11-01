@@ -18,6 +18,9 @@ GameObject::GameObject() {
 	isDead = false;
 	team = 0;
 
+	relX = NULL;
+	relY = NULL;
+
 }
 
 

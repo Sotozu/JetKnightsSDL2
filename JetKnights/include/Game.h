@@ -41,7 +41,7 @@ public:
 	//Mutators
 	void updateObjects2(float);
 	void genTestRobots();
-	void genTestBullets(int);
+	void genTestBullets(NewWeapon*);
 	void genTestWeapon();
 	void genTestObstacles();
 	
@@ -68,10 +68,10 @@ private:
 
 	Sound soundEffects;
 
-	NewRobot* robots[TOTAL_ROBOTS];
-	NewWeapon* weapons[TOTAL_WEAPONS];
-	Bullet* bullets[TOTAL_BULLETS];
-	GameObject* obstacles[TOTAL_BULLETS];
+	std::list<NewRobot*> robots;
+	std::list<NewWeapon*> weapons;
+	std::list<Bullet*> bullets;
+	std::list<GameObject*> obstacles;
 
 	std::list<StatusBar*> bars;
 	
@@ -80,51 +80,49 @@ private:
 	//Mutators
 
 	void loadMedia();
-	void updatePlayerBoost();
-	void updateBulletMovement();
-	void updateRobots();
-	void updateWeapons();
-	void updateObstacles();
-	
 
 	void spawnBullets();
 
-	void updateAllCollisions(Bullet* array[], int length, float timeStep);
-	void updateAllCollisions(NewRobot* array[], int length, float timeStep);
+	void updateAllCollisions(std::list<Bullet*> bullets, int length, float timeStep);
+	void updateAllCollisions(std::list<NewRobot*> robots, int length, float timeStep);
 
 	template<class T, class B>
-	void updateCollisions(T* b, B* array[], int length, float timeStep) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				b->updateCollision(array[i], timeStep);
+	void updateCollisions(T* b, B items, int length, float timeStep) {
+		for (auto item : items) {
+			if (item != NULL) {
+				b->updateCollision(item, timeStep);
 			}
 		}
 	}
 
 	template<class B>
-	void updateMovements(B* array[], int length, float timeStep) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				array[i]->update(timeStep);
+	void updateMovements(B items, int length, float timeStep) {
+		for (auto item : items) {
+			if (item != NULL) {
+				item->update(timeStep);
 			}
 		}
 	}
 
 	template<class B>
-	void updateRenders(B* array[], int length) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				array[i]->render();
+	void updateRenders(B items, int length) {
+		for (auto item : items) {
+			if (item != NULL) {
+				item->render();
 			}
 		}
 	}
 
 	template<class B>
-	void despawn(B* array[], int length) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL && array[i]->isDead) {
-				delete array[i];
-				array[i] = NULL;
+	void despawn(B* items, int length) {
+		class B::iterator it = items->begin();
+		while (it != items->end()) {
+			if ( (*it)->isDead ) {
+				//std::cout << *it << " isDead" << std::endl;
+				it = items->erase(it);  // alternatively, i = items.erase(i);
+			}
+			else {
+				++it;
 			}
 		}
 	}

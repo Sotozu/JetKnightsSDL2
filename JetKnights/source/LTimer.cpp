@@ -117,7 +117,7 @@ bool LTimer::testGunFire() {
         setNumberCheck(num);
 
         if (isFirstCheck) { //first time
-            std::cout << num << std::endl;
+            //std::cout << num << std::endl;
             return true;
         }
     }

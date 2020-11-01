@@ -22,6 +22,14 @@ public:
 	void setPos(int x, int y, float angle);
 	void setTeam(int);
 
+	// Dirty way to get relative objects, create a nested multi-object instead.
+	// This was a quick fix to make the weapons work with lists implemented.
+	template <class T>
+	void setRelative(T* relativeObject) {
+		relX = &relativeObject->posX;
+		relY = &relativeObject->posY;
+	}
+
 	//Accessors
 	int getPosX();
 	int getPosY();
@@ -44,15 +52,19 @@ public:
 	bool isDead;
 	int team;
 
+	float posX;
+	float posY;
+
 protected:
 	SDL_Renderer* gRenderer;
 	LTexture* texture;
 	Hitbox* hitbox;
 
-	float posX;
-	float posY;
 	float ang;
 
 	int hitboxOffsetX = 0;
 	int hitboxOffsetY = 0;
+
+	float* relX;
+	float* relY;
 };

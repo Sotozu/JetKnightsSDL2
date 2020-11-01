@@ -111,11 +111,19 @@ int NewWeapon::getJoyY() {
 }
 
 
-void NewWeapon::update() {
+void NewWeapon::update(float timestep) {
 	ang = getAngle();
 
-	posX = static_cast<int>(round(posX + radius * cos(ang * M_PI / 180)));  //If posX is not the position of a robot then the weapon will fly across the screen
-	posY = static_cast<int>(round(posY + radius * sin(ang * M_PI / 180)));
+
+	//again this relX buisness is a dirty way to get relative objects
+	if (relX != NULL && relY != NULL) {
+		posX = static_cast<int>(round(*relX + radius * cos(ang * M_PI / 180)));
+		posY = static_cast<int>(round(*relY + radius * sin(ang * M_PI / 180)));
+	}
+	else {
+		posX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
+		posY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
+	}
 	if (hitbox != NULL) {
 		hitbox->setPos(posX, posY);
 	}

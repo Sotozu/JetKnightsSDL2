@@ -16,7 +16,7 @@ public:
 
 
 	//Mutators
-	void update();
+	void update(float);
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 	bool WeaponFiring(SDL_Event e);
 	void setPlayer(int);

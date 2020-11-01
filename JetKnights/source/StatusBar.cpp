@@ -12,6 +12,7 @@ StatusBar::StatusBar() {
 	val = 0;
 }
 
+// Warning: This pointer based data access is prone to garbage data once the object in question is deleted
 StatusBar::StatusBar(int x, int y, int* st, SDL_Renderer* renderer){
 	this->status = st;
 	this->renderer = renderer;
@@ -54,6 +55,7 @@ int StatusBar::getY() {
 	return status_rect.y;
 }
 
+// Reverse the direction of the bar
 void StatusBar::reverse() {
 	if (direction == 1) {
 		direction = -1;

@@ -122,8 +122,14 @@ void NewRobot::update(float timeStep) {
 		isDead = true;
 	}
 	else {
-		posX += getVelX()*timeStep;
-		posY += getVelY()*timeStep;
+		if (relX != NULL && relY != NULL) {
+			posX += *relX + getVelX() * timeStep;
+			posY += *relY + getVelY() * timeStep;
+		}
+		else {
+			posX += getVelX() * timeStep;
+			posY += getVelY() * timeStep;
+		}
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
 			//std::cout << "POS X:" << hitbox->getPosX() << std::endl;
