@@ -55,22 +55,22 @@ void Game::handleEvent(SDL_Event e) {
 void Game::updateObjects(float timeStep) {
 
 	//---MOVE ALL OBJECTS---
-	updateMovements(robots, TOTAL_ROBOTS, timeStep);
-	updateMovements(weapons, TOTAL_WEAPONS, timeStep);
-	updateMovements(bullets, TOTAL_BULLETS, timeStep);
+	updateMovements(robots, timeStep);
+	updateMovements(weapons, timeStep);
+	updateMovements(bullets, timeStep);
 
 	//---COLLIDE ALL OBJECTS---
-	updateAllCollisions(robots, TOTAL_ROBOTS, timeStep);
-	updateAllCollisions(bullets, TOTAL_BULLETS, timeStep);
+	updateAllCollisions(robots, timeStep);
+	updateAllCollisions(bullets, timeStep);
 	
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
 	
 	//---Render All OBJECTS---
-	updateRenders(robots, TOTAL_ROBOTS);
-	updateRenders(weapons, TOTAL_WEAPONS);
-	updateRenders(bullets, TOTAL_BULLETS);
-	updateRenders(obstacles, TOTAL_OBSTACLES);
+	updateRenders(robots);
+	updateRenders(weapons);
+	updateRenders(bullets);
+	updateRenders(obstacles);
 
 	//---UPDATE VISUALS---
 	for (auto item : bars) {
@@ -79,9 +79,9 @@ void Game::updateObjects(float timeStep) {
 	}
 
 	//---DESPAWN DEAD OBJECTS---
-	despawn(&robots, TOTAL_ROBOTS);
-	despawn(&bullets, TOTAL_BULLETS);
-	despawn(&weapons, TOTAL_WEAPONS);
+	despawn(&robots);
+	despawn(&bullets);
+	despawn(&weapons);
 
 	//--cout info--
 	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
@@ -149,32 +149,28 @@ void  Game::genTestObstacles() {
 
 
 // Updates entire robot array by checking thigs they collide with
-void Game::updateAllCollisions(std::list<NewRobot*> robotlist, int length, float timeStep) {
+void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep) {
 	for (auto robot : robotlist) {
-		if (robot != NULL) {
-			robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-			updateCollisions(robot, robots, TOTAL_ROBOTS, timeStep);
-			updateCollisions(robot, obstacles, TOTAL_OBSTACLES, timeStep);
-			updateCollisions(robot, bullets, TOTAL_BULLETS, timeStep);
-		}
+		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
+		updateCollisions(robot, robots, timeStep);
+		updateCollisions(robot, obstacles, timeStep);
+		updateCollisions(robot, bullets, timeStep);
 	}
 }
 
 // Updates entire bullet array by checking thigs they collide with
-void Game::updateAllCollisions(std::list<Bullet*> mybullets, int length, float timeStep) {
+void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 	for (auto bullet : bullets) {
-		if (bullet != NULL) {
-			bullet->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
-			updateCollisions(bullet, robots, TOTAL_ROBOTS, timeStep);
-			updateCollisions(bullet, obstacles, TOTAL_OBSTACLES, timeStep);
-		}
+		bullet->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+		updateCollisions(bullet, robots, timeStep);
+		updateCollisions(bullet, obstacles, timeStep);
 	}
 }
 
 // Checks if a weapon is firing and spawns a bullet
 void Game::spawnBullets() {
 	for (auto weapon : weapons) {
-		if (weapon != NULL && weapon->isFiring) {
+		if (weapon->isFiring) {
 			if (timeTracker.testGunFire()) {
 				genTestBullets(weapon);
 				soundEffects.playgLow();

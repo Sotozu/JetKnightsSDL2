@@ -40,10 +40,6 @@ private:
 	int SCREEN_HEIGHT;
 	
 	static const int TOTAL_IMAGES = 4;
-	static const int TOTAL_ROBOTS = 2;
-	static const int TOTAL_WEAPONS = 2;
-	static const int TOTAL_BULLETS = 1000;
-	static const int TOTAL_OBSTACLES = 10;
 
 	SDL_Renderer* gRenderer;
 	
@@ -67,25 +63,25 @@ private:
 
 	void loadMedia();
 	void spawnBullets();
-	void updateAllCollisions(std::list<Bullet*> bullets, int length, float timeStep);
-	void updateAllCollisions(std::list<NewRobot*> robots, int length, float timeStep);
+	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
+	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
 
 	template<class T, class B>
-	void updateCollisions(T* b, B items, int length, float timeStep) {
+	void updateCollisions(T* b, B items, float timeStep) {
 		for (auto item : items) {
 			b->updateCollision(item, timeStep);
 		}
 	}
 
 	template<class B>
-	void updateMovements(B items, int length, float timeStep) {
+	void updateMovements(B items, float timeStep) {
 		for (auto item : items) {
 			item->update(timeStep);
 		}
 	}
 
 	template<class B>
-	void updateRenders(B items, int length) {
+	void updateRenders(B items) {
 		for (auto item : items) {
 			item->render();
 		}
@@ -93,7 +89,7 @@ private:
 
 	// Removes dead items from the list
 	template<class B>
-	void despawn(B* items, int length) {
+	void despawn(B* items) {
 		class B::iterator it = items->begin();
 		while (it != items->end()) {
 			if ( (*it)->isDead ) {

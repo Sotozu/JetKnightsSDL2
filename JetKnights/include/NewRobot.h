@@ -23,7 +23,7 @@ public:
 	void boostOff();
 	void setPlayer(int);
 
-	bool updateBorderCollision(int, int, float);
+	void updateBorderCollision(int, int, float);
 	void updateCollision(GameObject*, float);
 	void updateCollision(NewRobot*, float);
 	void updateCollision(Bullet*, float);

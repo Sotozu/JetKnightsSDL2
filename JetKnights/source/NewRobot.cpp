@@ -140,18 +140,16 @@ void NewRobot::setPlayer(int p) {
 	player = p;
 }
 
-bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
+void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
 	if (hitbox->chkBorderCollisionX(screenWidth)) {
 		posX -= getVelX() * stepTimer;
 		hitbox->setPosX(posX);
-		return true;
 	}
-	else if (hitbox->chkBorderCollisionY(screenHeight)) {
+
+	if (hitbox->chkBorderCollisionY(screenHeight)) {
 		posY -= getVelY() * stepTimer;
 		hitbox->setPosY(posY);
-		return true;
 	}
-	return false;
 }
 
 void NewRobot::updateCollision(GameObject* b, float timeStep) {
