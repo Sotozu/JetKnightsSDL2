@@ -37,7 +37,6 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 	genTestObstacles();
 	genTestWeapon();
 
-
 }
 
 //Loads all the textures for the game
@@ -212,4 +211,8 @@ std::string Game::findWorkingDir() {
 	char buf[256];
 	GetCurrentDirectoryA(256, buf);
 	return std::string(buf) + '\\';
+}
+
+void Game::playFightTheme() {
+	soundEffects.playFightTheme();
 }

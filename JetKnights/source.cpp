@@ -11,6 +11,8 @@ and may not be redistributed without written permission.*/
 #include "Game.h"
 #include "LTimer.h"
 #include <SDL_mixer.h>
+#include "ThemeMusic.h"
+#include "Sound.h"
 
 
 //Screen dimension constants
@@ -24,6 +26,9 @@ bool init();
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
+//
+
+
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
 
@@ -33,6 +38,9 @@ SDL_GameController* gGameController1 = NULL;
 
 int main( int argc, char* args[] )
 {
+	Sound soundEffects;
+
+
 	//Start up SDL and create window
 	if( !init() )
 	{
@@ -52,7 +60,7 @@ int main( int argc, char* args[] )
 			//Initialize Game object with gRenderer
 			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
-
+			game.playFightTheme();
 			//While application is running
 			while( !quit )
 			{
@@ -88,6 +96,7 @@ int main( int argc, char* args[] )
 				stepTimer.start();
 
 				SDL_RenderPresent( gRenderer );
+
 			}
 		
 	}

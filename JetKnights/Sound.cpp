@@ -41,10 +41,22 @@ void Sound::loadSound()
 		printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 	
 	}
-	gThruster = Mix_LoadMUS((workingDir + "/assets/sound/thrusterFire_004.wav").c_str());
-	if (gThruster == NULL)
+	thrusterOn = Mix_LoadWAV((workingDir + "/assets/sound/thrusterFire.wav").c_str());
+	if (thrusterOn == NULL)
 	{
-		printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+		printf("Failed to load thrusterOn effect! SDL_mixer Error: %s\n", Mix_GetError());
+
+	}
+	thrusterPowerDown = Mix_LoadWAV((workingDir + "/assets/sound/thrusterPowerDown1.wav").c_str());
+	if (thrusterPowerDown == NULL)
+	{
+		printf("Failed to load thrusterPowerDown sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+
+	}
+	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/fight_sound_track.wav").c_str());
+	if (fightTheme == NULL)
+	{
+		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
@@ -64,13 +76,20 @@ void Sound::playgMedium() {
 void Sound::playgLow() {
 	Mix_PlayChannel(-1, gLow, 0);
 }
-void Sound::playgThruster() {
-	Mix_PlayMusic(gThruster, -1);
+void Sound::turnThrusterOn() {
+	Mix_PlayChannel(1, thrusterOn, 0);
+}
+void Sound::turnThrusterOff() {
+	Mix_HaltChannel(1);
+	Mix_PlayChannel(-1, thrusterPowerDown, 0);
+}
+void Sound::playFightTheme() {
+	Mix_PlayMusic(fightTheme, -1);
+}
+void Sound::stopFightTheme() {
+	Mix_HaltMusic();
 }
 
-Mix_Music* Sound::getThruster() {
-	return gThruster;
-}
 
 std::string Sound::findWorkingDir() {
 	char buf[256];

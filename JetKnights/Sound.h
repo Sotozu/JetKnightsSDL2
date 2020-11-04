@@ -23,9 +23,11 @@ public:
 	void playgHigh();
 	void playgMedium();
 	void playgLow();
-	void playgThruster();
+	void turnThrusterOn();
+	void turnThrusterOff();
+	void playFightTheme();
+	void stopFightTheme();
 
-	Mix_Music* getThruster();
 
 private:
 	void loadSound();
@@ -38,8 +40,10 @@ private:
 	Mix_Chunk* gHigh = NULL;
 	Mix_Chunk* gMedium = NULL;
 	Mix_Chunk* gLow = NULL;
+	Mix_Chunk* thrusterOn = NULL;
+	Mix_Chunk* thrusterPowerDown = NULL;
 
-	Mix_Music* gThruster = NULL;
+	Mix_Music* fightTheme = NULL;
 
 
 };

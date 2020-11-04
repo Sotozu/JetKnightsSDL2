@@ -5,6 +5,7 @@
 #include <typeinfo>
 #include "GameObject.h"
 #include "Bullet.h"
+#include "Sound.h"
 
 
 
@@ -59,5 +60,7 @@ private:
 	const int TRIGGER_DEAD_ZONE = 5000;
 
 	bool inDeadCircle();
+
+	Sound robotSound;
 };
 

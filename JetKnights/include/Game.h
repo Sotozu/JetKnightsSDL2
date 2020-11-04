@@ -49,6 +49,8 @@ public:
 
 	std::string findWorkingDir();
 
+	void playFightTheme();
+
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
