@@ -9,19 +9,6 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
 
-	//Sets array to null (empty)
-	for (int i = 0; i < TOTAL_ROBOTS; i++) {
-		robots[i] = NULL;
-	}
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		weapons[i] = NULL;
-	}
-	for (int i = 0; i < TOTAL_BULLETS; i++) {
-		bullets[i] = NULL;
-	}
-	for (int i = 0; i < TOTAL_OBSTACLES; i++) {
-		obstacles[i] = NULL;
-	}
 	//List of assets that we will be using in the game
 	images = { workingDir + "/assets/images/robotrightnew.png",
 				 workingDir + "/assets/images/cannonsmall.png",
@@ -51,51 +38,38 @@ void Game::loadMedia() {
 
 // Passes SDL events to classes that use them
 void Game::handleEvent(SDL_Event e) {
-	for (int i = 0; i < TOTAL_ROBOTS; ++i) {
-		if (robots[i] != NULL) {
-			robots[i]->handleEvent(e);
+	for (auto robot : robots) {
+		if (robot != NULL) {
+			robot->handleEvent(e);
 		}
 	}
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		if (weapons[i] != NULL) {
-			weapons[i]->handleEvent(e);
+	for (auto weapon : weapons) {
+		if (weapon != NULL) {
+			weapon->handleEvent(e);
 		}
 	}
-
 }
 
 // Update order of the game
-void Game::updateObjects2(float timeStep) {
-	//---SPAWN NEW OBJECTS---
-	spawnBullets();
+void Game::updateObjects(float timeStep) {
 
 	//---MOVE ALL OBJECTS---
-	updateMovements(robots, TOTAL_ROBOTS, timeStep);
-
-	for (int i = 0; i < TOTAL_WEAPONS; ++i) {
-		if ( weapons[i] != NULL ){
-			if (robots[i] == NULL) {
-				weapons[i]->isDead = true;
-			}
-			else {
-				weapons[i]->setPos(robots[i]->getPosX(), robots[i]->getPosY(), 0);
-				weapons[i]->update();
-			}
-		}
-	}
-
-	updateMovements(bullets, TOTAL_BULLETS, timeStep);
+	updateMovements(robots, timeStep);
+	updateMovements(weapons, timeStep);
+	updateMovements(bullets, timeStep);
 
 	//---COLLIDE ALL OBJECTS---
-	updateAllCollisions(robots, TOTAL_ROBOTS, timeStep);
-	//updateAllCollisions(weapons, TOTAL_WEAPONS);  // There is no weapon collision
-	updateAllCollisions(bullets, TOTAL_BULLETS, timeStep);
+	updateAllCollisions(robots, timeStep);
+	updateAllCollisions(bullets, timeStep);
+	
+	//---SPAWN NEW OBJECTS---
+	spawnBullets();
 	
 	//---Render All OBJECTS---
-	updateRenders(robots, TOTAL_ROBOTS);
-	updateRenders(weapons, TOTAL_WEAPONS);
-	updateRenders(bullets, TOTAL_BULLETS);
-	updateRenders(obstacles, TOTAL_OBSTACLES);
+	updateRenders(robots);
+	updateRenders(weapons);
+	updateRenders(bullets);
+	updateRenders(obstacles);
 
 	//---UPDATE VISUALS---
 	for (auto item : bars) {
@@ -104,33 +78,32 @@ void Game::updateObjects2(float timeStep) {
 	}
 
 	//---DESPAWN DEAD OBJECTS---
-	despawn(robots, TOTAL_ROBOTS);
-	despawn(bullets, TOTAL_BULLETS);
-	despawn(weapons, TOTAL_WEAPONS);
+	despawn(&robots);
+	despawn(&bullets);
+	despawn(&weapons);
 
-	//---COUT INFO---
-	for (int i = 0; i < TOTAL_ROBOTS; i++) {
-		if (robots[i] != NULL) {
-		}
-	}
+	//--cout info--
+	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
+
 }
 
 // Explicitly generates Robots
 void Game::genTestRobots() {
-	robots[0] = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
-	robots[0]->setHitbox();
-	robots[0]->team = 1;
-	robots[0]->setPlayer(0);
+	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
+	robot0->setHitbox();
+	robot0->team = 1;
+	robot0->setPlayer(0);
+	robots.push_back(robot0);
 
-	robots[1] = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
-	robots[1]->setHitbox();
-	robots[1]->team = 2;
-	robots[1]->setPlayer(1);
+	NewRobot* robot1 = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
+	robot1->setHitbox();
+	robot1->team = 2;
+	robot1->setPlayer(1);
+	robots.push_back(robot1);
 	
-	//StatusBar* healthbar = new StatusBar(25, 25, &robots[1]->health, gRenderer);
-	StatusBar* health_bar1 = new StatusBar(25, 25, &robots[1]->health, gRenderer);
+	StatusBar* health_bar1 = new StatusBar(25, 25, &robot1->health, gRenderer);
 	bars.push_back(health_bar1);
-	StatusBar* health_bar2 = new StatusBar(SCREEN_WIDTH - 25, 25, &robots[0]->health, gRenderer);
+	StatusBar* health_bar2 = new StatusBar(SCREEN_WIDTH - 25, 25, &robot0->health, gRenderer);
 	health_bar2->reverse();
 	bars.push_back(health_bar2);
 
@@ -138,68 +111,67 @@ void Game::genTestRobots() {
 
 // Explicitly generates Weapons
 void  Game::genTestWeapon() {
-	weapons[0] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-	weapons[0]->setHitbox();
-	weapons[0]->team = 1;
-	weapons[0]->setPlayer(0);
-	weapons[1] = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-	weapons[1]->setHitbox();
-	weapons[1]->team = 2;
-	weapons[1]->setPlayer(1);
+	NewWeapon* weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
+	weapon->setHitbox();
+	weapon->team = 1;
+	weapon->setPlayer(0);
+	weapon->setRelative(*robots.begin()); //relative pointer acting as origin (this is a dirty method)
+	weapons.push_back(weapon);
+	
+	weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
+	weapon->setHitbox();
+	weapon->team = 2;
+	weapon->setPlayer(1);
+	weapon->setRelative(*(++robots.begin())); //relative pointer acting as origin (this is a dirty method)
+	weapons.push_back(weapon);
 
 }
 
 // Progressively generates bullets
-void Game::genTestBullets(int team) {
-	for (int i = 0; i < TOTAL_BULLETS; ++i) {
-		if (bullets[i] == NULL) {
-			bullets[i] = new Bullet(weapons[team - 1]->getPosX(), weapons[team - 1]->getPosY(), weapons[team - 1]->getAngle(), 1200, gRenderer, &textures[2]);
-			bullets[i]->setHitbox();
-			bullets[i]->setTeam(team);
-			return;
-		}
-	}
+void Game::genTestBullets(NewWeapon* weapon) {
+	Bullet* new_bullet = new Bullet(weapon->getPosX(), weapon->getPosY(), weapon->getAngle(), 1200, gRenderer, &textures[2]);
+	new_bullet->setHitbox();
+	new_bullet->setTeam(weapon->team);
+	bullets.push_back(new_bullet);
 }
 
 // Explicitly generates obstacles
 void  Game::genTestObstacles() {
-	obstacles[0] = new GameObject(300, 300, 0, gRenderer, &textures[3]);
-	obstacles[0]->setHitbox();
-	obstacles[1] = new GameObject(600, 100, 0, gRenderer, &textures[3]);
-	obstacles[1]->setHitbox();
+	GameObject* obstacle0 = new GameObject(300, 300, 0, gRenderer, &textures[3]);
+	obstacle0->setHitbox();
+	obstacles.push_back(obstacle0);
+
+	GameObject* obstacle1 = new GameObject(600, 100, 0, gRenderer, &textures[3]);
+	obstacle1->setHitbox();
+	obstacles.push_back(obstacle1);
 }
 
 
 // Updates entire robot array by checking thigs they collide with
-void Game::updateAllCollisions(NewRobot* array[], int length, float timeStep) {
-	for (int i = 0; i < length; ++i) {
-		if (array[i] != NULL) {
-			array[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-			updateCollisions(array[i], robots, TOTAL_ROBOTS, timeStep);
-			updateCollisions(array[i], obstacles, TOTAL_OBSTACLES, timeStep);
-			updateCollisions(array[i], bullets, TOTAL_BULLETS, timeStep);
-		}
+void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep) {
+	for (auto robot : robotlist) {
+		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
+		updateCollisions(robot, robots, timeStep);
+		updateCollisions(robot, obstacles, timeStep);
+		updateCollisions(robot, bullets, timeStep);
 	}
 }
 
 // Updates entire bullet array by checking thigs they collide with
-void Game::updateAllCollisions(Bullet* array[], int length, float timeStep) {
-	for (int i = 0; i < length; ++i) {
-		if (array[i] != NULL) {
-			array[i]->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
-			updateCollisions(array[i], robots, TOTAL_ROBOTS, timeStep);
-			updateCollisions(array[i], obstacles, TOTAL_OBSTACLES, timeStep);
-		}
+void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
+	for (auto bullet : bullets) {
+		bullet->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
+		updateCollisions(bullet, robots, timeStep);
+		updateCollisions(bullet, obstacles, timeStep);
 	}
 }
 
 // Checks if a weapon is firing and spawns a bullet
 void Game::spawnBullets() {
-	for (int i = 0; i < TOTAL_WEAPONS; i++) {
-		if (weapons[i] != NULL && weapons[i]->isFiring) {
-			//std::cout << SDL_GetTicks() << std::endl; 
+	for (auto weapon : weapons) {
+		if (weapon->isFiring) {
 			if (timeTracker.testGunFire()) {
-				genTestBullets(weapons[i]->team);
+				genTestBullets(weapon);
 				soundEffects.playgLow();
 			}
 			

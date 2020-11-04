@@ -41,8 +41,8 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* 
 	player = 0;
 }
 
+// Handles controller events that the robot should respond to
 void NewRobot::handleEvent(SDL_Event e) {
-
 	//Controller input
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If player 1 input
@@ -92,8 +92,8 @@ void NewRobot::handleEvent(SDL_Event e) {
 
 }
 
+//Calculates a dead zone circle as opposed to dead zone cross
 bool NewRobot::inDeadCircle() {
-	//Calculates a dead zone circle as opposed to dead zone cross
 	if (JOYSTICK_DEAD_ZONE > sqrt(pow(joyX, 2) + pow(joyY, 2))) {
 		return true;
 	}
@@ -102,8 +102,7 @@ bool NewRobot::inDeadCircle() {
 	}
 }
 
-
-
+// Gets angle of the Joystick
 float NewRobot::getJoyAngle() {
 	return atan2((double)joyY, (double)joyX) * (180.0 / M_PI);
 }
@@ -123,61 +122,41 @@ int NewRobot::getVelY() {
 	return mSpeed * sin(getJoyAngle() * (M_PI / 180));
 }
 
+// Robot update function
 void NewRobot::update(float timeStep) {
 	//std::cout << timeStep << std::endl;
 	if (health <= 0) {
 		isDead = true;
 	}
 	else {
-		posX += getVelX()*timeStep;
-		posY += getVelY()*timeStep;
+		if (relX != NULL && relY != NULL) {
+			posX += *relX + getVelX() * timeStep;
+			posY += *relY + getVelY() * timeStep;
+		}
+		else {
+			posX += getVelX() * timeStep;
+			posY += getVelY() * timeStep;
+		}
 		if (hitbox != NULL) {
 			hitbox->setPos(posX, posY);
-			//std::cout << "POS X:" << hitbox->getPosX() << std::endl;
-			//std::cout << "POS Y:" << hitbox->getPosY() << std::endl;
-
 		}
 	}
 }
-
-//void NewRobot::updateCollision(int screenWidth, int screenHeight, Hitbox* b) {
-//	if (hitbox != NULL) {
-//		if (hitbox->chkBorderCollisionX(screenWidth) || hitbox->chkCollision(b)) {
-//			posX -= getVelX();
-//			hitbox->setPosX(posX);
-//		}
-//		if (hitbox->chkBorderCollisionY(screenHeight) || hitbox->chkCollision(b)) {
-//			posY -= getVelY();
-//			hitbox->setPosY(posY);
-//		}
-//	}
-//	else {
-//		//Check if bullet hits screen boundaries
-//		if (hitbox->chkBorderCollisionX(screenWidth)) {
-//			posX -= getVelX();
-//		}
-//		if (hitbox->chkBorderCollisionY(screenHeight)) {
-//			posY -= getVelY();
-//		}
-//	}
-//}
 
 void NewRobot::setPlayer(int p) {
 	player = p;
 }
 
-bool NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
+void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
 	if (hitbox->chkBorderCollisionX(screenWidth)) {
 		posX -= getVelX() * stepTimer;
 		hitbox->setPosX(posX);
-		return true;
 	}
-	else if (hitbox->chkBorderCollisionY(screenHeight)) {
+
+	if (hitbox->chkBorderCollisionY(screenHeight)) {
 		posY -= getVelY() * stepTimer;
 		hitbox->setPosY(posY);
-		return true;
 	}
-	return false;
 }
 
 void NewRobot::updateCollision(GameObject* b, float timeStep) {
@@ -187,39 +166,6 @@ void NewRobot::updateCollision(GameObject* b, float timeStep) {
 	}
 }
 
-//bool NewRobot::isPlayerBoosting(SDL_Event e) {
-//
-//	static int num = 0;
-//
-//	if (e.type == SDL_CONTROLLERAXISMOTION) {
-//		//Controller input
-//
-//		//If player 1 input
-//		if (e.caxis.which == 0) {
-//
-//			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
-//				//std::cout << "WHAT!!!" << std::endl;
-//				//std::cout << e.caxis.value << std::endl;
-//				if (e.caxis.value > RIGHT_TRIGGER_DEAD_ZONE) {
-//					num = e.caxis.value;
-//					return true;
-//				}
-//				else {
-//					num = e.caxis.value;
-//
-//					return false;
-//				}
-//			}
-//		}
-//	}
-//	else if (num > RIGHT_TRIGGER_DEAD_ZONE) {
-//		return true;
-//	}
-//	else {
-//		return false;
-//	}
-//}
-
 void NewRobot::boostOn() {
 	std::cout << "BOOSTING" << std::endl;
 	boost = 600;
@@ -228,6 +174,7 @@ void NewRobot::boostOff() {
 	boost = 0;
 }
 
+// When the robot collides with another robot
 void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 	if (chkCollision(b)) {
 		posX -= getVelX() * timeStep;
@@ -235,6 +182,7 @@ void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 	}
 }
 
+// When the robot collides with a bullet
 void NewRobot::updateCollision(Bullet* b, float timeStep) {
 	if (chkCollision(b)) {
 		health -= b->getDamage();

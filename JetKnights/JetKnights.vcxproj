@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Game.cpp" />
@@ -29,11 +28,16 @@
     <ClCompile Include="source\LTimer.cpp" />
     <ClCompile Include="source\NewRobot.cpp" />
     <ClCompile Include="source\NewWeapon.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="source\Projectiles.cpp" />
     <ClCompile Include="source\Robot.cpp" />
     <ClCompile Include="source\Weapon.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="ThemeMusic.cpp" />
+=======
+    <ClCompile Include="source\Sound.cpp" />
+    <ClCompile Include="source\StatusBar.cpp" />
+>>>>>>> 85d2521e07603350b6f042e8e160e09a27411c9a
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Bullet.h" />
@@ -45,12 +49,17 @@
     <ClInclude Include="include\LTimer.h" />
     <ClInclude Include="include\NewRobot.h" />
     <ClInclude Include="include\NewWeapon.h" />
+<<<<<<< HEAD
     <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Robot.h" />
     <ClInclude Include="include\Weapon.h" />
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="ThemeMusic.h" />
+=======
+    <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\StatusBar.h" />
+>>>>>>> 85d2521e07603350b6f042e8e160e09a27411c9a
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

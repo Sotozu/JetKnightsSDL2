@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="source\Weapon.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\GameObject.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -11,12 +8,6 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\LTexture.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Projectiles.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Robot.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source.cpp">
@@ -37,8 +28,10 @@
     <ClCompile Include="source\NewWeapon.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="StatusBar.cpp" />
-    <ClCompile Include="Sound.cpp">
+    <ClCompile Include="source\Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StatusBar.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="ThemeMusic.cpp">
@@ -53,15 +46,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\LTexture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Robot.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Weapon.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Projectile.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\LTimer.h">
@@ -82,8 +66,10 @@
     <ClInclude Include="include\NewWeapon.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="StatusBar.h" />
-    <ClInclude Include="Sound.h">
+    <ClInclude Include="include\Sound.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StatusBar.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="ThemeMusic.h">

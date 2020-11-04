@@ -16,7 +16,7 @@ public:
 	NewRobot(int x, int y, float angle, SDL_Renderer* renderer);
 	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 
-	//Mutator
+	//Mutators
 	void handleEvent(SDL_Event e);
 	bool isPlayerBoosting(SDL_Event e);
 	void update(float);
@@ -24,8 +24,12 @@ public:
 	void boostOff();
 	void setPlayer(int);
 
+	void updateBorderCollision(int, int, float);
+	void updateCollision(GameObject*, float);
+	void updateCollision(NewRobot*, float);
+	void updateCollision(Bullet*, float);
 
-	//Accessor
+	//Accessors
 	int getJoyX();
 	int getJoyY();
 
@@ -34,11 +38,7 @@ public:
 	float getJoyAngle();
 	int getHealth();
 
-	bool updateBorderCollision(int, int, float);
-	void updateCollision(GameObject*, float);
-	void updateCollision(NewRobot*, float);
-	void updateCollision(Bullet*, float);
-
+	//Data
 	int health;
 	//int energy;
 

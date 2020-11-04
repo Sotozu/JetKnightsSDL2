@@ -24,29 +24,15 @@ public:
 	//Constructors
 	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
-	//Accessors
-	//Checks class against array of classes for collision 
-	template<class T, class B>
-	bool chkCollisions(B* array[], int length, T* b) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				if (b->chkCollision(array[i])) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	//Mutators
-	void updateObjects2(float);
+	void updateObjects(float);
 	void genTestRobots();
-	void genTestBullets(int);
+	void genTestBullets(NewWeapon*);
 	void genTestWeapon();
 	void genTestObstacles();
-	
 	void handleEvent(SDL_Event e);
 
+	//Accessors
 	std::string findWorkingDir();
 
 	void playFightTheme();
@@ -56,10 +42,6 @@ private:
 	int SCREEN_HEIGHT;
 	
 	static const int TOTAL_IMAGES = 4;
-	static const int TOTAL_ROBOTS = 2;
-	static const int TOTAL_WEAPONS = 2;
-	static const int TOTAL_BULLETS = 1000;
-	static const int TOTAL_OBSTACLES = 10;
 
 	SDL_Renderer* gRenderer;
 	
@@ -70,10 +52,10 @@ private:
 
 	Sound soundEffects;
 
-	NewRobot* robots[TOTAL_ROBOTS];
-	NewWeapon* weapons[TOTAL_WEAPONS];
-	Bullet* bullets[TOTAL_BULLETS];
-	GameObject* obstacles[TOTAL_BULLETS];
+	std::list<NewRobot*> robots;
+	std::list<NewWeapon*> weapons;
+	std::list<Bullet*> bullets;
+	std::list<GameObject*> obstacles;
 
 	std::list<StatusBar*> bars;
 	
@@ -82,51 +64,41 @@ private:
 	//Mutators
 
 	void loadMedia();
-	void updatePlayerBoost();
-	void updateBulletMovement();
-	void updateRobots();
-	void updateWeapons();
-	void updateObstacles();
-	
-
 	void spawnBullets();
-
-	void updateAllCollisions(Bullet* array[], int length, float timeStep);
-	void updateAllCollisions(NewRobot* array[], int length, float timeStep);
+	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
+	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
 
 	template<class T, class B>
-	void updateCollisions(T* b, B* array[], int length, float timeStep) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				b->updateCollision(array[i], timeStep);
-			}
+	void updateCollisions(T* b, B items, float timeStep) {
+		for (auto item : items) {
+			b->updateCollision(item, timeStep);
 		}
 	}
 
 	template<class B>
-	void updateMovements(B* array[], int length, float timeStep) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				array[i]->update(timeStep);
-			}
+	void updateMovements(B items, float timeStep) {
+		for (auto item : items) {
+			item->update(timeStep);
 		}
 	}
 
 	template<class B>
-	void updateRenders(B* array[], int length) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL) {
-				array[i]->render();
-			}
+	void updateRenders(B items) {
+		for (auto item : items) {
+			item->render();
 		}
 	}
 
+	// Removes dead items from the list
 	template<class B>
-	void despawn(B* array[], int length) {
-		for (int i = 0; i < length; ++i) {
-			if (array[i] != NULL && array[i]->isDead) {
-				delete array[i];
-				array[i] = NULL;
+	void despawn(B* items) {
+		class B::iterator it = items->begin();
+		while (it != items->end()) {
+			if ( (*it)->isDead ) {
+				it = items->erase(it);
+			}
+			else {
+				++it;
 			}
 		}
 	}
