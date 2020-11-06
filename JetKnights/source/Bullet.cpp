@@ -23,8 +23,8 @@ Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTe
 void Bullet::update(float timeStep) {
 	posX = posX + getVelX() * timeStep;
 	posY = posY + getVelY() * timeStep;
-	if (hitbox != NULL) {
-		hitbox->setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+	for(auto hitbox : hitboxes) {
+		hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
 	}
 }
 

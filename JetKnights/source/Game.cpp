@@ -83,7 +83,7 @@ void Game::updateObjects(float timeStep) {
 	despawn(&weapons);
 
 	//--cout info--
-	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
+	//std::cout << "Size of bullets list = " << bullets.size() << std::endl;
 
 }
 

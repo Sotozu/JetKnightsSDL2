@@ -5,22 +5,13 @@ we need to
 */
 
 NewWeapon::NewWeapon() : GameObject() {
-	gRenderer = NULL;
-	texture = NULL;
-
-	posX = 0;
-	posY = 0;
+	joyX = 0;
+	joyY = 0;
 
 	dirX = 0;
 	dirY = 0;
 
-	joyX = 0;
-	joyY = 0;
-
 	radius = 0;
-
-	hitboxOffsetX = 0;
-	hitboxOffsetY = 0;
 	player = 0;
 	isFiring = false;
 }
@@ -119,10 +110,9 @@ void NewWeapon::update(float timestep) {
 		posX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
 		posY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
 	}
-	if (hitbox != NULL) {
-		hitbox->setPos(posX, posY);
+	for( auto hitbox : hitboxes ) {
+		hitbox.setPos(posX, posY);
 	}
-
 }
 
 //Calculates a dead zone circle as opposed to dead zone cross
@@ -151,7 +141,7 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 	posY = y;
 	ang = angle;
 	renderer = gRenderer;
-	texture = ltexture;
+	textures.push_back(*ltexture);
 }
 
 void NewWeapon::setPlayer(int a) {

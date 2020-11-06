@@ -37,6 +37,7 @@
     <ClCompile Include="ThemeMusic.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Controller.h">
@@ -75,6 +76,8 @@
     <ClInclude Include="ThemeMusic.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Sound.h" />
+    <ClInclude Include="include\StatusBar.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">

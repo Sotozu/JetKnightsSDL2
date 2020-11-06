@@ -137,8 +137,8 @@ void NewRobot::update(float timeStep) {
 			posX += getVelX() * timeStep;
 			posY += getVelY() * timeStep;
 		}
-		if (hitbox != NULL) {
-			hitbox->setPos(posX, posY);
+		for(auto hitbox : hitboxes) {
+			hitbox.setPos(posX, posY);
 		}
 	}
 }
@@ -148,14 +148,15 @@ void NewRobot::setPlayer(int p) {
 }
 
 void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
-	if (hitbox->chkBorderCollisionX(screenWidth)) {
-		posX -= getVelX() * stepTimer;
-		hitbox->setPosX(posX);
-	}
-
-	if (hitbox->chkBorderCollisionY(screenHeight)) {
-		posY -= getVelY() * stepTimer;
-		hitbox->setPosY(posY);
+	for (auto hitbox : hitboxes) {
+		if (hitbox.chkBorderCollisionX(screenWidth)) {
+			posX -= getVelX() * stepTimer;
+			hitbox.setPosX(posX);
+		}
+		if (hitbox.chkBorderCollisionY(screenHeight)) {
+			posY -= getVelY() * stepTimer;
+			hitbox.setPosY(posY);
+		}
 	}
 }
 
