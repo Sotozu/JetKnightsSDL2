@@ -8,8 +8,6 @@ GameObject::GameObject() {
 	*/
 
 	gRenderer = NULL;
-	textures;
-	hitboxes;
 	posX = 0;
 	posY = 0;
 	ang = 0;
@@ -31,8 +29,6 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	No need to explicitly set it here as C++ does that for us.
 	*/
 	gRenderer = renderer;
-	textures;
-	hitboxes;
 	posX = x;
 	posY = y;
 	ang = angle;
@@ -41,12 +37,14 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	isDead = false;
 	isRelative = true;
 	team = 0;
+
+	relX = NULL;
+	relY = NULL;
 }
 
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* texture) {
 	gRenderer = renderer;
 	textures.push_back(*texture);
-	hitboxes;
 	posX = x;
 	posY = y;
 	ang = angle;
@@ -55,37 +53,32 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTextu
 	isDead = false;
 	isRelative = true;
 	team = 0;
+
+	relX = NULL;
+	relY = NULL;
 }
 
 
 void GameObject::render() {
 	if (!isDead) {
-		for(auto texture : textures){
+		// make sure to pass by reference!!!
+		for(auto &texture : textures) {
 			texture.render(posX, posY, NULL, gRenderer, ang);
 		}
-		for(auto hitbox : hitboxes) {
+		for(auto &hitbox : hitboxes) {
 			hitbox.render();
 		}
-		SDL_Rect origin = { posX - 2, posY - 2, 5, 5 };
-		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
-		SDL_RenderFillRect(gRenderer, &origin);
+		//	SDL_Rect origin = { posX - 2, posY - 2, 5, 5 };
+		//	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
+		//	SDL_RenderFillRect(gRenderer, &origin);
+		//}
 	}
 }
 
-void GameObject::setHitbox() {
-	for(auto texture : textures) {
+void GameObject::addHitbox() {
+	for(auto &texture : textures) {
 		hitboxes.push_back(Hitbox(posX, posY, texture.getWidth(), texture.getHeight(), gRenderer));
 	}
-}
-
-void GameObject::setHitbox(int h, int w, int offsetX=0, int offsetY=0) {
-	hitboxOffsetX = offsetX;
-	hitboxOffsetY = offsetY;
-	hitboxes.push_back(Hitbox(posX + offsetX, posY + offsetY, h, w, gRenderer));
-}
-
-void GameObject::setTexture(LTexture& texture) {
-	textures.push_back(texture);
 }
 
 void GameObject::setPos(int x, int y, float angle=0.0) {
@@ -122,8 +115,4 @@ bool GameObject::chkBorderCollision(int screenWidth, int screenHeight) {
 
 void GameObject::setTeam(int a) {
 	team = a;
-}
-
-void GameObject::update(float timestep) {
-
 }

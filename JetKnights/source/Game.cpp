@@ -83,20 +83,21 @@ void Game::updateObjects(float timeStep) {
 	despawn(&weapons);
 
 	//--cout info--
-	//std::cout << "Size of bullets list = " << bullets.size() << std::endl;
+	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
+	//textures[3].render(100, 100, NULL, gRenderer, 0.0);
 
 }
 
 // Explicitly generates Robots
 void Game::genTestRobots() {
 	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &textures[0]);
-	robot0->setHitbox();
+	robot0->addHitbox();
 	robot0->team = 1;
 	robot0->setPlayer(0);
 	robots.push_back(robot0);
 
 	NewRobot* robot1 = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
-	robot1->setHitbox();
+	robot1->addHitbox();
 	robot1->team = 2;
 	robot1->setPlayer(1);
 	robots.push_back(robot1);
@@ -112,14 +113,14 @@ void Game::genTestRobots() {
 // Explicitly generates Weapons
 void  Game::genTestWeapon() {
 	NewWeapon* weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-	weapon->setHitbox();
+	weapon->addHitbox();
 	weapon->team = 1;
 	weapon->setPlayer(0);
 	weapon->setRelative(*robots.begin()); //relative pointer acting as origin (this is a dirty method)
 	weapons.push_back(weapon);
 	
 	weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-	weapon->setHitbox();
+	weapon->addHitbox();
 	weapon->team = 2;
 	weapon->setPlayer(1);
 	weapon->setRelative(*(++robots.begin())); //relative pointer acting as origin (this is a dirty method)
@@ -130,7 +131,7 @@ void  Game::genTestWeapon() {
 // Progressively generates bullets
 void Game::genTestBullets(NewWeapon* weapon) {
 	Bullet* new_bullet = new Bullet(weapon->getPosX(), weapon->getPosY(), weapon->getAngle(), 1200, gRenderer, &textures[2]);
-	new_bullet->setHitbox();
+	new_bullet->addHitbox();
 	new_bullet->setTeam(weapon->team);
 	bullets.push_back(new_bullet);
 }
@@ -138,11 +139,11 @@ void Game::genTestBullets(NewWeapon* weapon) {
 // Explicitly generates obstacles
 void  Game::genTestObstacles() {
 	GameObject* obstacle0 = new GameObject(300, 300, 0, gRenderer, &textures[3]);
-	obstacle0->setHitbox();
+	obstacle0->addHitbox();
 	obstacles.push_back(obstacle0);
 
 	GameObject* obstacle1 = new GameObject(600, 100, 0, gRenderer, &textures[3]);
-	obstacle1->setHitbox();
+	obstacle1->addHitbox();
 	obstacles.push_back(obstacle1);
 }
 

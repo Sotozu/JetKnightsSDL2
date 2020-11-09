@@ -137,7 +137,7 @@ void NewRobot::update(float timeStep) {
 			posX += getVelX() * timeStep;
 			posY += getVelY() * timeStep;
 		}
-		for(auto hitbox : hitboxes) {
+		for(auto &hitbox : hitboxes) {
 			hitbox.setPos(posX, posY);
 		}
 	}
