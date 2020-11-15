@@ -1,3 +1,4 @@
+#pragma once
 #include "GameObject.h"
 
 //CONSTRUCTORS
@@ -68,10 +69,9 @@ void GameObject::render() {
 		for(auto &hitbox : hitboxes) {
 			hitbox.render();
 		}
-		//	SDL_Rect origin = { posX - 2, posY - 2, 5, 5 };
-		//	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
-		//	SDL_RenderFillRect(gRenderer, &origin);
-		//}
+		SDL_Rect origin = { posX - 2, posY - 2, 5, 5 };
+		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
+		SDL_RenderFillRect(gRenderer, &origin);
 	}
 }
 
@@ -115,4 +115,19 @@ bool GameObject::chkBorderCollision(int screenWidth, int screenHeight) {
 
 void GameObject::setTeam(int a) {
 	team = a;
+}
+
+void GameObject::setPosRelative(int x, int y, float angle) {
+	setPos(x + posX, y + posY, ang + angle);
+}
+
+void GameObject::updateSelf() {
+	std::cout << "self update has run" << std::endl;
+	updateChildren();
+}
+
+void GameObject::updateChildren() {
+	for (auto& variantObject : children) {
+		std::visit([](auto& child) {child.updateSelf(); }, variantObject);
+	}
 }

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <SDL_gamecontroller.h>
 #include <typeinfo>
+
 #include "GameObject.h"
 #include "Bullet.h"
 #include "Sound.h"

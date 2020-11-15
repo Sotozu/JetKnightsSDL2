@@ -4,12 +4,17 @@
 #include <iostream>
 #include <SDL_gamecontroller.h>
 #include <list>
-//#include <variant>
+#include <variant>
 
 #include "LTexture.h"
 #include "Hitbox.h"
-//#include "NewRobot.h"  //including causes error
-//#include "NewWeapon.h" //including causes error
+
+
+// Attempting todeclare classes that will go into the variant
+class GameObject;
+class NewRobot;
+class NewWeapon;
+class Bullet;
 
 class GameObject {
 
@@ -22,9 +27,13 @@ public:
 
 	//Mutators
 	void addHitbox();
+	void setTeam(int);
 
 	void setPos(int x, int y, float angle);
-	void setTeam(int);
+	void setPosRelative(int x, int y, float angle);
+	void updateSelf();
+	void updateChildren();
+	
 
 	// Dirty way to get relative objects, create nested multi-objects instead.
 	template <class T>
@@ -57,9 +66,11 @@ public:
 		return false;
 	}
 
-	
-	
+
 	//Data
+
+	std::list<std::variant<GameObject, NewRobot, NewWeapon, Bullet>> children;
+
 	bool isDead;
 	bool isRelative;
 	int team;
@@ -72,8 +83,6 @@ protected:
 	std::list<LTexture> textures;
 	std::list<Hitbox> hitboxes;
 
-	//std::list<std::variant<GameObject, NewRobot, NewWeapon>> childs;
-
 	float ang;
 
 	int hitboxOffsetX = 0;
@@ -82,3 +91,7 @@ protected:
 	float* relX;
 	float* relY;
 };
+
+#include "NewRobot.h"
+#include "NewWeapon.h"
+#include "Bullet.h"
