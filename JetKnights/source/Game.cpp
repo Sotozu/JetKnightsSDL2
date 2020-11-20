@@ -39,9 +39,8 @@ void Game::loadMedia() {
 // Passes SDL events to classes that use them
 void Game::handleEvent(SDL_Event e) {
 	for (auto robot : robots) {
-		if (robot != NULL) {
-			robot->handleEvent(e);
-		}
+		robot->handleEvent(e);
+		robot->passOnEvent(e);
 	}
 	for (auto weapon : weapons) {
 		if (weapon != NULL) {
@@ -95,9 +94,11 @@ void Game::genTestRobots() {
 	robot0->team = 1;
 	robot0->setPlayer(0);
 		// Testing child objects
-		GameObject box = GameObject(50, -50, 0, gRenderer, &textures[3]);
-		box.addHitbox();
-		robot0->addChild(box);
+		NewWeapon* wep = new NewWeapon(0, 50, 0, gRenderer, &textures[1]);
+		GameObject* box = new GameObject(70, -50, 0, gRenderer, &textures[3]);
+		box->addHitbox();
+		box->addChild(*wep);
+		robot0->addChild(*box);
 	robots.push_back(robot0);
 
 	NewRobot* robot1 = new NewRobot(400, 300, 0, gRenderer, &textures[0]);
@@ -174,12 +175,14 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 // Checks if a weapon is firing and spawns a bullet
 void Game::spawnBullets() {
 	for (auto weapon : weapons) {
-		if (weapon->isFiring) {
-			if (timeTracker.testGunFire()) {
+		if (weapon->isFiring & weapon->canFire()) {
+			/*if (timeTracker.testGunFire()) {
 				genTestBullets(weapon);
 				soundEffects.playgLow();
-			}
-			
+			}*/
+			weapon->attemptToFire();
+			genTestBullets(weapon);
+			soundEffects.playgLow();
 		}
 	}
 }

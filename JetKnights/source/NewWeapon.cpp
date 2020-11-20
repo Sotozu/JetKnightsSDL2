@@ -14,6 +14,8 @@ NewWeapon::NewWeapon() : GameObject() {
 	radius = 0;
 	player = 0;
 	isFiring = false;
+
+	stepTimer.start();
 }
 
 NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -30,6 +32,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	player = 0;
 	isFiring = false;
 
+	stepTimer.start();
 }
 
 NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -45,6 +48,8 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture
 	radius = 40;
 	player = 0;
 	isFiring = false;
+
+	stepTimer.start();
 }
 
 // How the weapon handles SDL events
@@ -103,15 +108,23 @@ void NewWeapon::update(float timestep) {
 
 	//again this relX buisness is a dirty way to get relative objects
 	if (relXp != NULL && relYp != NULL) {
-		posX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
-		posY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
+		relX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
+		relY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
 	}
 	else {
-		posX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
-		posY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
+		relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
+		relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
 	}
-	for( auto hitbox : hitboxes ) {
-		hitbox.setPos(posX, posY);
+	updatePos();
+}
+
+bool NewWeapon::canFire() {
+	return (stepTimer.getTicks() >= bulletInterval);
+}
+
+void NewWeapon::attemptToFire() {
+	if (canFire()) {
+		stepTimer.start();
 	}
 }
 

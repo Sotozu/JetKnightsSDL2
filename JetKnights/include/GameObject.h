@@ -34,8 +34,10 @@ public:
 	void setPosRelative(int x, int y, float angle);
 	void updatePos();
 
-	void updateSelf();
-	void updateChildren();
+	void update(float timestep);
+	void updateChildren(float timeStep);
+	void handleEvent(SDL_Event e);
+	void passOnEvent(SDL_Event e);
 	
 
 	// Dirty way to get relative objects, create nested multi-objects instead.

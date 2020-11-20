@@ -1,7 +1,10 @@
 #pragma once
 #include <iostream>
+#include "LTimer.h"
+
 #include "GameObject.h"
 #include "Bullet.h"
+
 
 
 class NewWeapon : public GameObject {
@@ -18,11 +21,13 @@ public:
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
 	bool WeaponFiring(SDL_Event e);
 	void setPlayer(int);
+	void attemptToFire();
 
 	//Accessors
 	float getAngle();
 	int getJoyX();
 	int getJoyY();
+	bool canFire();
 
 	//Data
 	int joyX;
@@ -41,6 +46,8 @@ private:
 	const int JOYSTICK_DEAD_ZONE = 20000;
 	const int TRIGGER_DEAD_ZONE = 5000;
 	bool inDeadCircle();
-	
+
+	LTimer stepTimer;
+	int bulletInterval = 50;
 };
 

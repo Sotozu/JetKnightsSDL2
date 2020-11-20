@@ -159,16 +159,30 @@ void GameObject::setPosRelative(int x, int y, float angle) {
 	setPos(x + posX, y + posY, ang + angle);
 }
 
-void GameObject::updateSelf() {
+void GameObject::update(float timestep) {
 	//std::cout << "self update has run" << std::endl;
-	updateChildren();
+	updateChildren(timestep);
 }
 
-void GameObject::updateChildren() {
+void GameObject::handleEvent(SDL_Event e) {
+	// Do nothing
+	passOnEvent(e);
+}
+
+void GameObject::passOnEvent(SDL_Event e) {
+	for (auto& variantObject : children) {
+		std::visit([&](auto& child) {
+			child.handleEvent(e);
+		}, variantObject);
+
+	}
+}
+
+void GameObject::updateChildren(float timestep) {
 	for (auto& variantObject : children) {
 		std::visit([&](auto& child) {
 			child.setOrigin(getPosX(), getPosY());
-			child.updateSelf();
+			child.update(timestep);
 		}, variantObject);
 
 	}

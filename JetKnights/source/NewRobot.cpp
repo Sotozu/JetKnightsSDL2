@@ -132,7 +132,7 @@ void NewRobot::update(float timeStep) {
 		for(auto &hitbox : hitboxes) {
 			hitbox.setPos(posX, posY);
 		}
-		updateChildren();
+		updateChildren(timeStep);
 	}
 }
 
@@ -172,8 +172,9 @@ void NewRobot::boostOff() {
 // When the robot collides with another robot
 void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 	if (chkCollision(b)) {
-		posX -= getVelX() * timeStep;
-		posY -= getVelY() * timeStep;
+		relX -= getVelX() * timeStep;
+		relY -= getVelY() * timeStep;
+		updatePos();
 	}
 }
 
