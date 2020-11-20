@@ -102,9 +102,9 @@ void NewWeapon::update(float timestep) {
 	ang = getAngle();
 
 	//again this relX buisness is a dirty way to get relative objects
-	if (relX != NULL && relY != NULL) {
-		posX = static_cast<int>(round(*relX + radius * cos(ang * M_PI / 180)));
-		posY = static_cast<int>(round(*relY + radius * sin(ang * M_PI / 180)));
+	if (relXp != NULL && relYp != NULL) {
+		posX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
+		posY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
 	}
 	else {
 		posX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));

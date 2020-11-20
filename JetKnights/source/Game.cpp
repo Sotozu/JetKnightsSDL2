@@ -94,6 +94,10 @@ void Game::genTestRobots() {
 	robot0->addHitbox();
 	robot0->team = 1;
 	robot0->setPlayer(0);
+		// Testing child objects
+		GameObject box = GameObject(50, -50, 0, gRenderer, &textures[3]);
+		box.addHitbox();
+		robot0->addChild(box);
 	robots.push_back(robot0);
 
 	NewRobot* robot1 = new NewRobot(400, 300, 0, gRenderer, &textures[0]);

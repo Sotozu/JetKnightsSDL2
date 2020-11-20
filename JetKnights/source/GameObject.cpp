@@ -9,6 +9,10 @@ GameObject::GameObject() {
 	*/
 
 	gRenderer = NULL;
+	oriX = 0;
+	oriY = 0;
+	relX = 0;
+	relY = 0;
 	posX = 0;
 	posY = 0;
 	ang = 0;
@@ -18,8 +22,8 @@ GameObject::GameObject() {
 	isRelative = true;
 	team = 0;
 
-	relX = NULL;
-	relY = NULL;
+	relXp = NULL;
+	relYp = NULL;
 
 }
 
@@ -30,6 +34,10 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	No need to explicitly set it here as C++ does that for us.
 	*/
 	gRenderer = renderer;
+	oriX = 0;
+	oriY = 0;
+	relX = x;
+	relY = y;
 	posX = x;
 	posY = y;
 	ang = angle;
@@ -39,13 +47,17 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	isRelative = true;
 	team = 0;
 
-	relX = NULL;
-	relY = NULL;
+	relXp = NULL;
+	relYp = NULL;
 }
 
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* texture) {
 	gRenderer = renderer;
 	textures.push_back(*texture);
+	oriX = 0;
+	oriY = 0;
+	relX = x;
+	relY = y;
 	posX = x;
 	posY = y;
 	ang = angle;
@@ -55,36 +67,61 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTextu
 	isRelative = true;
 	team = 0;
 
-	relX = NULL;
-	relY = NULL;
+	relXp = NULL;
+	relYp = NULL;
 }
 
 
 void GameObject::render() {
 	if (!isDead) {
-		// make sure to pass by reference!!!
+		// make sure to pass by reference for all these!!!
+		// Render texture
 		for(auto &texture : textures) {
 			texture.render(posX, posY, NULL, gRenderer, ang);
 		}
+		// Render hitbox
 		for(auto &hitbox : hitboxes) {
 			hitbox.render();
 		}
+		// Render Origin
 		SDL_Rect origin = { posX - 2, posY - 2, 5, 5 };
 		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
 		SDL_RenderFillRect(gRenderer, &origin);
+		// Render Children
+		for (auto& variantObject : children) {
+			std::visit([](auto& child) {
+				child.render();
+			}, variantObject);
+		}
 	}
 }
 
+// Adds default hitbox to object
 void GameObject::addHitbox() {
 	for(auto &texture : textures) {
 		hitboxes.push_back(Hitbox(posX, posY, texture.getWidth(), texture.getHeight(), gRenderer));
 	}
 }
 
+void GameObject::updatePos() {
+	posX = oriX + relX;
+	posY = oriY + relY;
+	for (auto& hitbox : hitboxes) {
+		hitbox.setPos(posX, posY);
+	}
+}
+
+void GameObject::setOrigin(float x, float y) {
+	oriX = x;
+	oriY = y;
+	updatePos();
+}
+
 void GameObject::setPos(int x, int y, float angle=0.0) {
-	posX = x;
-	posY = y;
+	relX = x;
+	relY = y;
 	ang = angle;
+	updatePos();
 }
 
 int  GameObject::getPosX() {
@@ -98,6 +135,7 @@ float  GameObject::getAng() {
 }
 
 // are we using this? check to see if we can remove
+// only returns first hitbox atm
 Hitbox* GameObject::getHitbox() {
 	for (auto hitbox : hitboxes) {
 		return &hitbox;
@@ -122,12 +160,16 @@ void GameObject::setPosRelative(int x, int y, float angle) {
 }
 
 void GameObject::updateSelf() {
-	std::cout << "self update has run" << std::endl;
+	//std::cout << "self update has run" << std::endl;
 	updateChildren();
 }
 
 void GameObject::updateChildren() {
 	for (auto& variantObject : children) {
-		std::visit([](auto& child) {child.updateSelf(); }, variantObject);
+		std::visit([&](auto& child) {
+			child.setOrigin(getPosX(), getPosY());
+			child.updateSelf();
+		}, variantObject);
+
 	}
 }

@@ -10,7 +10,7 @@
 #include "Hitbox.h"
 
 
-// Attempting todeclare classes that will go into the variant
+// Declaring classes that will go into the variant
 class GameObject;
 class NewRobot;
 class NewWeapon;
@@ -29,8 +29,11 @@ public:
 	void addHitbox();
 	void setTeam(int);
 
+	void setOrigin(float x, float y);
 	void setPos(int x, int y, float angle);
 	void setPosRelative(int x, int y, float angle);
+	void updatePos();
+
 	void updateSelf();
 	void updateChildren();
 	
@@ -38,8 +41,14 @@ public:
 	// Dirty way to get relative objects, create nested multi-objects instead.
 	template <class T>
 	void setRelative(T* relativeObject) {
-		relX = &relativeObject->posX;
-		relY = &relativeObject->posY;
+		relXp = &relativeObject->posX;
+		relYp = &relativeObject->posY;
+	}
+
+	template <class T>
+	void addChild(T &childObj) {
+		childObj.setOrigin(getPosX(), getPosY());
+		children.push_back(childObj);
 	}
 
 	//Accessors
@@ -75,8 +84,9 @@ public:
 	bool isRelative;
 	int team;
 
-	float posX;
-	float posY;
+	float oriX, oriY; //Absolute origin
+	float relX, relY; //Relative position
+	float posX, posY; //Absolute position
 
 protected:
 	SDL_Renderer* gRenderer;
@@ -88,10 +98,12 @@ protected:
 	int hitboxOffsetX = 0;
 	int hitboxOffsetY = 0;
 
-	float* relX;
-	float* relY;
+	float* relXp;
+	float* relYp;
 };
 
+
+// Headers for classes in the variant included here
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"

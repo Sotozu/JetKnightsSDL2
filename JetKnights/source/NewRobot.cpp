@@ -125,21 +125,14 @@ int NewRobot::getVelY() {
 // Robot update function
 void NewRobot::update(float timeStep) {
 	//std::cout << timeStep << std::endl;
-	if (health <= 0) {
-		isDead = true;
-	}
-	else {
-		if (relX != NULL && relY != NULL) {
-			posX += *relX + getVelX() * timeStep;
-			posY += *relY + getVelY() * timeStep;
-		}
-		else {
-			posX += getVelX() * timeStep;
-			posY += getVelY() * timeStep;
-		}
+	if (!isDead) {
+		relX += getVelX() * timeStep;
+		relY += getVelY() * timeStep;
+		updatePos();
 		for(auto &hitbox : hitboxes) {
 			hitbox.setPos(posX, posY);
 		}
+		updateChildren();
 	}
 }
 
@@ -150,20 +143,21 @@ void NewRobot::setPlayer(int p) {
 void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
 	for (auto hitbox : hitboxes) {
 		if (hitbox.chkBorderCollisionX(screenWidth)) {
-			posX -= getVelX() * stepTimer;
-			hitbox.setPosX(posX);
+			relX -= getVelX() * stepTimer;
+			updatePos();
 		}
 		if (hitbox.chkBorderCollisionY(screenHeight)) {
-			posY -= getVelY() * stepTimer;
-			hitbox.setPosY(posY);
+			relY -= getVelY() * stepTimer;
+			updatePos();
 		}
 	}
 }
 
 void NewRobot::updateCollision(GameObject* b, float timeStep) {
 	if (chkCollision(b)) {
-			posX -= getVelX() * timeStep;
-			posY -= getVelY() * timeStep;
+			relX -= getVelX() * timeStep;
+			relY -= getVelY() * timeStep;
+			updatePos();
 	}
 }
 
@@ -187,6 +181,9 @@ void NewRobot::updateCollision(NewRobot* b, float timeStep) {
 void NewRobot::updateCollision(Bullet* b, float timeStep) {
 	if (chkCollision(b)) {
 		health -= b->getDamage();
+		if (health <= 0) {
+			isDead = true;
+		}
 	}
 }
 
