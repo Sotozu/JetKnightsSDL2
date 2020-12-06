@@ -64,8 +64,7 @@ void Game::updateObjects(float timeStep) {
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
 	for (auto robot : robots) {
-		NewRobot kek = *robot;
-		spawnBulletsRecursive(kek);
+		spawnBulletsRecursive(*robot);
 	}
 	
 	//---Render All OBJECTS---
