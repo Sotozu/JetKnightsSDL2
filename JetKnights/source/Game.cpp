@@ -63,6 +63,10 @@ void Game::updateObjects(float timeStep) {
 	
 	//---SPAWN NEW OBJECTS---
 	spawnBullets();
+	for (auto robot : robots) {
+		NewRobot kek = *robot;
+		spawnBulletsRecursive(kek);
+	}
 	
 	//---Render All OBJECTS---
 	updateRenders(robots);
@@ -82,7 +86,7 @@ void Game::updateObjects(float timeStep) {
 	despawn(&weapons);
 
 	//--cout info--
-	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
+	//std::cout << "Size of bullets list = " << bullets.size() << std::endl;
 	//textures[3].render(100, 100, NULL, gRenderer, 0.0);
 
 }
@@ -176,10 +180,6 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 void Game::spawnBullets() {
 	for (auto weapon : weapons) {
 		if (weapon->isFiring & weapon->canFire()) {
-			/*if (timeTracker.testGunFire()) {
-				genTestBullets(weapon);
-				soundEffects.playgLow();
-			}*/
 			weapon->attemptToFire();
 			genTestBullets(weapon);
 			soundEffects.playgLow();

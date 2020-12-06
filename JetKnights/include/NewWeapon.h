@@ -48,6 +48,6 @@ private:
 	bool inDeadCircle();
 
 	LTimer stepTimer;
-	int bulletInterval = 50;
+	int bulletInterval = 1;
 };
 

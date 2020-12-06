@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <SDL_mixer.h>
 #include <windows.h>
+#include <variant>
 
 #include "GameObject.h"
 #include "NewRobot.h"
@@ -65,6 +66,7 @@ private:
 
 	void loadMedia();
 	void spawnBullets();
+	void spawnBulletsRecursive();
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
 	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
 
@@ -103,6 +105,25 @@ private:
 		}
 	}
 
+	template<class T>
+	void spawnBulletsRecursive(T &object) {
+		for (auto &varObj : object.children) {
+			if (auto weapon = std::get_if<NewWeapon>(&varObj)) {
+				std::cout << varObj.index() << " WEAPON" << std::endl;
+				if (weapon->isFiring & weapon->canFire()) {
+					weapon->attemptToFire();
+					genTestBullets(weapon);
+					soundEffects.playgLow();
+				}
+			}
+			else {
+				std::cout << varObj.index() << std::endl;
+			}
+			std::visit([&](auto& child) {
+				spawnBulletsRecursive(child);
+			}, varObj);
+		}
+	}
 	
 	
 };
