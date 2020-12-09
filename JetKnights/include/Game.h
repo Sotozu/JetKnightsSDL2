@@ -17,6 +17,7 @@
 #include "StatusBar.h"
 #include "LTimer.h"
 #include "Sound.h"
+#include "RelTexture.h"
 
 
 
@@ -29,7 +30,7 @@ public:
 	void updateObjects(float);
 	void genTestRobots();
 	void genTestBullets(NewWeapon*);
-	void genTestWeapon();
+	//void genTestWeapon();
 	void genTestObstacles();
 	void handleEvent(SDL_Event e);
 
@@ -66,7 +67,6 @@ private:
 
 	void loadMedia();
 	void spawnBullets();
-	void spawnBulletsRecursive();
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
 	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
 
@@ -105,19 +105,17 @@ private:
 		}
 	}
 
+	// Recursively checks objects for weapons and fires them
 	template<class T>
 	void spawnBulletsRecursive(T &object) {
 		for (auto &varObj : object.children) {
 			if (auto weapon = std::get_if<NewWeapon>(&varObj)) {
-				std::cout << varObj.index() << " WEAPON" << std::endl;
+				// Fire Weapon check
 				if (weapon->isFiring & weapon->canFire()) {
 					weapon->attemptToFire();
 					genTestBullets(weapon);
 					soundEffects.playgLow();
 				}
-			}
-			else {
-				std::cout << varObj.index() << std::endl;
 			}
 			std::visit([&](auto& child) {
 				spawnBulletsRecursive(child);

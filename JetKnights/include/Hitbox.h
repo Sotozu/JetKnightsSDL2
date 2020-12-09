@@ -27,6 +27,9 @@ public:
 
 	void render();
 
+	//Data
+	float relX, relY;
+
 private:
 	SDL_Renderer* gRenderer;
 };

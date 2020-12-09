@@ -28,7 +28,7 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 	player = 0;
 }
 
-NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
 	// 'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;

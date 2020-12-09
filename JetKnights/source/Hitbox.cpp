@@ -6,6 +6,9 @@ Hitbox::Hitbox() {
 	y = 0;
 	w = 0;
 	h = 0;
+
+	relX = 0;
+	relY = 0;
 }
 
 Hitbox::Hitbox(int posX, int posY, int width, int height, SDL_Renderer* renderer) {

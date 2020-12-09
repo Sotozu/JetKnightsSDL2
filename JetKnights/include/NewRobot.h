@@ -15,11 +15,11 @@ public:
 	//Constructors
 	NewRobot();
 	NewRobot(int x, int y, float angle, SDL_Renderer* renderer);
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
+	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture);
 
 	//Mutators
 	void handleEvent(SDL_Event e);
-	bool isPlayerBoosting(SDL_Event e);
+	//bool isPlayerBoosting(SDL_Event e);
 	void update(float);
 	void boostOn();
 	void boostOff();

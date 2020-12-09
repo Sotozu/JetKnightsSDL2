@@ -7,7 +7,7 @@ public:
 	//Constructors
 	Bullet();
 	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer);
-	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture);
+	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture);
 
 	//Mutators
 	void update(float);

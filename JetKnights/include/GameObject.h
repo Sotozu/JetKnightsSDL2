@@ -7,6 +7,7 @@
 #include <variant>
 
 #include "LTexture.h"
+#include "RelTexture.h"
 #include "Hitbox.h"
 
 
@@ -23,7 +24,7 @@ public:
 	//Constructors
 	GameObject();
 	GameObject(int x, int y, float angle, SDL_Renderer* renderer);
-	GameObject(int x, int y, float angle, SDL_Renderer* renderer, LTexture* );
+	GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture );
 
 	//Mutators
 	void addHitbox();
@@ -38,18 +39,11 @@ public:
 	void updateChildren(float timeStep);
 	void handleEvent(SDL_Event e);
 	void passOnEvent(SDL_Event e);
-	
-
-	// Dirty way to get relative objects, create nested multi-objects instead.
-	template <class T>
-	void setRelative(T* relativeObject) {
-		relXp = &relativeObject->posX;
-		relYp = &relativeObject->posY;
-	}
 
 	template <class T>
 	void addChild(T &childObj) {
 		childObj.setOrigin(getPosX(), getPosY());
+		childObj.setTeam(this->team);
 		children.push_back(childObj);
 	}
 
@@ -61,6 +55,8 @@ public:
 
 	//Pocesses
 	void render();
+	void renderTextures();
+	void renderHitboxes();
 	bool chkBorderCollision(int, int);
 
 	template <class T>
@@ -92,7 +88,7 @@ public:
 
 protected:
 	SDL_Renderer* gRenderer;
-	std::list<LTexture> textures;
+	std::list<RelTexture> textures;
 	std::list<Hitbox> hitboxes;
 
 	float ang;
@@ -100,8 +96,8 @@ protected:
 	int hitboxOffsetX = 0;
 	int hitboxOffsetY = 0;
 
-	float* relXp;
-	float* relYp;
+	//float* relXp;
+	//float* relYp;
 };
 
 

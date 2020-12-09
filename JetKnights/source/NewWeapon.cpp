@@ -35,7 +35,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	stepTimer.start();
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) : GameObject(x, y, angle, renderer, texture) {
 
 	//'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
@@ -107,14 +107,16 @@ void NewWeapon::update(float timestep) {
 	ang = getAngle();
 
 	//again this relX buisness is a dirty way to get relative objects
-	if (relXp != NULL && relYp != NULL) {
-		relX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
-		relY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
-	}
-	else {
-		relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
-		relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
-	}
+	//if (relXp != NULL && relYp != NULL) {
+	//	relX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
+	//	relY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
+	//}
+	//else {
+	//	relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
+	//	relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
+	//}
+	relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
+	relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
 	updatePos();
 }
 
@@ -138,7 +140,7 @@ bool NewWeapon::inDeadCircle() {
 	}
 }
 
-void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture) {
+void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
 
 	//NewWeapon variables
 	joyX = 0;
@@ -154,7 +156,7 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 	posY = y;
 	ang = angle;
 	renderer = gRenderer;
-	textures.push_back(*ltexture);
+	textures.push_back(*texture);
 }
 
 void NewWeapon::setPlayer(int a) {

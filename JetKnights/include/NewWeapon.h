@@ -12,14 +12,14 @@ public:
 	//Constructors
 	NewWeapon();
 	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer);
-	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
+	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
 
 
 	//Mutators
 	void handleEvent(SDL_Event e);
 	void update(float);
-	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, LTexture* ltexture);
-	bool WeaponFiring(SDL_Event e);
+	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
+	//bool WeaponFiring(SDL_Event e);
 	void setPlayer(int);
 	void attemptToFire();
 
@@ -38,8 +38,8 @@ private:
 	int dirX;
 	int dirY;
 	             
-	int muzzleX;
-	int muzzleY;
+	//int muzzleX;
+	//int muzzleY;
 
 	int radius;
 	int player;

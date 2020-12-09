@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet() {
+Bullet::Bullet() : GameObject() {
 	duration = 100;
 	mSpeed = 0;
 	damage = 1;
@@ -13,7 +13,7 @@ Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : G
 	damage = 1;
 }
 
-Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, LTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture) : GameObject(x, y, angle, renderer, texture) {
 	duration = 100;
 	mSpeed = speed;
 	damage = 1;
