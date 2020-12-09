@@ -17,6 +17,9 @@ Hitbox::Hitbox(int posX, int posY, int width, int height, SDL_Renderer* renderer
 	y = posY;
 	w = width;
 	h = height;
+
+	relX = 0;
+	relY = 0;
 }
 
 bool Hitbox::chkCollision(Hitbox* b) {
@@ -64,14 +67,14 @@ int Hitbox::getHeight() {
 }
 
 void Hitbox::setPos(int posX, int posY) {
-	x = posX;
-	y = posY;
+	x = posX + relX;
+	y = posY + relY;
 }
 void Hitbox::setPosX(int posX) {
-	x = posX;
+	x = posX + relX;
 }
 void Hitbox::setPosY(int posY) {
-	y = posY;
+	y = posY + relY;
 }
 
 SDL_Rect* Hitbox::getRect() {

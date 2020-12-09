@@ -95,9 +95,6 @@ protected:
 
 	int hitboxOffsetX = 0;
 	int hitboxOffsetY = 0;
-
-	//float* relXp;
-	//float* relYp;
 };
 
 

@@ -37,9 +37,6 @@ public:
 private:
 	int dirX;
 	int dirY;
-	             
-	//int muzzleX;
-	//int muzzleY;
 
 	int radius;
 	int player;

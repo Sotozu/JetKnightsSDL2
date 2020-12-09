@@ -3,11 +3,6 @@
 
 //CONSTRUCTORS
 GameObject::GameObject() {
-	/*The 'hitbox' object requires a textures width and length
-	No texture is passesd here. This will intialized  'hitbox' by its default constructor. 
-	No need to explicitly set it here as C++ does that for us.
-	*/
-
 	gRenderer = NULL;
 	oriX = 0;
 	oriY = 0;
@@ -21,18 +16,10 @@ GameObject::GameObject() {
 	isDead = false;
 	isRelative = true;
 	team = 0;
-
-	//relXp = NULL;
-	//relYp = NULL;
-
 }
 
 
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
-	/*The 'hitbox' object requires a textures width and length
-	No texture is passesd here. This will intialized  'hitbox' by its default constructor.
-	No need to explicitly set it here as C++ does that for us.
-	*/
 	gRenderer = renderer;
 	oriX = 0;
 	oriY = 0;
@@ -46,9 +33,6 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	isDead = false;
 	isRelative = true;
 	team = 0;
-
-	//relXp = NULL;
-	//relYp = NULL;
 }
 
 GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
@@ -66,9 +50,6 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTex
 	isDead = false;
 	isRelative = true;
 	team = 0;
-
-	//relXp = NULL;
-	//relYp = NULL;
 }
 
 
@@ -84,8 +65,11 @@ void GameObject::render() {
 
 		// Render Children
 		for (auto& variantObject : children) {
-			std::visit([](auto& child) {
+			std::visit([&](auto& child) {
 				child.render();
+				// Render blue connecting lines
+				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
+				SDL_RenderDrawLine(gRenderer, posX, posY, posX + child.relX, posY + child.relY);
 			}, variantObject);
 		}
 	}
@@ -101,7 +85,7 @@ void GameObject::renderTextures() {
 	for (auto& texture : textures) {
 		texture.render(posX, posY, ang);
 
-		// These are all for viewing relations
+		// These are all for rendering relations
 		SDL_Rect textureOrigin = { posX + texture.x - 2, posY + texture.y - 2, 5, 5 };
 		SDL_Rect textureBounds = { posX + texture.x, posY + texture.y, texture.getWidth(), texture.getHeight() };
 		SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
@@ -114,7 +98,10 @@ void GameObject::renderTextures() {
 // Adds default hitbox to object
 void GameObject::addHitbox() {
 	for(auto &texture : textures) {
-		hitboxes.push_back(Hitbox(posX + texture.x, posY + texture.y, texture.getWidth(), texture.getHeight(), gRenderer));
+		Hitbox hitbox = Hitbox(posX + texture.x, posY + texture.y, texture.getWidth(), texture.getHeight(), gRenderer);
+		hitbox.relX = texture.x;
+		hitbox.relY = texture.y;
+		hitboxes.push_back(hitbox);
 	}
 }
 
@@ -150,7 +137,7 @@ float  GameObject::getAng() {
 }
 
 // are we using this? check to see if we can remove
-// only returns first hitbox atm
+// Returns first hitbox in the list
 Hitbox* GameObject::getHitbox() {
 	for (auto hitbox : hitboxes) {
 		return &hitbox;
@@ -180,7 +167,6 @@ void GameObject::setPosRelative(int x, int y, float angle) {
 }
 
 void GameObject::update(float timestep) {
-	//std::cout << "self update has run" << std::endl;
 	updateChildren(timestep);
 }
 

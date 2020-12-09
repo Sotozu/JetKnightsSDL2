@@ -92,7 +92,7 @@ void Game::updateObjects(float timeStep) {
 // Explicitly generates Robots
 void Game::genTestRobots() {
 	RelTexture* roboTex = new RelTexture(textures[0].getWidth() / -2, textures[0].getHeight() / -2, 0, &textures[0], gRenderer);
-	RelTexture* wepTex = new RelTexture(0, 0, 0, &textures[1], gRenderer);
+	RelTexture* wepTex = new RelTexture(textures[1].getWidth() / -2, textures[1].getHeight() / -2, 0, &textures[1], gRenderer);
 
 	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &*roboTex);
 	robot0->addHitbox();
@@ -104,7 +104,7 @@ void Game::genTestRobots() {
 	robot0->addChild(*wep0);
 	robots.push_back(robot0);
 
-	NewRobot* robot1 = new NewRobot(400, 300, 0, gRenderer, &*roboTex);
+	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex);
 	robot1->addHitbox();
 	robot1->team = 2;
 	robot1->setPlayer(1);
@@ -123,27 +123,9 @@ void Game::genTestRobots() {
 
 }
 
-//// Explicitly generates Weapons
-//void  Game::genTestWeapon() {
-//	NewWeapon* weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-//	weapon->addHitbox();
-//	weapon->team = 1;
-//	weapon->setPlayer(0);
-//	weapon->setRelative(*robots.begin()); //relative pointer acting as origin (this is a dirty method)
-//	weapons.push_back(weapon);
-//	
-//	weapon = new NewWeapon(10, 10, 0, gRenderer, &textures[1]);
-//	weapon->addHitbox();
-//	weapon->team = 2;
-//	weapon->setPlayer(1);
-//	weapon->setRelative(*(++robots.begin())); //relative pointer acting as origin (this is a dirty method)
-//	weapons.push_back(weapon);
-//
-//}
-
 // Progressively generates bullets
 void Game::genTestBullets(NewWeapon* weapon) {
-	RelTexture* bulletTex = new RelTexture(0, 0, 0, &textures[2], gRenderer);
+	RelTexture* bulletTex = new RelTexture(textures[2].getWidth() / -2, textures[2].getHeight() / -2, 0, &textures[2], gRenderer);
 	Bullet* new_bullet = new Bullet(weapon->getPosX(), weapon->getPosY(), weapon->getAngle(), 1200, gRenderer, &*bulletTex);
 	new_bullet->addHitbox();
 	new_bullet->setTeam(weapon->team);

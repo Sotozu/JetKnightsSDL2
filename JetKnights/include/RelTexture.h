@@ -9,10 +9,11 @@ public:
 
     void render(float x, float y, float ang);
 
+    // Accesors
     int getWidth();
     int getHeight();
 
-    //Data
+    // Data
     float x, y, ang;
 
 private:

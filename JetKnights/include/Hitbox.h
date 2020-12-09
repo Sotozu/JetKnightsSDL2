@@ -28,7 +28,7 @@ public:
 	void render();
 
 	//Data
-	float relX, relY;
+	float relX, relY; //relative position of hitbox to GameObject
 
 private:
 	SDL_Renderer* gRenderer;

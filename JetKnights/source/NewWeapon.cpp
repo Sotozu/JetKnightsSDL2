@@ -105,16 +105,6 @@ int NewWeapon::getJoyY() {
 
 void NewWeapon::update(float timestep) {
 	ang = getAngle();
-
-	//again this relX buisness is a dirty way to get relative objects
-	//if (relXp != NULL && relYp != NULL) {
-	//	relX = static_cast<int>(round(*relXp + radius * cos(ang * M_PI / 180)));
-	//	relY = static_cast<int>(round(*relYp + radius * sin(ang * M_PI / 180)));
-	//}
-	//else {
-	//	relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
-	//	relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
-	//}
 	relX = static_cast<int>(round(radius * cos(ang * M_PI / 180)));
 	relY = static_cast<int>(round(radius * sin(ang * M_PI / 180)));
 	updatePos();

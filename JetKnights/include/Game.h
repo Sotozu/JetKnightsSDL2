@@ -30,7 +30,6 @@ public:
 	void updateObjects(float);
 	void genTestRobots();
 	void genTestBullets(NewWeapon*);
-	//void genTestWeapon();
 	void genTestObstacles();
 	void handleEvent(SDL_Event e);
 
@@ -63,7 +62,7 @@ private:
 	
 	LTimer timeTracker;
 
-	//Mutators
+	// Mutators
 
 	void loadMedia();
 	void spawnBullets();

@@ -19,7 +19,6 @@ public:
 
 	//Mutators
 	void handleEvent(SDL_Event e);
-	//bool isPlayerBoosting(SDL_Event e);
 	void update(float);
 	void boostOn();
 	void boostOff();
