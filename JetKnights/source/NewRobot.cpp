@@ -123,15 +123,46 @@ int NewRobot::getVelY() {
 }
 
 // Robot update function
-void NewRobot::update(float timeStep) {
+//void NewRobot::update(float timeStep) {
+//	//std::cout << timeStep << std::endl;
+//	if (!isDead) {
+//		relX += getVelX() * timeStep;
+//		relY += getVelY() * timeStep;
+//		updatePos();
+//		for(auto &hitbox : hitboxes) {
+//			hitbox.setPos(posX, posY);
+//		}
+//
+//		/*HERE WE NEED TO CHECK FOR */
+//
+//		updateChildren(timeStep);
+//	}
+//}
+void NewRobot::updatePosX(float timeStep) {
 	//std::cout << timeStep << std::endl;
 	if (!isDead) {
 		relX += getVelX() * timeStep;
-		relY += getVelY() * timeStep;
 		updatePos();
-		for(auto &hitbox : hitboxes) {
+		for (auto& hitbox : hitboxes) {
 			hitbox.setPos(posX, posY);
 		}
+
+		/*HERE WE NEED TO CHECK FOR */
+
+		updateChildren(timeStep);
+	}
+}
+void NewRobot::updatePosY(float timeStep) {
+	//std::cout << timeStep << std::endl;
+	if (!isDead) {
+		relY += getVelY() * timeStep;
+		updatePos();
+		for (auto& hitbox : hitboxes) {
+			hitbox.setPos(posX, posY);
+		}
+
+		/*HERE WE NEED TO CHECK FOR */
+
 		updateChildren(timeStep);
 	}
 }
@@ -153,12 +184,8 @@ void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float st
 	}
 }
 
-void NewRobot::updateCollision(GameObject* b, float timeStep) {
-	if (chkCollision(b)) {
-			relX -= getVelX() * timeStep;
-			relY -= getVelY() * timeStep;
-			updatePos();
-	}
+int NewRobot::getHealth() {
+	return health;
 }
 
 void NewRobot::boostOn() {
@@ -168,6 +195,15 @@ void NewRobot::boostOn() {
 void NewRobot::boostOff() {
 	boost = 0;
 }
+
+void NewRobot::updateCollision(GameObject* b, float timeStep) {
+	if (chkCollision(b)) {
+		relX -= getVelX() * timeStep;
+		relY -= getVelY() * timeStep;
+		updatePos();
+	}
+}
+
 
 // When the robot collides with another robot
 void NewRobot::updateCollision(NewRobot* b, float timeStep) {
@@ -188,6 +224,50 @@ void NewRobot::updateCollision(Bullet* b, float timeStep) {
 	}
 }
 
-int NewRobot::getHealth() {
-	return health;
+
+
+
+
+
+/*X*/
+
+void NewRobot::updateCollisionX(GameObject* b, float timeStep) {
+	if (chkCollision(b)) {
+		relX -= getVelX() * timeStep;
+		updatePos();
+	}
+}
+
+
+
+// When the robot collides with another robot
+void NewRobot::updateCollisionX(NewRobot* b, float timeStep) {
+	if (chkCollision(b)) {
+		relX -= getVelX() * timeStep;
+		updatePos();
+	}
+}
+
+
+
+
+
+
+/*Y*/
+
+void NewRobot::updateCollisionY(GameObject* b, float timeStep) {
+	if (chkCollision(b)) {
+		relY -= getVelY() * timeStep;
+		updatePos();
+	}
+}
+
+
+
+// When the robot collides with another robot
+void NewRobot::updateCollisionY(NewRobot* b, float timeStep) {
+	if (chkCollision(b)) {
+		relY -= getVelY() * timeStep;
+		updatePos();
+	}
 }

@@ -19,7 +19,13 @@ public:
 
 	//Mutators
 	void handleEvent(SDL_Event e);
-	void update(float);
+	//void update(float);
+
+	void updatePosX(float);
+
+	void updatePosY(float);
+
+
 	void boostOn();
 	void boostOff();
 	void setPlayer(int);
@@ -28,6 +34,13 @@ public:
 	void updateCollision(GameObject*, float);
 	void updateCollision(NewRobot*, float);
 	void updateCollision(Bullet*, float);
+
+	void updateCollisionX(GameObject*, float);
+	void updateCollisionX(NewRobot*, float);
+
+	void updateCollisionY(GameObject*, float);
+	void updateCollisionY(NewRobot*, float);
+
 
 	//Accessors
 	int getJoyX();

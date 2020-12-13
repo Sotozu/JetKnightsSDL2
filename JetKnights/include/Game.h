@@ -38,6 +38,7 @@ public:
 
 	void playFightTheme();
 
+
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -66,11 +67,43 @@ private:
 
 	void loadMedia();
 	void spawnBullets();
+
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
+
 	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
+
+	void updateAllRobotCollisionsX(std::list<NewRobot*> robots, float timeStep);
+	void updateAllRobotCollisionsY(std::list<NewRobot*> robots, float timeStep);
+
 
 	template<class T, class B>
 	void updateCollisions(T* b, B items, float timeStep) {
+		for (auto item : items) {
+			b->updateCollision(item, timeStep);
+		}
+	}
+
+	template<class T, class B>
+	void updateCollisionsX(T* b, B items, float timeStep) {
+		for (auto item : items) {
+			b->updateCollisionX(item, timeStep);
+		}
+	}
+
+	template<class T, class B>
+	void updateCollisionsY(T* b, B items, float timeStep) {
+		for (auto item : items) {
+			b->updateCollisionY(item, timeStep);
+		}
+	}
+
+
+	/*SEPERATES THE BULLET COLLISION FROM THE OBSTACLE AND ROBOT
+	THIS IS CALLED IN Game.cpp
+	"void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep)"*/
+
+	template<class T, class B>
+	void updateBulletCollisions(T* b, B items, float timeStep) {
 		for (auto item : items) {
 			b->updateCollision(item, timeStep);
 		}
@@ -80,6 +113,23 @@ private:
 	void updateMovements(B items, float timeStep) {
 		for (auto item : items) {
 			item->update(timeStep);
+		}
+	}
+
+	template<class B>
+	void updateRobotMovements(B items, float timeStep) {
+		for (auto item : items) {
+			item->updatePosX(timeStep);
+			/*Check for collision AND IF SO revert back to previous position*/
+			updateAllRobotCollisionsX(robots, timeStep);
+
+
+			item->updatePosY(timeStep);
+			/*Check for collision AND IF SO revert back to previous position*/
+			updateAllRobotCollisionsY(robots, timeStep);
+
+
+
 		}
 	}
 
