@@ -119,6 +119,7 @@ private:
 	template<class B>
 	void updateRobotMovements(B items, float timeStep) {
 		for (auto item : items) {
+
 			item->updatePosX(timeStep);
 			/*Check for collision AND IF SO revert back to previous position*/
 			updateAllRobotCollisionsX(robots, timeStep);
@@ -127,9 +128,7 @@ private:
 			item->updatePosY(timeStep);
 			/*Check for collision AND IF SO revert back to previous position*/
 			updateAllRobotCollisionsY(robots, timeStep);
-
-
-
+	
 		}
 	}
 

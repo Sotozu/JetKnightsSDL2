@@ -152,6 +152,7 @@ void NewRobot::updatePosX(float timeStep) {
 		updateChildren(timeStep);
 	}
 }
+
 void NewRobot::updatePosY(float timeStep) {
 	//std::cout << timeStep << std::endl;
 	if (!isDead) {
@@ -247,10 +248,6 @@ void NewRobot::updateCollisionX(NewRobot* b, float timeStep) {
 		updatePos();
 	}
 }
-
-
-
-
 
 
 /*Y*/
