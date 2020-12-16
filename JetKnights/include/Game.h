@@ -128,6 +128,8 @@ private:
 			item->updatePosY(timeStep);
 			/*Check for collision AND IF SO revert back to previous position*/
 			updateAllRobotCollisionsY(robots, timeStep);
+
+
 	
 		}
 	}

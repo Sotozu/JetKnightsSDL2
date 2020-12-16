@@ -61,7 +61,7 @@ void Game::updateObjects(float timeStep) {
 	updateMovements(bullets, timeStep);
 
 	//---COLLIDE ALL OBJECTS---
-	//updateAllCollisions(robots, timeStep);
+	updateAllCollisions(robots, timeStep);
 	updateAllCollisions(bullets, timeStep);
 	
 	//---SPAWN NEW OBJECTS---
@@ -151,15 +151,22 @@ void  Game::genTestObstacles() {
 
 // Updates entire robot array by checking thigs they collide with
 
+//void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep) {
+//	for (auto robot : robotlist) {
+//		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
+//
+//
+//		updateCollisions(robot, robots, timeStep);
+//		updateCollisions(robot, obstacles, timeStep);
+//
+//
+//
+//		updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
+//	}
+//}
+
 void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep) {
 	for (auto robot : robotlist) {
-		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-
-
-		updateCollisions(robot, robots, timeStep);
-		updateCollisions(robot, obstacles, timeStep);
-
-
 
 		updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
 	}
@@ -174,7 +181,7 @@ void Game::updateAllRobotCollisionsX(std::list<NewRobot*> robotlist, float timeS
 
 		updateCollisionsX(robot, obstacles, timeStep);
 
-		updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
+		//updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
 	}
 }
 
@@ -189,7 +196,7 @@ void Game::updateAllRobotCollisionsY(std::list<NewRobot*> robotlist, float timeS
 
 
 
-		updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
+		//updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
 	}
 }
 
