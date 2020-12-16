@@ -70,7 +70,9 @@ private:
 
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
 
-	void updateAllCollisions(std::list<NewRobot*> robots, float timeStep);
+	//void updateRobotBulletCollisions(std::list<NewRobot*> robots, float timeStep);
+	void updateRobotBulletCollisions(std::list<NewRobot*> robots, std::list<Bullet*> bullets, float timeStep);
+
 
 	void updateAllRobotCollisionsX(std::list<NewRobot*> robots, float timeStep);
 	void updateAllRobotCollisionsY(std::list<NewRobot*> robots, float timeStep);
@@ -124,13 +126,9 @@ private:
 			/*Check for collision AND IF SO revert back to previous position*/
 			updateAllRobotCollisionsX(robots, timeStep);
 
-
 			item->updatePosY(timeStep);
 			/*Check for collision AND IF SO revert back to previous position*/
 			updateAllRobotCollisionsY(robots, timeStep);
-
-
-	
 		}
 	}
 
