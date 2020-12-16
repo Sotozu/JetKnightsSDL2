@@ -174,8 +174,6 @@ void Game::updateAllRobotCollisionsX(std::list<NewRobot*> robotlist, float timeS
 
 		updateCollisionsX(robot, obstacles, timeStep);
 
-
-
 		updateBulletCollisions(robot, bullets, timeStep); //This collision is different than the robot and obstacle ones.
 	}
 }
