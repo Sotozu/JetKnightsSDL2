@@ -47,10 +47,9 @@
       <Filter>include</Filter>
     </ClCompile>
     <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\StatusBar.h" />
     <ClInclude Include="include\Sound.h" />
     <ClInclude Include="include\StatusBar.h" />
     <ClInclude Include="..\Dependencies\include\begin_code.h">
