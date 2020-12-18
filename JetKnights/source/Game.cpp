@@ -10,10 +10,10 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 	gRenderer = renderer;
 
 	//List of assets that we will be using in the game
-	images = { workingDir + "/assets/images/robotrightnew.png",
-				 workingDir + "/assets/images/cannonsmall.png",
-				 workingDir + "/assets/images/bullet-2.png",
-				workingDir + "/assets/images/crate.png" };
+	images = { "assets/images/robotrightnew.png",
+				"assets/images/cannonsmall.png",
+				"assets/images/bullet-2.png",
+				"assets/images/crate.png" };
 
 	//List of sounds that we will be using in the game
 
