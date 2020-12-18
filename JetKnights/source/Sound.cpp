@@ -53,7 +53,7 @@ void Sound::loadSound()
 		printf("Failed to load thrusterPowerDown sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/fight_sound_track.wav").c_str());
+	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/menu_sound_track.wav").c_str());
 	if (fightTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
