@@ -37,6 +37,11 @@ public:
 	std::string findWorkingDir();
 
 	void playFightTheme();
+	void playMenuTheme();
+	void playPauseTheme();
+
+	void stopMusic();
+
 
 
 private:

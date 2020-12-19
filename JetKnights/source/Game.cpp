@@ -88,7 +88,6 @@ void Game::updateObjects(float timeStep) {
 	despawn(&weapons);
 
 	//--cout info--
-	std::cout << "Size of bullets list = " << bullets.size() << std::endl;
 
 }
 
@@ -208,4 +207,16 @@ std::string Game::findWorkingDir() {
 
 void Game::playFightTheme() {
 	soundEffects.playFightTheme();
+}
+
+void Game::playMenuTheme() {
+	soundEffects.playMenuTheme();
+}
+
+void Game::playPauseTheme() {
+	soundEffects.playPauseTheme();
+}
+
+void Game::stopMusic() {
+	soundEffects.stopMusic();
 }

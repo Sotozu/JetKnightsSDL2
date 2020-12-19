@@ -53,8 +53,21 @@ void Sound::loadSound()
 		printf("Failed to load thrusterPowerDown sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/menu_sound_track.wav").c_str());
+	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/fight.wav").c_str());
 	if (fightTheme == NULL)
+	{
+		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+
+	}
+	menuTheme = Mix_LoadMUS((workingDir + "/assets/sound/main_menu.wav").c_str());
+	if (menuTheme == NULL)
+	{
+		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
+
+	}
+
+	pauseTheme = Mix_LoadMUS((workingDir + "/assets/sound/pause_menu.wav").c_str());
+	if (pauseTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
@@ -86,7 +99,13 @@ void Sound::turnThrusterOff() {
 void Sound::playFightTheme() {
 	Mix_PlayMusic(fightTheme, -1);
 }
-void Sound::stopFightTheme() {
+void Sound::playMenuTheme() {
+	Mix_PlayMusic(menuTheme, -1);
+}
+void Sound::playPauseTheme() {
+	Mix_PlayMusic(pauseTheme, -1);
+}
+void Sound::stopMusic() {
 	Mix_HaltMusic();
 }
 

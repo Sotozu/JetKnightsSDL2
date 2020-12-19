@@ -36,11 +36,18 @@ SDL_Renderer* gRenderer = NULL;
 SDL_GameController* gGameController0 = NULL;
 SDL_GameController* gGameController1 = NULL;
 
+
+enum gameState {
+	MAIN_MENU, PLAYING, PAUSE_MENU
+};
 int main( int argc, char* args[] )
 {
 	Sound soundEffects;
+	gameState state = PLAYING;
+	float timeStep, timeStepTwo;
+	bool fightMusic = true, menuMusic = true, pauseMusic = true;
 
-
+	bool gamePaused = false;
 	//Start up SDL and create window
 	if( !init() )
 	{
@@ -60,43 +67,137 @@ int main( int argc, char* args[] )
 			//Initialize Game object with gRenderer
 			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
-			game.playFightTheme();
 			//While application is running
 			while( !quit )
 			{
 				//Handle events on queue
 				while( SDL_PollEvent( &e ) != 0 )
 				{
-					//User requests quit
-					if( e.type == SDL_QUIT )
-					{
-						quit = true;
+
+					switch (state) {
+					case (MAIN_MENU):
+
+						if (menuMusic == true) {
+							game.stopMusic();
+							game.playMenuTheme();
+							menuMusic = false;
+							fightMusic = true;
+							pauseMusic = true;
+						}
+
+						if (e.type == SDL_QUIT)
+						{
+							quit = true;
+						}
+						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+
+							if (e.cbutton.which == 0) {
+								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+									std::cout << "IN MENUES" << std::endl;
+									state = PLAYING;
+								}
+							}
+						}
+						break;
+
+					case (PLAYING):
+						if (fightMusic == true) {
+							game.stopMusic();
+							game.playFightTheme();
+							menuMusic = true;
+							fightMusic = false;
+							pauseMusic = true;
+						}
+						if (e.type == SDL_QUIT)
+						{
+							quit = true;
+						}
+						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+							
+							if (e.cbutton.which == 0) {
+								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+									std::cout << "NOW PLAYING" << std::endl;
+									state = MAIN_MENU;
+								}
+								else if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+									std::cout << "PAUSE MENU" << std::endl;
+									state = PAUSE_MENU;
+
+									timeStepTwo = stepTimer.getTicks() / 1000.f;
+									gamePaused = true;
+								}
+
+
+
+
+							}
+						}
+						game.handleEvent(e);
+						break;
+
+					case (PAUSE_MENU):
+
+						game.handleEvent(e);
+
+
+						if (pauseMusic == true) {
+							game.stopMusic();
+							game.playPauseTheme();
+							menuMusic = true;
+							fightMusic = true;
+							pauseMusic = false;
+						}
+
+						if (e.type == SDL_QUIT)
+						{
+							quit = true;
+						}
+
+						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+
+							if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START){
+								std::cout << "NOW PLAYING" << std::endl;
+								state = PLAYING;
+							}
+						}
+						break;
 					}
+
+					//User requests quit
+					
 					//Passes all events to game which parses and executes
-					game.handleEvent(e);
 				}
 				//Calculate time step
-				float timeStep = stepTimer.getTicks() / 1000.f;
+				if (state == PLAYING) {
+					if (gamePaused == true){
+						timeStep = timeStepTwo;
+						gamePaused = false;
+					}
+					else {
+						timeStep = stepTimer.getTicks() / 1000.f;
+					}
 
-				if (stepTimer.testGunFire()) {
-					//std::cout << "FIRE!" << std::endl;
+					std::cout << stepTimer.getTicks() / 1000.f << std::endl;
+
+					if (stepTimer.testGunFire()) {
+						//std::cout << "FIRE!" << std::endl;
+					}
+
+					//std::cout << timeStep << std::endl;
+					//Clear screen
+					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+					SDL_RenderClear(gRenderer);
+
+					//Updates all objects in the game for every loop
+					/*Currently updates on each loop (process).
+					Will change to update at a certain fps (60).*/
+					game.updateObjects(timeStep);
+
+					//Restart step timer
+					stepTimer.start();
+
+					SDL_RenderPresent(gRenderer);
 				}
-
-				//std::cout << timeStep << std::endl;
-				//Clear screen
-				SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-				SDL_RenderClear( gRenderer );
-
-				//Updates all objects in the game for every loop
-				/*Currently updates on each loop (process).
-				Will change to update at a certain fps (60).*/
-				game.updateObjects(timeStep);
-
-				//Restart step timer
-				stepTimer.start();
-
-				SDL_RenderPresent( gRenderer );
-
 			}
 		
 	}

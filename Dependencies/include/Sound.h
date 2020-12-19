@@ -25,8 +25,12 @@ public:
 	void playgLow();
 	void turnThrusterOn();
 	void turnThrusterOff();
+
 	void playFightTheme();
-	void stopFightTheme();
+	void playPauseTheme();
+	void playMenuTheme();
+
+	void stopMusic();
 
 
 private:
@@ -44,6 +48,8 @@ private:
 	Mix_Chunk* thrusterPowerDown = NULL;
 
 	Mix_Music* fightTheme = NULL;
+	Mix_Music* pauseTheme = NULL;
+	Mix_Music* menuTheme = NULL;
 
 
 };
