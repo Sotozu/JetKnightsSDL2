@@ -33,7 +33,6 @@
     <ClCompile Include="source\StatusBar.cpp" />
     <ClCompile Include="ThemeMusic.cpp" />
     <ClCompile Include="source\Sound.cpp" />
-    <ClCompile Include="source\StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h" />

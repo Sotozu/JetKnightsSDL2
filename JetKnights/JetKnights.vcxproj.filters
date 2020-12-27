@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="source\StatusBar.cpp" />
     <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\StatusBar.cpp" />
     <ClCompile Include="source\StatusBar.cpp">
       <Filter>include</Filter>
     </ClCompile>
@@ -49,6 +48,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\Main_Menu.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StatusBar.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -344,13 +346,7 @@
     <ClInclude Include="..\Dependencies\include\SDL_vulkan.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\Sound.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\Dependencies\include\Sound.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\StatusBar.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\StatusBar.h">
