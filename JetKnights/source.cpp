@@ -9,6 +9,7 @@ and may not be redistributed without written permission.*/
 #include <iostream>
 #include "LTexture.h"
 #include "Game.h"
+#include "Main_Menu.h"
 #include "LTimer.h"
 #include <SDL_mixer.h>
 #include "ThemeMusic.h"
@@ -44,10 +45,13 @@ int main( int argc, char* args[] )
 {
 	Sound soundEffects;
 	gameState state = PLAYING;
+
 	float timeStep, timeStepTwo;
 	bool fightMusic = true, menuMusic = true, pauseMusic = true;
 
 	bool gamePaused = false;
+
+	bool isPlaying = true;
 	//Start up SDL and create window
 	if( !init() )
 	{
@@ -65,7 +69,13 @@ int main( int argc, char* args[] )
 			LTimer stepTimer;
 	
 			//Initialize Game object with gRenderer
+
 			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			Main_Menu mainmenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+			
+
+
 			
 			//While application is running
 			while( !quit )
@@ -179,11 +189,6 @@ int main( int argc, char* args[] )
 
 					std::cout << stepTimer.getTicks() / 1000.f << std::endl;
 
-					if (stepTimer.testGunFire()) {
-						//std::cout << "FIRE!" << std::endl;
-					}
-
-					//std::cout << timeStep << std::endl;
 					//Clear screen
 					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 					SDL_RenderClear(gRenderer);
@@ -191,12 +196,27 @@ int main( int argc, char* args[] )
 					//Updates all objects in the game for every loop
 					/*Currently updates on each loop (process).
 					Will change to update at a certain fps (60).*/
+
 					game.updateObjects(timeStep);
 
 					//Restart step timer
 					stepTimer.start();
 
 					SDL_RenderPresent(gRenderer);
+				}
+				else if (state == MAIN_MENU) {
+					
+					//Clear screen
+					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+					SDL_RenderClear(gRenderer);
+
+					mainmenu.updateObjects(timeStep);
+
+					SDL_RenderPresent(gRenderer);
+					
+
+				}
+				else if (state == PAUSE_MENU) {
 				}
 			}
 		

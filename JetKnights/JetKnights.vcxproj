@@ -26,6 +26,7 @@
     <ClCompile Include="source\Hitbox.cpp" />
     <ClCompile Include="source\LTexture.cpp" />
     <ClCompile Include="source\LTimer.cpp" />
+    <ClCompile Include="source\Main_Menu.cpp" />
     <ClCompile Include="source\NewRobot.cpp" />
     <ClCompile Include="source\NewWeapon.cpp" />
     <ClCompile Include="source\RelTexture.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="..\Dependencies\include\Hitbox.h" />
     <ClInclude Include="..\Dependencies\include\LTexture.h" />
     <ClInclude Include="..\Dependencies\include\LTimer.h" />
+    <ClInclude Include="..\Dependencies\include\Main_Menu.h" />
     <ClInclude Include="..\Dependencies\include\NewRobot.h" />
     <ClInclude Include="..\Dependencies\include\NewWeapon.h" />
     <ClInclude Include="..\Dependencies\include\RelTexture.h" />

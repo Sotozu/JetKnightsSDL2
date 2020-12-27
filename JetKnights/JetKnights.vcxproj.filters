@@ -1,6 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\StatusBar.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\Bullet.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Game.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
     <ClCompile Include="source\GameObject.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -10,25 +24,22 @@
     <ClCompile Include="source\LTexture.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\LTimer.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\NewRobot.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\Game.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Bullet.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\NewWeapon.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\RelTexture.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
     <ClCompile Include="source\Sound.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\StatusBar.cpp">
@@ -37,21 +48,11 @@
     <ClCompile Include="ThemeMusic.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\RelTexture.cpp">
+    <ClCompile Include="source\Main_Menu.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\StatusBar.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\StatusBar.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Sound.h" />
-    <ClInclude Include="include\StatusBar.h" />
     <ClInclude Include="..\Dependencies\include\begin_code.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -353,6 +354,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\StatusBar.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Main_Menu.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
