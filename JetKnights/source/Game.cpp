@@ -22,7 +22,7 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 
 	genTestRobots();
 	genTestObstacles();
-	//genTestWeapon();
+	//genTestWeapon()
 
 }
 
@@ -30,7 +30,6 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 void Game::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
 		textures[i].loadFromFile(images[i], gRenderer);
-		//soundEffects[i].loadSound(sounds[i]);
 	}
 }
 
@@ -65,7 +64,9 @@ void Game::updateObjects(float timeStep) {
 	updateAllCollisions(bullets, timeStep);
 	
 	//---SPAWN NEW OBJECTS---
+
 	spawnBullets();
+
 	for (auto robot : robots) {
 		spawnBulletsRecursive(*robot);
 	}
@@ -125,13 +126,15 @@ void Game::genTestRobots() {
 
 }
 
-// Progressively generates bullets
+// Progressively generates bullets and play sound for when one is generated
 void Game::genTestBullets(NewWeapon* weapon) {
 	RelTexture* bulletTex = new RelTexture(textures[2].getWidth() / -2, textures[2].getHeight() / -2, 0, &textures[2], gRenderer);
 	Bullet* new_bullet = new Bullet(weapon->getPosX(), weapon->getPosY(), weapon->getAngle(), 1200, gRenderer, &*bulletTex);
 	new_bullet->addHitbox();
 	new_bullet->setTeam(weapon->team);
 	bullets.push_back(new_bullet);
+
+	weapon->weaponSound();
 }
 
 // Explicitly generates obstacles
@@ -194,7 +197,6 @@ void Game::spawnBullets() {
 		if (weapon->isFiring & weapon->canFire()) {
 			weapon->attemptToFire();
 			genTestBullets(weapon);
-			soundEffects.playgLow();
 		}
 	}
 }

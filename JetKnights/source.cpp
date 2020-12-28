@@ -44,7 +44,7 @@ enum gameState {
 };
 int main( int argc, char* args[] )
 {
-	Sound soundEffects;
+
 	gameState state = MAIN_MENU;
 
 	float timeStep, timeStepTwo;

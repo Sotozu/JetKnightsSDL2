@@ -56,6 +56,12 @@
     <ClCompile Include="source\Pause_Menu.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Robot_Sounds.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Weapons_Sounds.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h">
@@ -359,6 +365,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\Pause_Menu.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Robot_Sounds.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Weapon_Sounds.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

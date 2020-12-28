@@ -6,7 +6,7 @@
 
 #include "GameObject.h"
 #include "Bullet.h"
-#include "Sound.h"
+#include "Robot_Sounds.h"
 
 
 
@@ -74,6 +74,6 @@ private:
 
 	bool inDeadCircle();
 
-	Sound robotSound;
+	Robot_Sounds robotSound;
 };
 
