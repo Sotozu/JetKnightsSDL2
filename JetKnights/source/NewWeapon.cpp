@@ -152,3 +152,7 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 void NewWeapon::setPlayer(int a) {
 	player = a;
 }
+
+void NewWeapon::weaponSound() {
+	weaponSounds.playgLow();
+}

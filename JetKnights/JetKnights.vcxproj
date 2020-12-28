@@ -31,7 +31,9 @@
     <ClCompile Include="source\NewWeapon.cpp" />
     <ClCompile Include="source\Pause_Menu.cpp" />
     <ClCompile Include="source\RelTexture.cpp" />
+    <ClCompile Include="source\Robot_Sounds.cpp" />
     <ClCompile Include="source\StatusBar.cpp" />
+    <ClCompile Include="source\Weapons_Sounds.cpp" />
     <ClCompile Include="ThemeMusic.cpp" />
     <ClCompile Include="source\Sound.cpp" />
   </ItemGroup>
@@ -50,6 +52,7 @@
     <ClInclude Include="..\Dependencies\include\NewWeapon.h" />
     <ClInclude Include="..\Dependencies\include\Pause_Menu.h" />
     <ClInclude Include="..\Dependencies\include\RelTexture.h" />
+    <ClInclude Include="..\Dependencies\include\Robot_Sounds.h" />
     <ClInclude Include="..\Dependencies\include\SDL.h" />
     <ClInclude Include="..\Dependencies\include\SDL_assert.h" />
     <ClInclude Include="..\Dependencies\include\SDL_atomic.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="..\Dependencies\include\SDL_vulkan.h" />
     <ClInclude Include="..\Dependencies\include\Sound.h" />
     <ClInclude Include="..\Dependencies\include\StatusBar.h" />
+    <ClInclude Include="..\Dependencies\include\Weapon_Sounds.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Dependencies\include\SDL_config.h.cmake" />

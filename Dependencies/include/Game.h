@@ -167,7 +167,8 @@ private:
 				if (weapon->isFiring & weapon->canFire()) {
 					weapon->attemptToFire();
 					genTestBullets(weapon);
-					soundEffects.playgLow();
+					//weapon->weaponSounds();
+					//soundEffects.playgLow();
 				}
 			}
 			std::visit([&](auto& child) {

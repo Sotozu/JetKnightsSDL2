@@ -4,6 +4,7 @@
 
 #include "GameObject.h"
 #include "Bullet.h"
+#include "Weapon_Sounds.h"
 
 
 
@@ -19,6 +20,7 @@ public:
 	void handleEvent(SDL_Event e);
 	void update(float);
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
+	void weaponSound();
 	//bool WeaponFiring(SDL_Event e);
 	void setPlayer(int);
 	void attemptToFire();
@@ -46,5 +48,7 @@ private:
 
 	LTimer stepTimer;
 	int bulletInterval = 50;
+
+	Weapon_Sounds weaponSounds;
 };
 
