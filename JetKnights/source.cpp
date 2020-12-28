@@ -10,6 +10,7 @@ and may not be redistributed without written permission.*/
 #include "LTexture.h"
 #include "Game.h"
 #include "Main_Menu.h"
+#include "Pause_Menu.h"
 #include "LTimer.h"
 #include <SDL_mixer.h>
 #include "ThemeMusic.h"
@@ -44,7 +45,7 @@ enum gameState {
 int main( int argc, char* args[] )
 {
 	Sound soundEffects;
-	gameState state = PLAYING;
+	gameState state = MAIN_MENU;
 
 	float timeStep, timeStepTwo;
 	bool fightMusic = true, menuMusic = true, pauseMusic = true;
@@ -71,6 +72,8 @@ int main( int argc, char* args[] )
 			//Initialize Game object with gRenderer
 
 			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			Main_Menu mainmenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
@@ -205,7 +208,8 @@ int main( int argc, char* args[] )
 					SDL_RenderPresent(gRenderer);
 				}
 				else if (state == MAIN_MENU) {
-					
+
+					timeStep = stepTimer.getTicks() / 1000.f;
 					//Clear screen
 					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 					SDL_RenderClear(gRenderer);
@@ -217,6 +221,14 @@ int main( int argc, char* args[] )
 
 				}
 				else if (state == PAUSE_MENU) {
+					timeStep = stepTimer.getTicks() / 1000.f;
+					//Clear screen
+					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+					SDL_RenderClear(gRenderer);
+
+					pausemenu.updateObjects(timeStep);
+
+					SDL_RenderPresent(gRenderer);
 				}
 			}
 		

@@ -29,6 +29,7 @@
     <ClCompile Include="source\Main_Menu.cpp" />
     <ClCompile Include="source\NewRobot.cpp" />
     <ClCompile Include="source\NewWeapon.cpp" />
+    <ClCompile Include="source\Pause_Menu.cpp" />
     <ClCompile Include="source\RelTexture.cpp" />
     <ClCompile Include="source\StatusBar.cpp" />
     <ClCompile Include="ThemeMusic.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="..\Dependencies\include\Main_Menu.h" />
     <ClInclude Include="..\Dependencies\include\NewRobot.h" />
     <ClInclude Include="..\Dependencies\include\NewWeapon.h" />
+    <ClInclude Include="..\Dependencies\include\Pause_Menu.h" />
     <ClInclude Include="..\Dependencies\include\RelTexture.h" />
     <ClInclude Include="..\Dependencies\include\SDL.h" />
     <ClInclude Include="..\Dependencies\include\SDL_assert.h" />

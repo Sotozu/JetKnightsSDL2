@@ -53,6 +53,9 @@
     <ClCompile Include="source\StatusBar.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\Pause_Menu.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h">
@@ -353,6 +356,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\Main_Menu.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Pause_Menu.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
