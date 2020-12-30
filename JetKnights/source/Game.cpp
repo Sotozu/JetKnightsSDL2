@@ -1,5 +1,22 @@
 #include "Game.h"
 
+//Default Constructor
+
+Game::Game() {
+
+	workingDir = "";
+	SCREEN_HEIGHT = 0;
+	SCREEN_WIDTH = 0;
+	gRenderer = NULL;
+
+	//List of assets that we will be using in the game
+	images = { "assets/images/robotrightnew.png",
+				"assets/images/cannonsmall.png",
+				"assets/images/bullet-2.png",
+				"assets/images/crate.png" };
+
+
+}
 
 //Constructor
 Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
@@ -24,6 +41,35 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 	genTestObstacles();
 	//genTestWeapon()
 
+}
+
+void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH) {
+
+	workingDir = findWorkingDir();
+	SCREEN_HEIGHT = screenH;
+	SCREEN_WIDTH = screenW;
+	gRenderer = renderer;
+
+	//List of assets that we will be using in the game
+	images = { "assets/images/robotrightnew.png",
+				"assets/images/cannonsmall.png",
+				"assets/images/bullet-2.png",
+				"assets/images/crate.png" };
+
+	//List of sounds that we will be using in the game
+
+
+	loadMedia();
+
+	genTestRobots();
+	genTestObstacles();
+	//genTestWeapon()
+
+}
+
+void Game::resetGame() {
+	genTestRobots();
+	genTestObstacles();
 }
 
 //Loads all the textures for the game
@@ -134,6 +180,7 @@ void Game::genTestBullets(NewWeapon* weapon) {
 	new_bullet->setTeam(weapon->team);
 	bullets.push_back(new_bullet);
 
+	//play weapon sound
 	weapon->weaponSound();
 }
 

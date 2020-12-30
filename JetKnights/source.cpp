@@ -52,6 +52,8 @@ int main( int argc, char* args[] )
 
 	bool gamePaused = false;
 
+	bool wasInMenu = true;
+
 	bool isPlaying = true;
 	//Start up SDL and create window
 	if( !init() )
@@ -71,7 +73,12 @@ int main( int argc, char* args[] )
 	
 			//Initialize Game object with gRenderer
 
-			Game game(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			std::unique_ptr<Game> game(new Game());
+
+			//game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+			game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 			Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -91,8 +98,8 @@ int main( int argc, char* args[] )
 					case (MAIN_MENU):
 
 						if (menuMusic == true) {
-							game.stopMusic();
-							game.playMenuTheme();
+							game->stopMusic();
+							game->playMenuTheme();
 							menuMusic = false;
 							fightMusic = true;
 							pauseMusic = true;
@@ -114,9 +121,11 @@ int main( int argc, char* args[] )
 						break;
 
 					case (PLAYING):
+					
 						if (fightMusic == true) {
-							game.stopMusic();
-							game.playFightTheme();
+
+							game->stopMusic();
+							game->playFightTheme();
 							menuMusic = true;
 							fightMusic = false;
 							pauseMusic = true;
@@ -145,17 +154,17 @@ int main( int argc, char* args[] )
 
 							}
 						}
-						game.handleEvent(e);
+						game->handleEvent(e);
 						break;
 
 					case (PAUSE_MENU):
 
-						game.handleEvent(e);
+						game->handleEvent(e);
 
 
 						if (pauseMusic == true) {
-							game.stopMusic();
-							game.playPauseTheme();
+							game->stopMusic();
+							game->playPauseTheme();
 							menuMusic = true;
 							fightMusic = true;
 							pauseMusic = false;
@@ -200,7 +209,7 @@ int main( int argc, char* args[] )
 					/*Currently updates on each loop (process).
 					Will change to update at a certain fps (60).*/
 
-					game.updateObjects(timeStep);
+					game->updateObjects(timeStep);
 
 					//Restart step timer
 					stepTimer.start();
@@ -222,22 +231,11 @@ int main( int argc, char* args[] )
 				}
 				else if (state == PAUSE_MENU) {
 					timeStep = stepTimer.getTicks() / 1000.f;
-					//Clear screen
-					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-					SDL_RenderClear(gRenderer);
-
-					pausemenu.updateObjects(timeStep);
-
-					SDL_RenderPresent(gRenderer);
+					pausemenu.renderTransparentRect();
 				}
 			}
 		
 	}
-
-	/*
-	WILL CREATE A FUNCTION THAT CLOSES AND 
-	DELETES PROGRAMS THAT USE DYNAMIC MEMORY
-	*/
 
 	return 0;
 }
