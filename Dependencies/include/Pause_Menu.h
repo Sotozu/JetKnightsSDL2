@@ -21,7 +21,7 @@ public:
 	Pause_Menu(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 	void updateObjects(float);
-
+	void renderTransparentRect();
 	void genTestPanel();
 	void handleEvent(SDL_Event e);
 
@@ -45,6 +45,8 @@ private:
 	// Mutators
 
 	void loadMedia();
+
+	
 
 
 

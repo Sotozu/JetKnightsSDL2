@@ -65,3 +65,11 @@ void  Pause_Menu::genTestPanel() {
 
 }
 
+void Pause_Menu::renderTransparentRect() {
+	SDL_Rect fillRect = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(gRenderer, 64, 64, 64, 1);
+	SDL_RenderFillRect(gRenderer, &fillRect);
+	SDL_RenderPresent(gRenderer);
+}
+

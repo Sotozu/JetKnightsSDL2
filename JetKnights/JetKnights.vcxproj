@@ -28,6 +28,7 @@
     <ClCompile Include="source\LTimer.cpp" />
     <ClCompile Include="source\Main_Menu.cpp" />
     <ClCompile Include="source\NewRobot.cpp" />
+    <ClCompile Include="source\NewSound.cpp" />
     <ClCompile Include="source\NewWeapon.cpp" />
     <ClCompile Include="source\Pause_Menu.cpp" />
     <ClCompile Include="source\RelTexture.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="..\Dependencies\include\LTimer.h" />
     <ClInclude Include="..\Dependencies\include\Main_Menu.h" />
     <ClInclude Include="..\Dependencies\include\NewRobot.h" />
+    <ClInclude Include="..\Dependencies\include\NewSound.h" />
     <ClInclude Include="..\Dependencies\include\NewWeapon.h" />
     <ClInclude Include="..\Dependencies\include\Pause_Menu.h" />
     <ClInclude Include="..\Dependencies\include\RelTexture.h" />

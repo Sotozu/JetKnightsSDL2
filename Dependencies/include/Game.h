@@ -23,11 +23,21 @@
 
 class Game {
 public:
+	//Default Constructors
+	Game();
+
 	//Constructors
+
 	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
 	//Mutators
+
+	void initialize(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
+
+	void resetGame();
+
 	void updateObjects(float);
+
 	void genTestRobots();
 	void genTestBullets(NewWeapon*);
 	void genTestObstacles();
