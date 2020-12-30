@@ -164,8 +164,8 @@ int main( int argc, char* args[] )
 
 						if (pauseMusic == true) {
 
-							pausemenu.stopMusic();
-							pausemenu.playPauseTheme();
+							//pausemenu.stopMusic();
+							//pausemenu.playPauseTheme();
 							menuMusic = true;
 							fightMusic = true;
 							pauseMusic = false;
@@ -190,8 +190,12 @@ int main( int argc, char* args[] )
 					
 					//Passes all events to game which parses and executes
 				}
-				//Calculate time step
+
+
+
 				if (state == PLAYING) {
+					//Creates a time stamp so that when the game unpauses the game timer "resets" to that positions 
+
 					if (gamePaused == true){
 						timeStep = timeStepTwo;
 						gamePaused = false;

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Dependencies\include\PauseMenu_Sounds.h" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Game.cpp" />
@@ -54,6 +53,7 @@
     <ClInclude Include="..\Dependencies\include\NewRobot.h" />
     <ClInclude Include="..\Dependencies\include\NewSound.h" />
     <ClInclude Include="..\Dependencies\include\NewWeapon.h" />
+    <ClInclude Include="..\Dependencies\include\PauseMenu_Sounds.h" />
     <ClInclude Include="..\Dependencies\include\Pause_Menu.h" />
     <ClInclude Include="..\Dependencies\include\RelTexture.h" />
     <ClInclude Include="..\Dependencies\include\Robot_Sounds.h" />

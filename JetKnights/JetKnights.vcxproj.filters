@@ -68,9 +68,6 @@
     <ClCompile Include="source\PauseMenu_Sounds.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="..\Dependencies\include\PauseMenu_Sounds.h">
-      <Filter>include</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h">
@@ -383,6 +380,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\NewSound.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\PauseMenu_Sounds.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
