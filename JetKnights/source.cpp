@@ -163,8 +163,9 @@ int main( int argc, char* args[] )
 
 
 						if (pauseMusic == true) {
-							game->stopMusic();
-							game->playPauseTheme();
+
+							pausemenu.stopMusic();
+							pausemenu.playPauseTheme();
 							menuMusic = true;
 							fightMusic = true;
 							pauseMusic = false;
