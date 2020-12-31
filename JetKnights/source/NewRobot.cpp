@@ -268,3 +268,27 @@ void NewRobot::updateCollisionY(NewRobot* b, float timeStep) {
 		updatePos();
 	}
 }
+
+// Will deactivate the current weapon and activate the next one
+void NewRobot::nextWeapon() {
+	// Get "list" of weapons
+	std::vector<NewWeapon*> weapons;
+	for (auto& varObj : children) {
+		if (NewWeapon* weapon = std::get_if<NewWeapon>(&varObj)) {
+			weapons.push_back(weapon);
+		}
+	}
+	// Activate and deactivate based on index
+	if (weapons.size() <= 1) {  // dont think i need this check, but will keep for now
+		return;
+	}
+	else {
+		for (int i = 0 ; i < weapons.size() ; i++ ) {
+			if (weapons[i]->isActive) {
+				weapons[i]->isActive = false;
+				weapons[(i + 1) % weapons.size()]->isActive = true;
+				return;
+			}
+		}
+	}
+}

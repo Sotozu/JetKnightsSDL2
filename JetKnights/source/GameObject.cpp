@@ -14,6 +14,7 @@ GameObject::GameObject() {
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 	isDead = false;
+	isActive = true;
 	isRelative = true;
 	team = 0;
 }
@@ -31,6 +32,7 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 	isDead = false;
+	isActive = true;
 	isRelative = true;
 	team = 0;
 }
@@ -48,13 +50,14 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTex
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 	isDead = false;
+	isActive = true;
 	isRelative = true;
 	team = 0;
 }
 
 
 void GameObject::render() {
-	if (!isDead) {
+	if (!isDead && isActive) {
 		// make sure to pass by reference for all these!!!
 		renderTextures();
 		renderHitboxes();
@@ -167,12 +170,14 @@ void GameObject::setPosRelative(int x, int y, float angle) {
 }
 
 void GameObject::update(float timestep) {
-	updateChildren(timestep);
+	if (isActive)
+		updateChildren(timestep);
 }
 
 void GameObject::handleEvent(SDL_Event e) {
 	// Do nothing
-	passOnEvent(e);
+	if (isActive)
+		passOnEvent(e);
 }
 
 void GameObject::passOnEvent(SDL_Event e) {

@@ -41,6 +41,8 @@ public:
 	void updateCollisionY(GameObject*, float);
 	void updateCollisionY(NewRobot*, float);
 
+	void nextWeapon();
+
 
 	//Accessors
 	int getJoyX();

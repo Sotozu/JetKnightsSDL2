@@ -50,5 +50,9 @@ private:
 	int bulletInterval = 50;
 
 	Weapon_Sounds weaponSounds;
+
+	void onJoyXevent(SDL_Event e);
+	void onJoyYevent(SDL_Event e);
+	void onRightTriggerEvent(SDL_Event e);
 };
 
