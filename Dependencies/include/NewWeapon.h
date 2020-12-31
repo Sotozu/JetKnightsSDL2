@@ -20,9 +20,10 @@ public:
 	void handleEvent(SDL_Event e);
 	void update(float);
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
-	void weaponSound();
-	//bool WeaponFiring(SDL_Event e);
 	void setPlayer(int);
+	void setBulletInterval(int value);
+	void setParams(int player, int interval, bool isActive);
+	void weaponSound();
 	void attemptToFire();
 
 	//Accessors
@@ -47,8 +48,12 @@ private:
 	bool inDeadCircle();
 
 	LTimer stepTimer;
-	int bulletInterval = 50;
+	int bulletInterval;
 
 	Weapon_Sounds weaponSounds;
+
+	void onJoyXevent(SDL_Event e);
+	void onJoyYevent(SDL_Event e);
+	void onRightTriggerEvent(SDL_Event e);
 };
 

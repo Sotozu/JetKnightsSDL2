@@ -1,9 +1,5 @@
 #include "NewWeapon.h"
 
-/*
-we need to 
-*/
-
 NewWeapon::NewWeapon() : GameObject() {
 	joyX = 0;
 	joyY = 0;
@@ -14,6 +10,7 @@ NewWeapon::NewWeapon() : GameObject() {
 	radius = 0;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
 }
@@ -31,6 +28,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	radius = 0;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
 }
@@ -48,44 +46,54 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTextu
 	radius = 40;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
+}
+
+void NewWeapon::onJoyXevent(SDL_Event e) {
+	if (e.caxis.axis == 2) {
+		joyX = e.caxis.value;
+		if (!inDeadCircle()) {
+			dirX = e.caxis.value;
+		}
+	}
+}
+
+void NewWeapon::onJoyYevent(SDL_Event e) {
+	if (e.caxis.axis == 3) {
+		joyY = e.caxis.value;
+		if (!inDeadCircle()) {
+			dirY = e.caxis.value;
+		}
+	}
+}
+
+void NewWeapon::onRightTriggerEvent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
+		if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+			isFiring = true;
+		}
+		else {
+			isFiring = false;
+		}
+	}
 }
 
 // How the weapon handles SDL events
 void NewWeapon::handleEvent( SDL_Event e ) {
 	//Joystick input
-	if (e.type == SDL_CONTROLLERAXISMOTION) {	
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If event matches player
 		if (e.caxis.which == player) {
 			//X axis motion
-			if (e.caxis.axis == 2) {						
-				joyX = e.caxis.value;
-				if (!inDeadCircle()) {						
-					dirX = e.caxis.value;
-				}
-			}
+			onJoyXevent(e);
 			//Y axis motion
-			else if (e.caxis.axis == 3) {
-				joyY = e.caxis.value;
-				if (!inDeadCircle()) {	
-					dirY = e.caxis.value;
-				}
-			}
-			//Trigger press
-			else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) {
-				if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-					isFiring = true;
-				}
-				else {
-					isFiring = false;
-				}
-			}
-		}	
+			onJoyYevent(e);
+			//Right Trigger press
+			onRightTriggerEvent(e);
+		}
 	}
-	
-
-	
 }
 
 float NewWeapon::getAngle() {
@@ -155,4 +163,14 @@ void NewWeapon::setPlayer(int a) {
 
 void NewWeapon::weaponSound() {
 	weaponSounds.playgLow();
+}
+
+void NewWeapon::setBulletInterval(int value) {
+	bulletInterval = value;
+}
+
+void NewWeapon::setParams(int player, int interval, bool isActive) {
+	this->player = player;
+	bulletInterval = interval;
+	this->isActive = isActive;
 }

@@ -63,7 +63,7 @@ private:
 
 	bool isPaused;
 	
-	static const int TOTAL_IMAGES = 4;
+	static const int TOTAL_IMAGES = 5;
 
 	SDL_Renderer* gRenderer;
 	
@@ -90,7 +90,7 @@ private:
 	// Mutators
 
 	void loadMedia();
-	void spawnBullets();
+	//void spawnBullets();
 
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
 
@@ -183,7 +183,7 @@ private:
 		for (auto &varObj : object.children) {
 			if (auto weapon = std::get_if<NewWeapon>(&varObj)) {
 				// Fire Weapon check
-				if (weapon->isFiring & weapon->canFire()) {
+				if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
 					weapon->attemptToFire();
 					genTestBullets(weapon);
 					//weapon->weaponSounds();

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <SDL_gamecontroller.h>
 #include <typeinfo>
+#include <vector>
 
 #include "GameObject.h"
 #include "Bullet.h"
@@ -45,6 +46,8 @@ public:
 	void updateCollisionY(GameObject*, float);
 	void updateCollisionY(NewRobot*, float);
 
+	void nextWeapon();
+
 
 	//Accessors
 	int getJoyX();
@@ -83,5 +86,10 @@ private:
 	Robot_Sounds robotSound;
 
 	SDL_GameController* gameController;
+
+	void onJoyXevent(SDL_Event e);
+	void onJoyYevent(SDL_Event e);
+	void onLeftTriggerEvent(SDL_Event e);
+	void onButtonBevent(SDL_Event e);
 };
 

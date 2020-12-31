@@ -77,6 +77,56 @@ void NewRobot::unpauseRobot() {
 	isPaused = false;
 }
 
+void NewRobot::onJoyXevent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
+		joyX = e.caxis.value;
+		// Set speed depending on dead zone
+		if (!inDeadCircle()) {
+			mSpeed = MAX_SPEED + boost;
+		}
+		else {
+			mSpeed = 0;
+		}
+	}
+}
+
+void NewRobot::onJoyYevent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
+		joyY = e.caxis.value;
+		// Set speed depending on dead zone
+		if (!inDeadCircle()) {
+			mSpeed = MAX_SPEED + boost;
+		}
+		else {
+			mSpeed = 0;
+		}
+	}
+}
+
+void NewRobot::onLeftTriggerEvent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+		if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+			if (boost != 600) {
+				robotSound.turnThrusterOn();
+			}
+			boost = 600;
+		}
+		else {
+			if (boost == 600) {
+				robotSound.turnThrusterOff();
+			}
+			boost = 0;
+		}
+
+	}
+}
+
+void NewRobot::onButtonBevent(SDL_Event e) {
+	if (e.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
+		std::cout << "B pressed" << std::endl;
+		nextWeapon();
+	}
+}
 
 // Handles controller events that the robot should respond to
 void NewRobot::handleEvent(SDL_Event e) {
@@ -85,49 +135,18 @@ void NewRobot::handleEvent(SDL_Event e) {
 		//If player 1 input
 		if (e.caxis.which == player) {
 			//X axis motion
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
-					joyX = e.caxis.value;
-					// Set speed depending on dead zone
-					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED + boost;
-					}
-					else {
-						mSpeed = 0;
-					}
-				}
-				//Y axis motion
-				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
-					joyY = e.caxis.value;
-					// Set speed depending on dead zone
-					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED + boost;
-					}
-					else {
-						mSpeed = 0;
-					}
-				}
+			onJoyXevent(e);
+			//Y axis motion
+			onJoyYevent(e);
+			//Trigger press
+			onLeftTriggerEvent(e);
 
-
-				//Trigger press
-				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT && isPaused == false) {
-
-						if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-							//If the trigger is pressed begin the thruster
-							if (boost != 600) {
-								robotSound.turnThrusterOn();
-							}
-							boost = 600;
-						}
-						else {
-							if (boost == 600) {
-									robotSound.turnThrusterOff();
-							}
-							boost = 0;
-						}
-					
-
-				}
-				
+		}
+	}
+	else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+		if (e.caxis.which == player) {
+			// Switch weapon button
+			onButtonBevent(e);
 		}
 	}
 
@@ -149,9 +168,6 @@ void NewRobot::handleEvent(SDL_Event e) {
 		hasJustBeenPaused = false;
 
 	}
-
-
-
 }
 
 //Calculates a dead zone circle as opposed to dead zone cross
@@ -200,6 +216,7 @@ int NewRobot::getVelY() {
 //		updateChildren(timeStep);
 //	}
 //}
+
 void NewRobot::updatePosX(float timeStep) {
 	//std::cout << timeStep << std::endl;
 	if (!isDead) {
@@ -321,12 +338,38 @@ void NewRobot::updateCollisionY(GameObject* b, float timeStep) {
 	}
 }
 
-
-
 // When the robot collides with another robot
 void NewRobot::updateCollisionY(NewRobot* b, float timeStep) {
 	if (chkCollision(b)) {
 		relY -= getVelY() * timeStep;
 		updatePos();
+	}
+}
+
+// Will deactivate the current weapon and activate the next one
+void NewRobot::nextWeapon() {
+	// Get "list" of weapons
+	// Currently only searches direct children
+	std::vector<NewWeapon*> weapons;
+	for (auto& varObj : children) {
+		if (NewWeapon* weapon = std::get_if<NewWeapon>(&varObj)) {
+			weapons.push_back(weapon);
+			std::cout << "Weapon activity = " << weapon->isActive << std::endl;
+		}
+	}
+	std::cout << "weapon count = " << weapons.size() << std::endl;
+	// Activate and deactivate based on index
+	if (weapons.size() <= 1) {  // dont think i need this check, but will keep for now
+		return;
+	}
+	else {
+		for (int i = 0 ; i < weapons.size() ; i++ ) {
+			if (weapons[i]->isActive) {
+				weapons[i]->isActive = false;
+				weapons[(i + 1) % weapons.size()]->isActive = true;
+				return;
+			}
+		}
+		weapons[0]->isActive = true;
 	}
 }

@@ -64,9 +64,10 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
-				"assets/images/cannonsmall.png",
+				"assets/images/pistols.png",
 				"assets/images/bullet-2.png",
-				"assets/images/crate.png" };
+				"assets/images/crate.png",
+				"assets/images/minigun.png"};
 
 	//List of sounds that we will be using in the game
 
@@ -137,7 +138,7 @@ void Game::updateObjects(float timeStep) {
 	
 	//---SPAWN NEW OBJECTS---
 
-	spawnBullets();
+	//spawnBullets();
 
 	for (auto robot : robots) {
 		spawnBulletsRecursive(*robot);
@@ -168,6 +169,7 @@ void Game::updateObjects(float timeStep) {
 void Game::genTestRobots() {
 	RelTexture* roboTex = new RelTexture(textures[0].getWidth() / -2, textures[0].getHeight() / -2, 0, &textures[0], gRenderer);
 	RelTexture* wepTex = new RelTexture(textures[1].getWidth() / -2, textures[1].getHeight() / -2, 0, &textures[1], gRenderer);
+	RelTexture* minigunTex = new RelTexture(textures[4].getWidth() / -2, textures[4].getHeight() / -2, 0, &textures[4], gRenderer);
 
 	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &*roboTex, gGameController0);
 	robot0->addHitbox();
@@ -175,8 +177,13 @@ void Game::genTestRobots() {
 	robot0->setPlayer(0);
 	// Adding Weapon child
 	NewWeapon* wep0 = new NewWeapon(0, 50, 0, gRenderer, &*wepTex);
-	wep0->setPlayer(0);
+	wep0->setParams(0, 50, true);
 	robot0->addChild(*wep0);
+	// Add second Weapon
+	NewWeapon* wep01 = new NewWeapon(0, 50, 0, gRenderer, &*minigunTex);
+	wep01->setParams(0, 10, false);
+	robot0->addChild(*wep01);
+	// Add robot to robot list
 	robots.push_back(robot0);
 
 	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex, gGameController1);
@@ -265,14 +272,14 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 }
 
 // Checks if a weapon is firing and spawns a bullet
-void Game::spawnBullets() {
-	for (auto weapon : weapons) {
-		if (weapon->isFiring & weapon->canFire()) {
-			weapon->attemptToFire();
-			genTestBullets(weapon);
-		}
-	}
-}
+//void Game::spawnBullets() {
+//	for (auto weapon : weapons) {
+//		if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
+//			weapon->attemptToFire();
+//			genTestBullets(weapon);
+//		}
+//	}
+//}
 
 std::string Game::findWorkingDir() {
 	char buf[256];

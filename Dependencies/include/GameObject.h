@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SDL_gamecontroller.h>
 #include <list>
+#include <vector>
 #include <variant>
 
 #include "LTexture.h"
@@ -79,6 +80,7 @@ public:
 	std::list<std::variant<GameObject, NewRobot, NewWeapon, Bullet>> children;
 
 	bool isDead;
+	bool isActive;
 	bool isRelative;
 	int team;
 
