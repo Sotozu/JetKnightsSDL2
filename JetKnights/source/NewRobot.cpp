@@ -162,6 +162,7 @@ int NewRobot::getVelY() {
 //		updateChildren(timeStep);
 //	}
 //}
+
 void NewRobot::updatePosX(float timeStep) {
 	//std::cout << timeStep << std::endl;
 	if (!isDead) {
@@ -296,6 +297,7 @@ void NewRobot::updateCollisionY(NewRobot* b, float timeStep) {
 // Will deactivate the current weapon and activate the next one
 void NewRobot::nextWeapon() {
 	// Get "list" of weapons
+	// Currently only searches direct children
 	std::vector<NewWeapon*> weapons;
 	for (auto& varObj : children) {
 		if (NewWeapon* weapon = std::get_if<NewWeapon>(&varObj)) {
@@ -316,5 +318,6 @@ void NewRobot::nextWeapon() {
 				return;
 			}
 		}
+		weapons[0]->isActive = true;
 	}
 }

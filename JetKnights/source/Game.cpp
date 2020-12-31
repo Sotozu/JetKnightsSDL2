@@ -66,7 +66,7 @@ void Game::updateObjects(float timeStep) {
 	
 	//---SPAWN NEW OBJECTS---
 
-	spawnBullets();
+	//spawnBullets();
 
 	for (auto robot : robots) {
 		spawnBulletsRecursive(*robot);
@@ -199,14 +199,14 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 }
 
 // Checks if a weapon is firing and spawns a bullet
-void Game::spawnBullets() {
-	for (auto weapon : weapons) {
-		if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
-			weapon->attemptToFire();
-			genTestBullets(weapon);
-		}
-	}
-}
+//void Game::spawnBullets() {
+//	for (auto weapon : weapons) {
+//		if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
+//			weapon->attemptToFire();
+//			genTestBullets(weapon);
+//		}
+//	}
+//}
 
 std::string Game::findWorkingDir() {
 	char buf[256];

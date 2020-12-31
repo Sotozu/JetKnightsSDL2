@@ -71,7 +71,7 @@ private:
 	// Mutators
 
 	void loadMedia();
-	void spawnBullets();
+	//void spawnBullets();
 
 	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
 
