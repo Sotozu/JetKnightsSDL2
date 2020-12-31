@@ -48,7 +48,7 @@ private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	
-	static const int TOTAL_IMAGES = 4;
+	static const int TOTAL_IMAGES = 5;
 
 	SDL_Renderer* gRenderer;
 	

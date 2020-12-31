@@ -168,3 +168,9 @@ void NewWeapon::weaponSound() {
 void NewWeapon::setBulletInterval(int value) {
 	bulletInterval = value;
 }
+
+void NewWeapon::setParams(int player, int interval, bool isActive) {
+	this->player = player;
+	bulletInterval = interval;
+	this->isActive = isActive;
+}

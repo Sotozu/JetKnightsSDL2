@@ -22,6 +22,7 @@ public:
 	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
 	void setPlayer(int);
 	void setBulletInterval(int value);
+	void setParams(int player, int interval, bool isActive);
 	void weaponSound();
 	void attemptToFire();
 
