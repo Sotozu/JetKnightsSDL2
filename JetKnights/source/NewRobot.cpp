@@ -41,6 +41,51 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture
 	player = 0;
 }
 
+void NewRobot::onJoyXevent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
+		joyX = e.caxis.value;
+		// Set speed depending on dead zone
+		if (!inDeadCircle()) {
+			mSpeed = MAX_SPEED + boost;
+		}
+		else {
+			mSpeed = 0;
+		}
+	}
+}
+
+void NewRobot::onJoyYevent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
+		joyY = e.caxis.value;
+		// Set speed depending on dead zone
+		if (!inDeadCircle()) {
+			mSpeed = MAX_SPEED + boost;
+		}
+		else {
+			mSpeed = 0;
+		}
+	}
+}
+
+void NewRobot::onLeftTriggerEvent(SDL_Event e) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+		if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+			if (boost != 600) {
+				robotSound.turnThrusterOn();
+			}
+			boost = 600;
+		}
+		else {
+			if (boost == 600) {
+				robotSound.turnThrusterOff();
+			}
+			boost = 0;
+		}
+
+	}
+}
+
+
 // Handles controller events that the robot should respond to
 void NewRobot::handleEvent(SDL_Event e) {
 	//Controller input
@@ -48,48 +93,13 @@ void NewRobot::handleEvent(SDL_Event e) {
 		//If player 1 input
 		if (e.caxis.which == player) {
 			//X axis motion
-				if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTX) {
-					joyX = e.caxis.value;
-					// Set speed depending on dead zone
-					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED + boost;
-					}
-					else {
-						mSpeed = 0;
-					}
-				}
-				//Y axis motion
-				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_LEFTY) {
-					joyY = e.caxis.value;
-					// Set speed depending on dead zone
-					if (!inDeadCircle()) {
-						mSpeed = MAX_SPEED + boost;
-					}
-					else {
-						mSpeed = 0;
-					}
-				}
-				//Trigger press
-				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
-					
-					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-						if (boost != 600) {
-							robotSound.turnThrusterOn();
-						}
-						boost = 600;
-					}
-					else {
-						if (boost == 600) {
-							robotSound.turnThrusterOff();
-						}
-						boost = 0;
-					}
-
-				}
+			onJoyXevent(e);
+			//Y axis motion
+			onJoyYevent(e);
+			//Trigger press
+			onLeftTriggerEvent(e);
 		}
 	}
-
-
 }
 
 //Calculates a dead zone circle as opposed to dead zone cross

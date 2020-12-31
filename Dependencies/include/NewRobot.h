@@ -77,5 +77,9 @@ private:
 	bool inDeadCircle();
 
 	Robot_Sounds robotSound;
+
+	void onJoyXevent(SDL_Event e);
+	void onJoyYevent(SDL_Event e);
+	void onLeftTriggerEvent(SDL_Event e);
 };
 
