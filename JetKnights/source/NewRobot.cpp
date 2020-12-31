@@ -168,8 +168,8 @@ void NewRobot::handleEvent(SDL_Event e) {
 	else if (isPaused == false && hasJustBeenPaused == true) {
 
 		if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
-			robotSound.resumeThruster();
 			isThrusterOn = true;
+			robotSound.resumeThruster();
 			std::cout << triggerAxisValue << std::endl;
 		}
 		else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){

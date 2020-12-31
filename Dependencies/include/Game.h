@@ -63,7 +63,7 @@ private:
 
 	bool isPaused;
 	
-	static const int TOTAL_IMAGES = 5;
+	static const int TOTAL_IMAGES = 6;
 
 	SDL_Renderer* gRenderer;
 	
