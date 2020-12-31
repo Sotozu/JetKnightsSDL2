@@ -48,7 +48,7 @@ int main( int argc, char* args[] )
 	gameState state = MAIN_MENU;
 
 	float timeStep, timeStepTwo;
-	bool fightMusic = true, menuMusic = true, pauseMusic = true;
+	bool isPlay = true, isMenu = true, isPaused = true;
 
 	bool gamePaused = false;
 
@@ -97,12 +97,12 @@ int main( int argc, char* args[] )
 					switch (state) {
 					case (MAIN_MENU):
 
-						if (menuMusic == true) {
+						if (isMenu == true) {
 							game->stopMusic();
 							game->playMenuTheme();
-							menuMusic = false;
-							fightMusic = true;
-							pauseMusic = true;
+							isMenu = false;
+							isPlay = true;
+							isPaused = true;
 						}
 
 						if (e.type == SDL_QUIT)
@@ -113,7 +113,7 @@ int main( int argc, char* args[] )
 
 							if (e.cbutton.which == 0) {
 								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-									std::cout << "IN MENUES" << std::endl;
+									std::cout << "PLAY" << std::endl;
 									state = PLAYING;
 								}
 							}
@@ -122,13 +122,13 @@ int main( int argc, char* args[] )
 
 					case (PLAYING):
 					
-						if (fightMusic == true) {
+						if (isPlay == true) {
 
 							game->stopMusic();
 							game->playFightTheme();
-							menuMusic = true;
-							fightMusic = false;
-							pauseMusic = true;
+							isMenu = true;
+							isPlay = false;
+							isPaused = true;
 						}
 						if (e.type == SDL_QUIT)
 						{
@@ -138,7 +138,7 @@ int main( int argc, char* args[] )
 							
 							if (e.cbutton.which == 0) {
 								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-									std::cout << "NOW PLAYING" << std::endl;
+									std::cout << "MAIN MENU" << std::endl;
 									state = MAIN_MENU;
 								}
 								else if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
@@ -159,16 +159,18 @@ int main( int argc, char* args[] )
 
 					case (PAUSE_MENU):
 
-						game->handleEvent(e);
+						game->pauseGame(e);
 
 
-						if (pauseMusic == true) {
+						if (isPaused == true) {
 
-							//pausemenu.stopMusic();
-							//pausemenu.playPauseTheme();
-							menuMusic = true;
-							fightMusic = true;
-							pauseMusic = false;
+							pausemenu.stopMusic();
+							pausemenu.playPauseTheme();
+							//game->pauseGame();
+
+							isMenu = true;
+							isPlay = true;
+							isPaused = false;
 						}
 
 						if (e.type == SDL_QUIT)
@@ -179,7 +181,7 @@ int main( int argc, char* args[] )
 						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
 
 							if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START){
-								std::cout << "NOW PLAYING" << std::endl;
+								std::cout << "PLAY" << std::endl;
 								state = PLAYING;
 							}
 						}

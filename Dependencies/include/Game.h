@@ -34,7 +34,8 @@ public:
 
 	void initialize(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
-	void resetGame();
+	void pauseGame(SDL_Event e);
+
 
 	void updateObjects(float);
 
@@ -57,6 +58,8 @@ public:
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
+
+	bool isPaused;
 	
 	static const int TOTAL_IMAGES = 4;
 

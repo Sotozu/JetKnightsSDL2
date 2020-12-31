@@ -25,7 +25,11 @@ public:
 
 	void updatePosY(float);
 
+	void pauseRobotSounds();
+	void unpauseRobotSounds();
 
+	void pauseRobot();
+	void unpauseRobot();
 	void boostOn();
 	void boostOff();
 	void setPlayer(int);
@@ -73,6 +77,7 @@ private:
 	const int TRIGGER_DEAD_ZONE = 5000;
 
 	bool inDeadCircle();
+	bool isPaused;
 
 	Robot_Sounds robotSound;
 };

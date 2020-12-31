@@ -12,7 +12,7 @@ NewRobot::NewRobot() : GameObject() {
 	boost = 0;
 	health = 100;
 	player = 0;
-
+	isPaused = false;
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
@@ -26,6 +26,10 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 	boost = 0;
 	health = 100;
 	player = 0;
+
+	isPaused = false;
+
+
 }
 
 NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
@@ -39,7 +43,27 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture
 
 	health = 100;
 	player = 0;
+
+	isPaused = false;
+
+
 }
+
+void NewRobot::pauseRobotSounds() {
+	robotSound.pauseThruster();
+}
+
+void NewRobot::unpauseRobotSounds() {
+	robotSound.resumeThruster();
+}
+
+void NewRobot::pauseRobot() {
+	isPaused = true;
+}
+void NewRobot::unpauseRobot() {
+	isPaused = false;
+}
+
 
 // Handles controller events that the robot should respond to
 void NewRobot::handleEvent(SDL_Event e) {
@@ -69,25 +93,41 @@ void NewRobot::handleEvent(SDL_Event e) {
 						mSpeed = 0;
 					}
 				}
+
+
 				//Trigger press
-				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+				else if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT && isPaused == false) {
+
+						if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+							//If the trigger is pressed begin the thruster
+							if (boost != 600) {
+								robotSound.turnThrusterOn();
+							}
+							boost = 600;
+						}
+						else {
+							if (boost == 600) {
+								robotSound.turnThrusterOff();
+							}
+							boost = 0;
+						}
 					
-					if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-						if (boost != 600) {
-							robotSound.turnThrusterOn();
-						}
-						boost = 600;
-					}
-					else {
-						if (boost == 600) {
-							robotSound.turnThrusterOff();
-						}
-						boost = 0;
-					}
 
 				}
+				
 		}
 	}
+
+	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD 
+	//BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
+
+	if (isPaused == true) {
+		robotSound.pauseThruster();
+	}
+	if (isPaused == false) {
+		robotSound.resumeThruster();
+	}
+
 
 
 }
