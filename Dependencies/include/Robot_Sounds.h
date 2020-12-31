@@ -13,6 +13,9 @@ public:
 
 	void turnThrusterOn();
 	void turnThrusterOff();
+	void pauseThruster();
+	void resumeThruster();
+
 
 
 private:

@@ -12,6 +12,7 @@
 
 #include "GameObject.h"
 #include "RelTexture.h"
+#include "PauseMenu_Sounds.h"
 
 
 class Pause_Menu {
@@ -24,6 +25,8 @@ public:
 	void renderTransparentRect();
 	void genTestPanel();
 	void handleEvent(SDL_Event e);
+	void playPauseTheme();
+	void stopMusic();
 
 
 
@@ -31,14 +34,18 @@ public:
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
-
+	PauseMenu_Sounds pauseMenuMusic;
 	static const int TOTAL_IMAGES = 1;
 
 	SDL_Renderer* gRenderer;
 
-	std::vector<std::string> menuBackgroundImagesDir;
+	std::vector<std::string> pauseMenuBackgroundImagesDir;
+	std::vector<std::string> pauseMenuMusicDir;
 
-	LTexture menuBackgroundImages[TOTAL_IMAGES];
+
+
+
+	LTexture pauseMenuBackgroundImages[TOTAL_IMAGES];
 
 	std::list<GameObject*> panel;
 

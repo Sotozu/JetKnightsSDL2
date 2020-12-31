@@ -9,7 +9,7 @@ Pause_Menu::Pause_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 	gRenderer = renderer;
 
 	//List of assets that we will be using in the game
-	menuBackgroundImagesDir = { "assets/images/Pause_Menu.jpg" };
+	pauseMenuBackgroundImagesDir = { "assets/images/Pause_Menu.jpg" };
 
 
 	//List of sounds that we will be using in the game
@@ -23,7 +23,7 @@ Pause_Menu::Pause_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 //Loads all the textures for the game
 void Pause_Menu::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
-		menuBackgroundImages[i].loadFromFile(menuBackgroundImagesDir[i], gRenderer);
+		pauseMenuBackgroundImages[i].loadFromFile(pauseMenuBackgroundImagesDir[i], gRenderer);
 		//soundEffects[i].loadSound(sounds[i]);
 	}
 }
@@ -57,7 +57,7 @@ void Pause_Menu::updateObjects(float timeStep) {
 
 void  Pause_Menu::genTestPanel() {
 
-	RelTexture* panelTex = new RelTexture(0, 0, 0, &menuBackgroundImages[0], gRenderer);
+	RelTexture* panelTex = new RelTexture(0, 0, 0, &pauseMenuBackgroundImages[0], gRenderer);
 
 	GameObject* panel0 = new GameObject(0, 0, 0, gRenderer, &*panelTex);
 	panel0->addHitbox();
@@ -71,5 +71,14 @@ void Pause_Menu::renderTransparentRect() {
 	SDL_SetRenderDrawColor(gRenderer, 64, 64, 64, 1);
 	SDL_RenderFillRect(gRenderer, &fillRect);
 	SDL_RenderPresent(gRenderer);
+}
+
+void Pause_Menu::playPauseTheme() {
+
+	pauseMenuMusic.playPauseMusicTheme();
+}
+
+void Pause_Menu::stopMusic() {
+	pauseMenuMusic.stopMusic();
 }
 

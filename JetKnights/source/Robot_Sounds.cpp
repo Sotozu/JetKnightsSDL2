@@ -34,6 +34,14 @@ void Robot_Sounds::turnThrusterOff() {
 }
 
 
+void Robot_Sounds::pauseThruster() {
+	Mix_Pause(1);
+}
+void Robot_Sounds::resumeThruster() {
+	Mix_Resume(1);
+
+}
+
 
 std::string Robot_Sounds::findWorkingDir() {
 	char buf[256];
