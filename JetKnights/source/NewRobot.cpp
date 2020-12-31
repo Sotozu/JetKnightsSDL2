@@ -5,17 +5,24 @@
 NewRobot::NewRobot() : GameObject() {
 	joyX = 0;
 	joyY = 0;
+
 	mSpeed = 0;
 	radius = 0;
+
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
 	boost = 0;
 	health = 100;
 	player = 0;
+
 	isPaused = false;
+	hasJustBeenPaused = false;
+
+	gameController = NULL;
 }
 
-NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
+NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, SDL_GameController* CONTROLLER) : 
+	GameObject(x, y, angle, renderer ) {
 	// 'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;
@@ -28,11 +35,15 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer) : GameObje
 	player = 0;
 
 	isPaused = false;
+	hasJustBeenPaused = false;
+
+	gameController = CONTROLLER;
 
 
 }
 
-NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture) : GameObject(x, y, angle, renderer, ltexture) {
+NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture, SDL_GameController* CONTROLLER) : 
+	GameObject(x, y, angle, renderer, ltexture) {
 	// 'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;
@@ -45,8 +56,9 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture
 	player = 0;
 
 	isPaused = false;
+	hasJustBeenPaused = false;
 
-
+	gameController = CONTROLLER;
 }
 
 void NewRobot::pauseRobotSounds() {
@@ -59,6 +71,7 @@ void NewRobot::unpauseRobotSounds() {
 
 void NewRobot::pauseRobot() {
 	isPaused = true;
+	hasJustBeenPaused = true;
 }
 void NewRobot::unpauseRobot() {
 	isPaused = false;
@@ -107,7 +120,7 @@ void NewRobot::handleEvent(SDL_Event e) {
 						}
 						else {
 							if (boost == 600) {
-								robotSound.turnThrusterOff();
+									robotSound.turnThrusterOff();
 							}
 							boost = 0;
 						}
@@ -118,14 +131,23 @@ void NewRobot::handleEvent(SDL_Event e) {
 		}
 	}
 
-	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD 
-	//BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
-
+	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
 	if (isPaused == true) {
 		robotSound.pauseThruster();
+		hasJustBeenPaused = true;
 	}
-	if (isPaused == false) {
-		robotSound.resumeThruster();
+	else if (isPaused == false && hasJustBeenPaused == true) {
+		if (SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > TRIGGER_DEAD_ZONE) {
+			robotSound.resumeThruster();
+			std::cout << SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) << std::endl;
+		}
+		else if (SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > TRIGGER_DEAD_ZONE){
+			//std::cout << SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) << std::endl;
+
+		}
+	
+		hasJustBeenPaused = false;
+
 	}
 
 

@@ -14,8 +14,8 @@ class NewRobot : public GameObject{
 public:
 	//Constructors
 	NewRobot();
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer);
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture);
+	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, SDL_GameController* CONTROLLER);
+	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture, SDL_GameController* CONTROLLER);
 
 	//Mutators
 	void handleEvent(SDL_Event e);
@@ -78,7 +78,10 @@ private:
 
 	bool inDeadCircle();
 	bool isPaused;
+	bool hasJustBeenPaused;
 
 	Robot_Sounds robotSound;
+
+	SDL_GameController* gameController;
 };
 

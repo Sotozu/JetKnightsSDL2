@@ -9,6 +9,8 @@ Game::Game() {
 	SCREEN_WIDTH = 0;
 	gRenderer = NULL;
 	isPaused = false;
+	gGameController0 = NULL;
+	gGameController1 = NULL;
 
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
@@ -20,13 +22,16 @@ Game::Game() {
 }
 
 //Constructor
-Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
+Game::Game(SDL_Renderer* renderer, int screenW, int screenH, 
+	SDL_GameController* CONTROLLER0, SDL_GameController* CONTROLLER1) {
 
 	workingDir = findWorkingDir();
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
 	isPaused = false;
+	gGameController0 = CONTROLLER0;
+	gGameController1 = CONTROLLER1;
 
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
@@ -46,13 +51,16 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH) {
 }
 
 //function to intilize for dynamiclly created game
-void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH) {
+void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH, 
+	SDL_GameController* CONTROLLER0, SDL_GameController* CONTROLLER1) {
 
 	workingDir = findWorkingDir();
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
 	isPaused = false;
+	gGameController0 = CONTROLLER0;
+	gGameController1 = CONTROLLER1;
 
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
@@ -161,7 +169,7 @@ void Game::genTestRobots() {
 	RelTexture* roboTex = new RelTexture(textures[0].getWidth() / -2, textures[0].getHeight() / -2, 0, &textures[0], gRenderer);
 	RelTexture* wepTex = new RelTexture(textures[1].getWidth() / -2, textures[1].getHeight() / -2, 0, &textures[1], gRenderer);
 
-	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &*roboTex);
+	NewRobot* robot0 = new NewRobot(500, 500, 0, gRenderer, &*roboTex, gGameController0);
 	robot0->addHitbox();
 	robot0->team = 1;
 	robot0->setPlayer(0);
@@ -171,7 +179,7 @@ void Game::genTestRobots() {
 	robot0->addChild(*wep0);
 	robots.push_back(robot0);
 
-	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex);
+	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex, gGameController1);
 	robot1->addHitbox();
 	robot1->team = 2;
 	robot1->setPlayer(1);

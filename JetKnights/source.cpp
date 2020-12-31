@@ -78,7 +78,7 @@ int main( int argc, char* args[] )
 
 			//game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-			game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+			game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, gGameController0, gGameController1);
 
 			Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -206,7 +206,7 @@ int main( int argc, char* args[] )
 						timeStep = stepTimer.getTicks() / 1000.f;
 					}
 
-					std::cout << stepTimer.getTicks() / 1000.f << std::endl;
+					//std::cout << stepTimer.getTicks() / 1000.f << std::endl;
 
 					//Clear screen
 					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);

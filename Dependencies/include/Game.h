@@ -28,11 +28,13 @@ public:
 
 	//Constructors
 
-	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
+	Game(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT, 
+		SDL_GameController* CONTROLLER1, SDL_GameController* CONTROLLER2);
 
 	//Mutators
 
-	void initialize(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
+	void initialize(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT, 
+		SDL_GameController* CONTROLLER1, SDL_GameController* CONTROLLER2);
 
 	void pauseGame(SDL_Event e);
 
@@ -80,6 +82,10 @@ private:
 	std::list<StatusBar*> bars;
 	
 	LTimer timeTracker;
+
+	SDL_GameController* gGameController0;
+	SDL_GameController* gGameController1;
+
 
 	// Mutators
 
