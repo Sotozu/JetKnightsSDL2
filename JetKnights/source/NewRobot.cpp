@@ -85,6 +85,13 @@ void NewRobot::onLeftTriggerEvent(SDL_Event e) {
 	}
 }
 
+void NewRobot::onButtonBevent(SDL_Event e) {
+	if (e.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
+		std::cout << "B pressed" << std::endl;
+		nextWeapon();
+	}
+}
+
 
 // Handles controller events that the robot should respond to
 void NewRobot::handleEvent(SDL_Event e) {
@@ -98,6 +105,13 @@ void NewRobot::handleEvent(SDL_Event e) {
 			onJoyYevent(e);
 			//Trigger press
 			onLeftTriggerEvent(e);
+			
+		}
+	}
+	else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+		if (e.caxis.which == player) {
+			// Switch weapon button
+			onButtonBevent(e);
 		}
 	}
 }
@@ -286,8 +300,10 @@ void NewRobot::nextWeapon() {
 	for (auto& varObj : children) {
 		if (NewWeapon* weapon = std::get_if<NewWeapon>(&varObj)) {
 			weapons.push_back(weapon);
+			std::cout << "Weapon activity = " << weapon->isActive << std::endl;
 		}
 	}
+	std::cout << "weapon count = " << weapons.size() << std::endl;
 	// Activate and deactivate based on index
 	if (weapons.size() <= 1) {  // dont think i need this check, but will keep for now
 		return;

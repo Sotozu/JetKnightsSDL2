@@ -105,6 +105,12 @@ void Game::genTestRobots() {
 	NewWeapon* wep0 = new NewWeapon(0, 50, 0, gRenderer, &*wepTex);
 	wep0->setPlayer(0);
 	robot0->addChild(*wep0);
+	// Add second Weapon
+	NewWeapon* wep01 = new NewWeapon(0, 50, 0, gRenderer, &*wepTex);
+	wep01->setPlayer(0);
+	wep01->setBulletInterval(10);
+	robot0->addChild(*wep01);
+	// Add robot to robot list
 	robots.push_back(robot0);
 
 	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex);
@@ -194,7 +200,7 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 // Checks if a weapon is firing and spawns a bullet
 void Game::spawnBullets() {
 	for (auto weapon : weapons) {
-		if (weapon->isFiring & weapon->canFire()) {
+		if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
 			weapon->attemptToFire();
 			genTestBullets(weapon);
 		}

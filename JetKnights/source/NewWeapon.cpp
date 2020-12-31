@@ -1,9 +1,5 @@
 #include "NewWeapon.h"
 
-/*
-we need to 
-*/
-
 NewWeapon::NewWeapon() : GameObject() {
 	joyX = 0;
 	joyY = 0;
@@ -14,6 +10,7 @@ NewWeapon::NewWeapon() : GameObject() {
 	radius = 0;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
 }
@@ -31,6 +28,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	radius = 0;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
 }
@@ -48,6 +46,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTextu
 	radius = 40;
 	player = 0;
 	isFiring = false;
+	bulletInterval = 50;
 
 	stepTimer.start();
 }
@@ -84,7 +83,7 @@ void NewWeapon::onRightTriggerEvent(SDL_Event e) {
 // How the weapon handles SDL events
 void NewWeapon::handleEvent( SDL_Event e ) {
 	//Joystick input
-	if (e.type == SDL_CONTROLLERAXISMOTION) {	
+	if (e.type == SDL_CONTROLLERAXISMOTION) {
 		//If event matches player
 		if (e.caxis.which == player) {
 			//X axis motion
@@ -93,7 +92,7 @@ void NewWeapon::handleEvent( SDL_Event e ) {
 			onJoyYevent(e);
 			//Right Trigger press
 			onRightTriggerEvent(e);
-		}	
+		}
 	}
 }
 
@@ -164,4 +163,8 @@ void NewWeapon::setPlayer(int a) {
 
 void NewWeapon::weaponSound() {
 	weaponSounds.playgLow();
+}
+
+void NewWeapon::setBulletInterval(int value) {
+	bulletInterval = value;
 }

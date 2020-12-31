@@ -164,7 +164,7 @@ private:
 		for (auto &varObj : object.children) {
 			if (auto weapon = std::get_if<NewWeapon>(&varObj)) {
 				// Fire Weapon check
-				if (weapon->isFiring & weapon->canFire()) {
+				if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
 					weapon->attemptToFire();
 					genTestBullets(weapon);
 					//weapon->weaponSounds();

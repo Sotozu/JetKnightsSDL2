@@ -81,5 +81,6 @@ private:
 	void onJoyXevent(SDL_Event e);
 	void onJoyYevent(SDL_Event e);
 	void onLeftTriggerEvent(SDL_Event e);
+	void onButtonBevent(SDL_Event e);
 };
 
