@@ -71,6 +71,8 @@ private:
 	int joyX;
 	int joyY;
 
+	int triggerAxisValue;
+
 	int radius;
 	int mSpeed;
 	int boost;
@@ -82,6 +84,7 @@ private:
 	bool inDeadCircle();
 	bool isPaused;
 	bool hasJustBeenPaused;
+	bool isThrusterOn;
 
 	Robot_Sounds robotSound;
 

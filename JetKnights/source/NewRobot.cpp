@@ -14,9 +14,11 @@ NewRobot::NewRobot() : GameObject() {
 	boost = 0;
 	health = 100;
 	player = 0;
+	triggerAxisValue = 0;
 
 	isPaused = false;
 	hasJustBeenPaused = false;
+	isThrusterOn = false;
 
 	gameController = NULL;
 }
@@ -33,12 +35,13 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, SDL_GameCo
 	boost = 0;
 	health = 100;
 	player = 0;
+	triggerAxisValue = 0;
 
 	isPaused = false;
 	hasJustBeenPaused = false;
+	isThrusterOn = false;
 
 	gameController = CONTROLLER;
-
 
 }
 
@@ -54,9 +57,12 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture
 
 	health = 100;
 	player = 0;
+	triggerAxisValue = 0;
 
 	isPaused = false;
 	hasJustBeenPaused = false;
+	isThrusterOn = false;
+
 
 	gameController = CONTROLLER;
 }
@@ -71,7 +77,6 @@ void NewRobot::unpauseRobotSounds() {
 
 void NewRobot::pauseRobot() {
 	isPaused = true;
-	hasJustBeenPaused = true;
 }
 void NewRobot::unpauseRobot() {
 	isPaused = false;
@@ -104,16 +109,18 @@ void NewRobot::onJoyYevent(SDL_Event e) {
 }
 
 void NewRobot::onLeftTriggerEvent(SDL_Event e) {
-	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT && isPaused == false) {
 		if (e.caxis.value > TRIGGER_DEAD_ZONE) {
 			if (boost != 600) {
 				robotSound.turnThrusterOn();
+				isThrusterOn = true;
 			}
 			boost = 600;
 		}
 		else {
 			if (boost == 600) {
 				robotSound.turnThrusterOff();
+				isThrusterOn = false;
 			}
 			boost = 0;
 		}
@@ -150,19 +157,27 @@ void NewRobot::handleEvent(SDL_Event e) {
 		}
 	}
 
-	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
+	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD
+	//BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
+
+	triggerAxisValue = SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
 	if (isPaused == true) {
 		robotSound.pauseThruster();
 		hasJustBeenPaused = true;
 	}
 	else if (isPaused == false && hasJustBeenPaused == true) {
-		if (SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > TRIGGER_DEAD_ZONE) {
-			robotSound.resumeThruster();
-			std::cout << SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) << std::endl;
-		}
-		else if (SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) > TRIGGER_DEAD_ZONE){
-			//std::cout << SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT) << std::endl;
 
+		if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
+			robotSound.resumeThruster();
+			isThrusterOn = true;
+			std::cout << triggerAxisValue << std::endl;
+		}
+		else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){
+
+			std::cout << triggerAxisValue << std::endl;
+			boost = 0;
+			robotSound.turnThrusterOff();
+			isThrusterOn = false;
 		}
 	
 		hasJustBeenPaused = false;
