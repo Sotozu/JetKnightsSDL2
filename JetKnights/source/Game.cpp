@@ -14,9 +14,11 @@ Game::Game() {
 
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
-				"assets/images/cannonsmall.png",
-				"assets/images/bullet-2.png",
-				"assets/images/crate.png" };
+				"assets/images/pistols.png",
+				"assets/images/my_cat.png",
+				"assets/images/crate.png",
+				"assets/images/minigun.png",
+				"assets/images/cannonsmall.png" };
 
 
 }
@@ -36,7 +38,7 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH,
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
 				"assets/images/pistols.png",
-				"assets/images/bullet-2.png",
+				"assets/images/my_cat.png",
 				"assets/images/crate.png",
 				"assets/images/minigun.png",
 				"assets/images/cannonsmall.png" };
@@ -67,7 +69,7 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
 				"assets/images/pistols.png",
-				"assets/images/bullet-2.png",
+				"assets/images/my_cat.png",
 				"assets/images/crate.png",
 				"assets/images/minigun.png",
 				"assets/images/cannonsmall.png" };
@@ -190,7 +192,7 @@ void Game::genTestRobots() {
 	robot0->addChild(*wep01);
 	// Add third Weapon
 	NewWeapon* wep02 = new NewWeapon(0, 50, 0, gRenderer, &*cannonTex);
-	wep02->setParams(0, 150, false);
+	wep02->setParams(0, 250, false);
 	robot0->addChild(*wep02);
 	// Add robot to robot list
 	robots.push_back(robot0);
@@ -200,9 +202,18 @@ void Game::genTestRobots() {
 	robot1->team = 2;
 	robot1->setPlayer(1);
 	// Adding Weapon child
-	NewWeapon* wep1 = new NewWeapon(0, 50, 0, gRenderer, &*wepTex);
-	wep1->setPlayer(1);
-	robot1->addChild(*wep1);
+	NewWeapon* wep00 = new NewWeapon(0, 50, 0, gRenderer, &*wepTex);
+	wep00->setParams(1, 50, true);
+	robot1->addChild(*wep00);
+	// Add second Weapon
+	NewWeapon* wep11 = new NewWeapon(0, 50, 0, gRenderer, &*minigunTex);
+	wep11->setParams(1, 10, false);
+	robot1->addChild(*wep11);
+	// Add third Weapon
+	NewWeapon* wep22 = new NewWeapon(0, 50, 0, gRenderer, &*cannonTex);
+	wep22->setParams(1, 250, false);
+	robot1->addChild(*wep22);
+	// Add robot to robot list
 	robots.push_back(robot1);
 	
 	// Creating Status Bars

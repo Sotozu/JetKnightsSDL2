@@ -35,9 +35,11 @@ void Weapon_Sounds::loadSound()
 
 	}
 
-	gLow = Mix_LoadWAV((workingDir + "/assets/sound/low.wav").c_str());
+	gLow = Mix_LoadWAV((workingDir + "/assets/sound/cat_meow.wav").c_str());
+	std::cout << workingDir << std::endl;
 	if (gLow == NULL)
 	{
+		
 		printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
