@@ -7,9 +7,10 @@ Pause_Menu::Pause_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
+	workingDir = findWorkingDir();
 
 	//List of assets that we will be using in the game
-	pauseMenuBackgroundImagesDir = { "assets/images/Pause_Menu.jpg" };
+	pauseMenuBackgroundImagesDir = { workingDir + "../Dependencies/assets/images/Pause_Menu.jpg" };
 
 
 	//List of sounds that we will be using in the game
@@ -80,5 +81,11 @@ void Pause_Menu::playPauseTheme() {
 
 void Pause_Menu::stopMusic() {
 	pauseMenuMusic.stopMusic();
+}
+
+std::string Pause_Menu::findWorkingDir() {
+	char buf[256];
+	GetCurrentDirectoryA(256, buf);
+	return std::string(buf) + '\\';
 }
 

@@ -14,59 +14,59 @@ void Sound::loadSound()
 	
 
 	//Load sound effects
-	gScratch = Mix_LoadWAV((workingDir + "/assets/sound/scratch.wav").c_str());
+	gScratch = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/scratch.wav").c_str());
 	if (gScratch == NULL)
 	{
 		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 	
 	}
 
-	gHigh = Mix_LoadWAV((workingDir + "/assets/sound/high.wav").c_str());
+	gHigh = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/high.wav").c_str());
 	if (gHigh == NULL)
 	{
 		printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	gMedium = Mix_LoadWAV((workingDir + "/assets/sound/medium.wav").c_str());
+	gMedium = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/medium.wav").c_str());
 	if (gMedium == NULL)
 	{
 		printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 	
 	}
 
-	gLow = Mix_LoadWAV((workingDir + "/assets/sound/low.wav").c_str());
+	gLow = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/low.wav").c_str());
 	if (gLow == NULL)
 	{
 		printf("Failed to load low sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 	
 	}
-	thrusterOn = Mix_LoadWAV((workingDir + "/assets/sound/thrusterFire.wav").c_str());
+	thrusterOn = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/thrusterFire.wav").c_str());
 	if (thrusterOn == NULL)
 	{
 		printf("Failed to load thrusterOn effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	thrusterPowerDown = Mix_LoadWAV((workingDir + "/assets/sound/thrusterPowerDown1.wav").c_str());
+	thrusterPowerDown = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/thrusterPowerDown1.wav").c_str());
 	if (thrusterPowerDown == NULL)
 	{
 		printf("Failed to load thrusterPowerDown sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	fightTheme = Mix_LoadMUS((workingDir + "/assets/sound/fight.wav").c_str());
+	fightTheme = Mix_LoadMUS((workingDir + "../Dependencies/assets/sound/fight.wav").c_str());
 	if (fightTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	menuTheme = Mix_LoadMUS((workingDir + "/assets/sound/main_menu.wav").c_str());
+	menuTheme = Mix_LoadMUS((workingDir + "../Dependencies/assets/sound/main_menu.wav").c_str());
 	if (menuTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	pauseTheme = Mix_LoadMUS((workingDir + "/assets/sound/pause_menu.wav").c_str());
+	pauseTheme = Mix_LoadMUS((workingDir + "../Dependencies/assets/sound/pause_menu.wav").c_str());
 	if (pauseTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());

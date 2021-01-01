@@ -14,14 +14,14 @@ void PauseMenu_Sounds::loadSound()
 
 
 	//Load sound effects
-	pauseMenuButtonPress = Mix_LoadWAV((workingDir + "/assets/sound/scratch.wav").c_str());
+	pauseMenuButtonPress = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/scratch.wav").c_str());
 	if (pauseMenuButtonPress == NULL)
 	{
 		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	pauseTheme = Mix_LoadMUS((workingDir + "/assets/sound/pause_menu.wav").c_str());
+	pauseTheme = Mix_LoadMUS((workingDir + "../Dependencies/assets/sound/pause_menu.wav").c_str());
 	if (pauseTheme == NULL)
 	{
 		printf("Failed to load fightTheme sound effect! SDL_mixer Error: %s\n", Mix_GetError());

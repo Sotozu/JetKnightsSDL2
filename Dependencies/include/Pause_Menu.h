@@ -42,7 +42,8 @@ private:
 	std::vector<std::string> pauseMenuBackgroundImagesDir;
 	std::vector<std::string> pauseMenuMusicDir;
 
-
+	std::string findWorkingDir();
+	std::string workingDir;
 
 
 	LTexture pauseMenuBackgroundImages[TOTAL_IMAGES];

@@ -14,28 +14,28 @@ void Weapon_Sounds::loadSound()
 
 
 	//Load sound effects
-	gScratch = Mix_LoadWAV((workingDir + "/assets/sound/scratch.wav").c_str());
+	gScratch = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/scratch.wav").c_str());
 	if (gScratch == NULL)
 	{
 		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	gHigh = Mix_LoadWAV((workingDir + "/assets/sound/high.wav").c_str());
+	gHigh = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/high.wav").c_str());
 	if (gHigh == NULL)
 	{
 		printf("Failed to load high sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	gMedium = Mix_LoadWAV((workingDir + "/assets/sound/medium.wav").c_str());
+	gMedium = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/medium.wav").c_str());
 	if (gMedium == NULL)
 	{
 		printf("Failed to load medium sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
 
-	gLow = Mix_LoadWAV((workingDir + "/assets/sound/cat_meow.wav").c_str());
+	gLow = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/low.wav").c_str());
 	std::cout << workingDir << std::endl;
 	if (gLow == NULL)
 	{

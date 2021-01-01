@@ -36,12 +36,12 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH,
 	gGameController1 = CONTROLLER1;
 
 	//List of assets that we will be using in the game
-	images = { "assets/images/robotrightnew.png",
-				"assets/images/pistols.png",
-				"assets/images/my_cat.png",
-				"assets/images/crate.png",
-				"assets/images/minigun.png",
-				"assets/images/cannonsmall.png" };
+	images = { workingDir + "../Dependencies/assets/images/robotrightnew.png",
+				workingDir + "../Dependencies/assets/images/pistols.png",
+				workingDir + "../Dependencies/assets/images/my_cat.png",
+				workingDir + "../Dependencies/assets/images/crate.png",
+				workingDir + "../Dependencies/assets/images/minigun.png",
+				workingDir + "../Dependencies/assets/images/cannonsmall.png" };
 
 	//List of sounds that we will be using in the game
 
@@ -67,12 +67,12 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 	gGameController1 = CONTROLLER1;
 
 	//List of assets that we will be using in the game
-	images = { "assets/images/robotrightnew.png",
-				"assets/images/pistols.png",
-				"assets/images/my_cat.png",
-				"assets/images/crate.png",
-				"assets/images/minigun.png",
-				"assets/images/cannonsmall.png" };
+	images = { workingDir + "../Dependencies/assets/images/robotrightnew.png",
+				workingDir + "../Dependencies/assets/images/pistols.png",
+				workingDir + "../Dependencies/assets/images/my_cat.png",
+				workingDir + "../Dependencies/assets/images/crate.png",
+				workingDir + "../Dependencies/assets/images/minigun.png",
+				workingDir + "../Dependencies/assets/images/cannonsmall.png" };
 
 	//List of sounds that we will be using in the game
 

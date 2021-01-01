@@ -7,9 +7,10 @@ Main_Menu::Main_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 	SCREEN_HEIGHT = screenH;
 	SCREEN_WIDTH = screenW;
 	gRenderer = renderer;
+	workingDir = findWorkingDir();
 
 	//List of assets that we will be using in the game
-	menuBackgroundImagesDir = { "assets/images/Main_Menu.jpg" };
+	menuBackgroundImagesDir = { workingDir + "../Dependencies/assets/images/Main_Menu.jpg" };
 
 
 	//List of sounds that we will be using in the game
@@ -65,3 +66,8 @@ void  Main_Menu::genTestPanel () {
 
 }
 
+	std::string Main_Menu::findWorkingDir() {
+		char buf[256];
+		GetCurrentDirectoryA(256, buf);
+		return std::string(buf) + '\\';
+	}

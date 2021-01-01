@@ -46,6 +46,8 @@ private:
 
 	void loadMedia();
 
+	std::string findWorkingDir();
+	std::string workingDir;
 
 
 	template<class B>
@@ -54,7 +56,5 @@ private:
 			item->render();
 		}
 	}
-
-
 
 };
