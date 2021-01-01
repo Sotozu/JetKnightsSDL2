@@ -19,10 +19,10 @@ Click "local windows debugger" to run the game.
 
 ## controls
 
-left trigger: boost
-right trigger: shoot
-left joystick: movement
-right joystick: aim weapon
-B button: switch weapons
-menu button: takes you from the main-menu to the game and vise versa
-back button: takes you from the game to the pause-menu and vise versa
+*left trigger: boost
+*right trigger: shoot
+*left joystick: movement
+*right joystick: aim weapon
+*B button: switch weapons
+*menu button: takes you from the main-menu to the game and vise versa
+*back button: takes you from the game to the pause-menu and vise versa
