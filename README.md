@@ -14,7 +14,7 @@ This game is a pvp shooter with mecha.
 
 ## Installation
 
-1. Download the master branch to any folder you want.
+1. Download the *master* branch to any folder you want.
 2. Use microsoft visual studio 2019 and open the project.
 3. Click "local windows debugger" to run the game.
 
