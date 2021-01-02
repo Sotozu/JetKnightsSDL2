@@ -18,7 +18,9 @@ NewRobot::NewRobot() : GameObject() {
 
 	isPaused = false;
 	hasJustBeenPaused = false;
-	isThrusterOn = false;
+	isThrusterCurrentlyOn = false;
+	thrusterSwitchOn = false;
+	wasThrusterAlreadyOn = false;
 
 	gameController = NULL;
 }
@@ -39,7 +41,10 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, SDL_GameCo
 
 	isPaused = false;
 	hasJustBeenPaused = false;
-	isThrusterOn = false;
+	isThrusterCurrentlyOn = false;
+	thrusterSwitchOn = false;
+	wasThrusterAlreadyOn = false;
+
 
 	gameController = CONTROLLER;
 
@@ -61,7 +66,10 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture
 
 	isPaused = false;
 	hasJustBeenPaused = false;
-	isThrusterOn = false;
+	isThrusterCurrentlyOn = false;
+	thrusterSwitchOn = false;
+	isThrusterCurrentlyOn = false;
+
 
 
 	gameController = CONTROLLER;
@@ -109,19 +117,31 @@ void NewRobot::onJoyYevent(SDL_Event e) {
 }
 
 void NewRobot::onLeftTriggerEvent(SDL_Event e) {
+
 	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT && isPaused == false) {
 		if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-			if (boost != 600) {
+			//If the trigger is pressed to turn thruster on AND the thruster has not been turned on yet THEN play the thruster ON sound
+			if (isThrusterCurrentlyOn == false) {
 				robotSound.turnThrusterOn();
-				isThrusterOn = true;
+
+				//
+				isThrusterCurrentlyOn = true;
+				thrusterSwitchOn = true;
 			}
+			isThrusterCurrentlyOn = true;
 			boost = 600;
 		}
 		else {
-			if (boost == 600) {
+
+			//If the thruster switch is turned on then activate thruster off
+			if (thrusterSwitchOn == true)
+			{
 				robotSound.turnThrusterOff();
-				isThrusterOn = false;
+				thrusterSwitchOn = false;
 			}
+			isThrusterCurrentlyOn = false;
+
+
 			boost = 0;
 		}
 
@@ -161,28 +181,28 @@ void NewRobot::handleEvent(SDL_Event e) {
 	//BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
 
 	triggerAxisValue = SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
-	if (isPaused == true) {
-		robotSound.pauseThruster();
-		hasJustBeenPaused = true;
-	}
-	else if (isPaused == false && hasJustBeenPaused == true) {
+	//if (isPaused == true) {
+	//	robotSound.pauseThruster();
+	//	hasJustBeenPaused = true;
+	//}
+	//else if (isPaused == false && hasJustBeenPaused == true) {
 
-		if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
-			isThrusterOn = true;
-			robotSound.resumeThruster();
-			std::cout << triggerAxisValue << std::endl;
-		}
-		else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){
+	//	if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
+	//		isThrusterOn = true;
+	//		robotSound.resumeThruster();
+	//		std::cout << triggerAxisValue << std::endl;
+	//	}
+	//	else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){
 
-			std::cout << triggerAxisValue << std::endl;
-			boost = 0;
-			robotSound.turnThrusterOff();
-			isThrusterOn = false;
-		}
-	
-		hasJustBeenPaused = false;
+	//		std::cout << triggerAxisValue << std::endl;
+	//		boost = 0;
+	//		robotSound.turnThrusterOff();
+	//		isThrusterOn = false;
+	//	}
+	//
+	//	hasJustBeenPaused = false;
 
-	}
+	//}
 }
 
 //Calculates a dead zone circle as opposed to dead zone cross

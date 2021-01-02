@@ -84,7 +84,9 @@ private:
 	bool inDeadCircle();
 	bool isPaused;
 	bool hasJustBeenPaused;
-	bool isThrusterOn;
+	bool isThrusterCurrentlyOn;
+	bool thrusterSwitchOn;
+	bool wasThrusterAlreadyOn;
 
 	Robot_Sounds robotSound;
 
