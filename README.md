@@ -18,7 +18,7 @@ This game is a pvp shooter with mecha.
 2. Use **Microsoft Visual Studio** and open the project.
 3. Click "Local Windows Debugger" to run the game.
 
-## controls
+## Controls
 
 
 * left trigger: boost
