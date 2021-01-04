@@ -87,12 +87,11 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 
 void Game::pauseGame(SDL_Event e) {
 
-
+	//std::cout << "PAUSE" << std::endl;
+	//std::cout << std::endl;
 	for (auto robot : robots) {
 
-		robot->pauseRobot();
-
-		robot->handleEvent(e);
+		robot->robotPaused(e);
 		robot->passOnEvent(e);
 	}
 	for (auto weapon : weapons) {
@@ -101,6 +100,13 @@ void Game::pauseGame(SDL_Event e) {
 		}
 	}
 }
+
+void Game::unpauseGame() {
+	for (auto robot : robots) {
+		robot->robotUnpause();
+	}
+}
+
 
 //Loads all the textures for the game
 void Game::loadMedia() {
@@ -115,7 +121,7 @@ void Game::loadMedia() {
 void Game::handleEvent(SDL_Event e) {
 	for (auto robot : robots) {
 
-		robot->unpauseRobot();
+		//robot->robotUnpause();
 		robot->handleEvent(e);
 		robot->passOnEvent(e);
 	}
