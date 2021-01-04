@@ -9,8 +9,8 @@ This game is a pvp shooter with mecha.
 
 ## Game Requirements
 
-* Two X-box controllers are required to play this game.
-* Visual Studio 2017 and up
+* Two wired X-box controllers are required to play this game. 
+* Microsoft Visual Studio 2017 and up
 
 ## Installation
 
@@ -18,7 +18,7 @@ This game is a pvp shooter with mecha.
 2. Use **Microsoft Visual Studio** and open the project.
 3. Click "Local Windows Debugger" to run the game.
 
-## controls
+## Controls
 
 * left trigger: boost
 * right trigger: shoot
