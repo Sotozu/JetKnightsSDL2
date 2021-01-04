@@ -37,6 +37,8 @@ public:
 		SDL_GameController* CONTROLLER1, SDL_GameController* CONTROLLER2);
 
 	void pauseGame(SDL_Event e);
+	void unpauseGame();
+
 
 
 	void updateObjects(float);

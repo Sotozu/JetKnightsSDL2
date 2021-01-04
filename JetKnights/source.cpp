@@ -50,7 +50,7 @@ int main( int argc, char* args[] )
 	float timeStep, timeStepTwo;
 	bool isPlay = true, isMenu = true, isPaused = true;
 
-	bool gamePaused = false;
+	bool wasGamePaused = false;
 
 	bool wasInMenu = true;
 
@@ -62,7 +62,7 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-	
+		int i = 0;
 			//Main loop flag
 			bool quit = false;
 
@@ -85,112 +85,88 @@ int main( int argc, char* args[] )
 			Main_Menu mainmenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
 
+			/*
+			removes the events of adding devices before playing the game and some window events.
+			*/
+			SDL_PumpEvents();
+			SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
 
-			
+			game->playMenuTheme();
+
 			//While application is running
 			while( !quit )
 			{
-				//Handle events on queue
-				while( SDL_PollEvent( &e ) != 0 )
+			
+
+				/*
+				The event system in SDL is treating the controller events just like joystick events. 
+				We don't want to register these because it will result in excessive calls to the event loop.
+				*/
+
+				SDL_PumpEvents();
+				SDL_FlushEvents(SDL_JOYAXISMOTION, SDL_JOYDEVICEREMOVED);
+
+				while (SDL_PollEvent(&e) != 0)
 				{
-
-					switch (state) {
-					case (MAIN_MENU):
-
-						if (isMenu == true) {
-							game->stopMusic();
-							game->playMenuTheme();
-							isMenu = false;
-							isPlay = true;
-							isPaused = true;
-						}
-
-						if (e.type == SDL_QUIT)
-						{
-							quit = true;
-						}
-						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-
-							if (e.cbutton.which == 0) {
-								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-									std::cout << "PLAY" << std::endl;
-									state = PLAYING;
-								}
-							}
-						}
-						break;
-
-					case (PLAYING):
-					
-						if (isPlay == true) {
-
-							game->stopMusic();
-							game->playFightTheme();
-							isMenu = true;
-							isPlay = false;
-							isPaused = true;
-						}
-						if (e.type == SDL_QUIT)
-						{
-							quit = true;
-						}
-						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-							
-							if (e.cbutton.which == 0) {
-								if (e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-									std::cout << "MAIN MENU" << std::endl;
-									state = MAIN_MENU;
-								}
-								else if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-									std::cout << "PAUSE MENU" << std::endl;
-									state = PAUSE_MENU;
-
-									timeStepTwo = stepTimer.getTicks() / 1000.f;
-									gamePaused = true;
-								}
-
-
-
-
-							}
-						}
-						game->handleEvent(e);
-						break;
-
-					case (PAUSE_MENU):
-
-						game->pauseGame(e);
-
-
-						if (isPaused == true) {
-
-							pausemenu.stopMusic();
-							pausemenu.playPauseTheme();
-							//game->pauseGame();
-
-							isMenu = true;
-							isPlay = true;
-							isPaused = false;
-						}
-
-						if (e.type == SDL_QUIT)
-						{
-							quit = true;
-						}
-
-						else if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-
-							if (e.cbutton.button == SDL_CONTROLLER_BUTTON_START){
-								std::cout << "PLAY" << std::endl;
-								state = PLAYING;
-							}
-						}
+					//If the player quits
+					if (e.type == SDL_QUIT)
+					{
+						quit = true;
 						break;
 					}
 
-					//User requests quit
-					
-					//Passes all events to game which parses and executes
+					//If the player either wants to go to the main-menu, pause-menu, or play-state
+					//The player must have pressed the "back" button or the "main-menu" button
+					if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+						if (e.cbutton.which == 0 || e.cbutton.which == 1) {
+
+							if (state == MAIN_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+								state = PLAYING;
+								game->stopMusic();
+								game->playFightTheme();
+
+							}
+							else if (state == PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+								state = PAUSE_MENU;
+								wasGamePaused = true;
+								timeStepTwo = stepTimer.getTicks() / 1000.f;
+								pausemenu.stopMusic();
+								pausemenu.playPauseTheme();
+
+							}
+							else if (state == PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+								state = MAIN_MENU;
+								game->stopMusic();
+								game->playMenuTheme();
+							}
+							else if (state == PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+								state = PLAYING;
+								game->unpauseGame();
+
+								game->stopMusic();
+								game->playFightTheme();
+							}
+						}
+					}
+
+
+					switch (state) {
+
+					case (MAIN_MENU):
+						//there is currently nothing done here
+						break;
+
+					case (PLAYING):
+
+						game->handleEvent(e);
+
+						break;
+
+					case (PAUSE_MENU):
+						game->pauseGame(e);
+						break;
+					}
+
 				}
 
 
@@ -198,9 +174,9 @@ int main( int argc, char* args[] )
 				if (state == PLAYING) {
 					//Creates a time stamp so that when the game unpauses the game timer "resets" to that positions 
 
-					if (gamePaused == true){
+					if (wasGamePaused == true){
 						timeStep = timeStepTwo;
-						gamePaused = false;
+						wasGamePaused = false;
 					}
 					else {
 						timeStep = stepTimer.getTicks() / 1000.f;
@@ -241,7 +217,6 @@ int main( int argc, char* args[] )
 					pausemenu.renderTransparentRect();
 				}
 			}
-		
 	}
 
 	return 0;

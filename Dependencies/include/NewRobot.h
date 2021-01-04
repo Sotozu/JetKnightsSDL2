@@ -29,8 +29,8 @@ public:
 	void pauseRobotSounds();
 	void unpauseRobotSounds();
 
-	void pauseRobot();
-	void unpauseRobot();
+	void robotPaused(SDL_Event e);
+	void robotUnpause();
 	void boostOn();
 	void boostOff();
 	void setPlayer(int);
@@ -71,11 +71,11 @@ private:
 	int joyX;
 	int joyY;
 
-	int triggerAxisValue;
 
 	int radius;
 	int mSpeed;
 	int boost;
+	Sint16 triggerAxisValue;
 
 	int player;
 	const int JOYSTICK_DEAD_ZONE = 8000;
@@ -87,6 +87,7 @@ private:
 	bool isThrusterCurrentlyOn;
 	bool thrusterSwitchOn;
 	bool wasThrusterAlreadyOn;
+	bool thrusterOnBeforePause;
 
 	Robot_Sounds robotSound;
 
