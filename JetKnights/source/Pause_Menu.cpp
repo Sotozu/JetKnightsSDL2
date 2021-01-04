@@ -10,7 +10,7 @@ Pause_Menu::Pause_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 	workingDir = findWorkingDir();
 
 	//List of assets that we will be using in the game
-	pauseMenuBackgroundImagesDir = { workingDir + "../Dependencies/assets/images/Pause_Menu.jpg" };
+	pauseMenuPanelImagesDir = { workingDir + "../Dependencies/assets/images/Pause_Menu_Panel_1.png" };
 
 
 	//List of sounds that we will be using in the game
@@ -24,7 +24,7 @@ Pause_Menu::Pause_Menu(SDL_Renderer* renderer, int screenW, int screenH) {
 //Loads all the textures for the game
 void Pause_Menu::loadMedia() {
 	for (int i = 0; i < TOTAL_IMAGES; ++i) {
-		pauseMenuBackgroundImages[i].loadFromFile(pauseMenuBackgroundImagesDir[i], gRenderer);
+		pauseMenuPanelImages[i].loadFromFile(pauseMenuPanelImagesDir[i], gRenderer);
 		//soundEffects[i].loadSound(sounds[i]);
 	}
 }
@@ -58,7 +58,7 @@ void Pause_Menu::updateObjects(float timeStep) {
 
 void  Pause_Menu::genTestPanel() {
 
-	RelTexture* panelTex = new RelTexture(0, 0, 0, &pauseMenuBackgroundImages[0], gRenderer);
+	RelTexture* panelTex = new RelTexture(0, 0, 0, &pauseMenuPanelImages[0], gRenderer);
 
 	GameObject* panel0 = new GameObject(0, 0, 0, gRenderer, &*panelTex);
 	panel0->addHitbox();

@@ -39,14 +39,14 @@ private:
 
 	SDL_Renderer* gRenderer;
 
-	std::vector<std::string> pauseMenuBackgroundImagesDir;
+	std::vector<std::string> pauseMenuPanelImagesDir;
 	std::vector<std::string> pauseMenuMusicDir;
 
 	std::string findWorkingDir();
 	std::string workingDir;
 
 
-	LTexture pauseMenuBackgroundImages[TOTAL_IMAGES];
+	LTexture pauseMenuPanelImages[TOTAL_IMAGES];
 
 	std::list<GameObject*> panel;
 

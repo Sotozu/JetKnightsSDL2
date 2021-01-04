@@ -17,7 +17,7 @@ void Robot_Sounds::loadSound()
 		printf("Failed to load thrusterOn effect! SDL_mixer Error: %s\n", Mix_GetError());
 
 	}
-	thrusterPowerDown = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/thrusterPowerDown1.wav").c_str());
+	thrusterPowerDown = Mix_LoadWAV((workingDir + "../Dependencies/assets/sound/thrusterPowerDown.wav").c_str());
 	if (thrusterPowerDown == NULL)
 	{
 		printf("Failed to load thrusterPowerDown sound effect! SDL_mixer Error: %s\n", Mix_GetError());

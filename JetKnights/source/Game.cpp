@@ -15,7 +15,7 @@ Game::Game() {
 	//List of assets that we will be using in the game
 	images = { "assets/images/robotrightnew.png",
 				"assets/images/pistols.png",
-				"assets/images/my_cat.png",
+				"assets/images/bullet.png",
 				"assets/images/crate.png",
 				"assets/images/minigun.png",
 				"assets/images/cannonsmall.png" };
@@ -38,7 +38,7 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH,
 	//List of assets that we will be using in the game
 	images = { workingDir + "../Dependencies/assets/images/robotrightnew.png",
 				workingDir + "../Dependencies/assets/images/pistols.png",
-				workingDir + "../Dependencies/assets/images/my_cat.png",
+				workingDir + "../Dependencies/assets/images/bullet.png",
 				workingDir + "../Dependencies/assets/images/crate.png",
 				workingDir + "../Dependencies/assets/images/minigun.png",
 				workingDir + "../Dependencies/assets/images/cannonsmall.png" };
@@ -69,7 +69,7 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 	//List of assets that we will be using in the game
 	images = { workingDir + "../Dependencies/assets/images/robotrightnew.png",
 				workingDir + "../Dependencies/assets/images/pistols.png",
-				workingDir + "../Dependencies/assets/images/my_cat.png",
+				workingDir + "../Dependencies/assets/images/bullet.png",
 				workingDir + "../Dependencies/assets/images/crate.png",
 				workingDir + "../Dependencies/assets/images/minigun.png",
 				workingDir + "../Dependencies/assets/images/cannonsmall.png" };
