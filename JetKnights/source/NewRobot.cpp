@@ -89,71 +89,78 @@ void NewRobot::robotPaused(SDL_Event e) {
 	isPaused = true;
 
 	robotSound.pauseThruster();
+
 	if (e.type == SDL_CONTROLLERAXISMOTION) {
-		if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
+			//If player 1 input
+		if (e.caxis.which == player) {
+			onJoyXevent(e);
+			//Y axis motion
+			onJoyYevent(e);
+			if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
 
-			//TRIGGER HELD DOWN
-			if (e.caxis.value > TRIGGER_DEAD_ZONE) {
-				if (isThrusterCurrentlyOn == false) {
+				//TRIGGER HELD DOWN
+				if (e.caxis.value > TRIGGER_DEAD_ZONE) {
+					if (isThrusterCurrentlyOn == false) {
 
-					/*
-					1. is paused
-					2. thrusters were set to OFF before
-					3. currently holding down the trigger
-					4. Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!
-					*/
-					std::cout << "THRUSTER NOT ON" << std::endl;
-					std::cout << "Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!" << std::endl;
-					thrusterSwitchOn = true;
-					std::cout << triggerAxisValue << std::endl;
-					std::cout << std::endl;
+						/*
+						1. is paused
+						2. thrusters were set to OFF before
+						3. currently holding down the trigger
+						4. Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!
+						*/
+						std::cout << "THRUSTER NOT ON" << std::endl;
+						std::cout << "Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!" << std::endl;
+						thrusterSwitchOn = true;
+						std::cout << triggerAxisValue << std::endl;
+						std::cout << std::endl;
+
+					}
+					else if (isThrusterCurrentlyOn == true) {
+						/*
+						1. is paused
+						2. thruster were set to ON before
+						3. currently holding down the trigger
+						4. Thruster should be set to ON when unpause and RESUME THRUSTER SOUND
+						*/
+						std::cout << "THRUSTER ON" << std::endl;
+						std::cout << "Thruster should be set to ON when unpause and RESUME THRUSTER SOUND" << std::endl;
+						thrusterSwitchOn = true;
+						std::cout << triggerAxisValue << std::endl;
+						std::cout << std::endl;
+
+					}
 
 				}
-				else if (isThrusterCurrentlyOn == true) {
-					/*
-					1. is paused
-					2. thruster were set to ON before
-					3. currently holding down the trigger
-					4. Thruster should be set to ON when unpause and RESUME THRUSTER SOUND
-					*/
-					std::cout << "THRUSTER ON" << std::endl;
-					std::cout << "Thruster should be set to ON when unpause and RESUME THRUSTER SOUND" << std::endl;
-					thrusterSwitchOn = true;
-					std::cout << triggerAxisValue << std::endl;
-					std::cout << std::endl;
+				//TRIGGER NOT HELD DOWN
+				else if (e.caxis.value <= TRIGGER_DEAD_ZONE) {
 
-				}
+					if (isThrusterCurrentlyOn == false) {
+						/*
+						1. is paused
+						2. thruster were set to OFF before
+						3. NOT holding down the trigger
+						4. Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM
+						*/
+						std::cout << "THRUSTER NOT ON" << std::endl;
+						std::cout << "Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM" << std::endl;
+						thrusterSwitchOn = false;
+						std::cout << triggerAxisValue << std::endl;
+						std::cout << std::endl;
+					}
+					else if (isThrusterCurrentlyOn == true) {
+						/*
+						1. is paused
+						2. thruster were set to ON before
+						3. not holding down the trigger
+						4. Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!
+						*/
+						std::cout << "THRUSTER ON" << std::endl;
+						std::cout << "Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!" << std::endl;
+						thrusterSwitchOn = false;
+						std::cout << triggerAxisValue << std::endl;
+						std::cout << std::endl;
 
-			}
-			//TRIGGER NOT HELD DOWN
-			else if (e.caxis.value <= TRIGGER_DEAD_ZONE) {
-
-				if (isThrusterCurrentlyOn == false) {
-					/*
-					1. is paused
-					2. thruster were set to OFF before
-					3. NOT holding down the trigger
-					4. Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM
-					*/
-					std::cout << "THRUSTER NOT ON" << std::endl;
-					std::cout << "Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM" << std::endl;
-					thrusterSwitchOn = false;
-					std::cout << triggerAxisValue << std::endl;
-					std::cout << std::endl;
-				}
-				else if (isThrusterCurrentlyOn == true) {
-					/*
-					1. is paused
-					2. thruster were set to ON before
-					3. not holding down the trigger
-					4. Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!
-					*/
-					std::cout << "THRUSTER ON" << std::endl;
-					std::cout << "Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!" << std::endl;
-					thrusterSwitchOn = false;
-					std::cout << triggerAxisValue << std::endl;
-					std::cout << std::endl;
-
+					}
 				}
 			}
 
