@@ -107,12 +107,8 @@ void NewRobot::robotPaused(SDL_Event e) {
 						2. thrusters were set to OFF before
 						3. currently holding down the trigger
 						4. Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!
-						*/
-						std::cout << "THRUSTER NOT ON" << std::endl;
-						std::cout << "Thruster should be ON when we unpause and a NEW THRUSTER ON SOUND SHOULD BE PLAYED!" << std::endl;
 						thrusterSwitchOn = true;
-						std::cout << triggerAxisValue << std::endl;
-						std::cout << std::endl;
+
 
 					}
 					else if (isThrusterCurrentlyOn == true) {
@@ -122,11 +118,8 @@ void NewRobot::robotPaused(SDL_Event e) {
 						3. currently holding down the trigger
 						4. Thruster should be set to ON when unpause and RESUME THRUSTER SOUND
 						*/
-						std::cout << "THRUSTER ON" << std::endl;
-						std::cout << "Thruster should be set to ON when unpause and RESUME THRUSTER SOUND" << std::endl;
 						thrusterSwitchOn = true;
-						std::cout << triggerAxisValue << std::endl;
-						std::cout << std::endl;
+
 
 					}
 
@@ -141,11 +134,8 @@ void NewRobot::robotPaused(SDL_Event e) {
 						3. NOT holding down the trigger
 						4. Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM
 						*/
-						std::cout << "THRUSTER NOT ON" << std::endl;
-						std::cout << "Thruster should be set to OFF when unpause and A COMPLETE RESET TO THE THRUSTER SOUND SYSTEM" << std::endl;
 						thrusterSwitchOn = false;
-						std::cout << triggerAxisValue << std::endl;
-						std::cout << std::endl;
+
 					}
 					else if (isThrusterCurrentlyOn == true) {
 						/*
@@ -154,11 +144,8 @@ void NewRobot::robotPaused(SDL_Event e) {
 						3. not holding down the trigger
 						4. Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!
 						*/
-						std::cout << "THRUSTER ON" << std::endl;
-						std::cout << "Thruster should be OFF when unpause and A NEW THRUSTER OFF SOUND SHOULD BE PLAYED!" << std::endl;
 						thrusterSwitchOn = false;
-						std::cout << triggerAxisValue << std::endl;
-						std::cout << std::endl;
+
 
 					}
 				}
@@ -167,32 +154,6 @@ void NewRobot::robotPaused(SDL_Event e) {
 		}
 	}
 		
-
-
-
-
-		/*if (isPaused == true) {
-		robotSound.pauseThruster();
-		hasJustBeenPaused = true;
-	}
-	else if (isPaused == false && hasJustBeenPaused == true) {
-
-		if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
-			isThrusterOn = true;
-			robotSound.resumeThruster();
-			std::cout << triggerAxisValue << std::endl;
-		}
-		else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){
-
-			std::cout << triggerAxisValue << std::endl;
-			boost = 0;
-			robotSound.turnThrusterOff();
-			isThrusterOn = false;
-		}
-
-		hasJustBeenPaused = false;
-
-	}*/
 
 }
 void NewRobot::robotUnpause() {
@@ -207,15 +168,11 @@ void NewRobot::robotUnpause() {
 		//RESUME THRUSTER SOUND
 		robotSound.resumeThruster();
 		boost = 600;
-		//std::cout << "Hello" << std::endl;
-		
 
-		std::cout << 2 << std::endl;
 
 	}
 	else if (isThrusterCurrentlyOn == false && thrusterSwitchOn == true) {
 		//NO SOUND
-		std::cout << 3 << std::endl;
 
 	}
 	else if (isThrusterCurrentlyOn == true && thrusterSwitchOn == false) {
@@ -254,11 +211,9 @@ void NewRobot::onJoyYevent(SDL_Event e) {
 }
 
 void NewRobot::onLeftTriggerEvent(SDL_Event e) {
-	std::cout << "What is going on" << std::endl;
 
 	if (e.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT) {
 		triggerAxisValue = e.caxis.value;
-		std::cout << triggerAxisValue << std::endl;
 
 		if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
 			//If the trigger is pressed to turn thruster on 
@@ -289,7 +244,6 @@ void NewRobot::onLeftTriggerEvent(SDL_Event e) {
 
 void NewRobot::onButtonBevent(SDL_Event e) {
 	if (e.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-		std::cout << "B pressed" << std::endl;
 		nextWeapon();
 	}
 }
@@ -316,32 +270,6 @@ void NewRobot::handleEvent(SDL_Event e) {
 		}
 	}
 
-	//PAUSE SOUND SYSTEM MUST DEVELOPED OUTSIDE OF EVENTS BEING REGISTERD
-	//BECAUSE EVEN REGARDLESS OF EVENT INPUTS THE SOUNDS MUST HALT
-
-	//triggerAxisValue = SDL_GameControllerGetAxis(gameController, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
-	//if (isPaused == true) {
-	//	robotSound.pauseThruster();
-	//	hasJustBeenPaused = true;
-	//}
-	//else if (isPaused == false && hasJustBeenPaused == true) {
-
-	//	if (triggerAxisValue > TRIGGER_DEAD_ZONE) {
-	//		isThrusterOn = true;
-	//		robotSound.resumeThruster();
-	//		std::cout << triggerAxisValue << std::endl;
-	//	}
-	//	else if (triggerAxisValue <= TRIGGER_DEAD_ZONE && isThrusterOn == true){
-
-	//		std::cout << triggerAxisValue << std::endl;
-	//		boost = 0;
-	//		robotSound.turnThrusterOff();
-	//		isThrusterOn = false;
-	//	}
-	//
-	//	hasJustBeenPaused = false;
-
-	//}
 }
 
 //Calculates a dead zone circle as opposed to dead zone cross
@@ -374,25 +302,8 @@ int NewRobot::getVelY() {
 	return mSpeed * sin(getJoyAngle() * (M_PI / 180));
 }
 
-// Robot update function
-//void NewRobot::update(float timeStep) {
-//	//std::cout << timeStep << std::endl;
-//	if (!isDead) {
-//		relX += getVelX() * timeStep;
-//		relY += getVelY() * timeStep;
-//		updatePos();
-//		for(auto &hitbox : hitboxes) {
-//			hitbox.setPos(posX, posY);
-//		}
-//
-//		/*HERE WE NEED TO CHECK FOR */
-//
-//		updateChildren(timeStep);
-//	}
-//}
 
 void NewRobot::updatePosX(float timeStep) {
-	//std::cout << timeStep << std::endl;
 	if (!isDead) {
 		relX += getVelX() * timeStep;
 		updatePos();
@@ -407,7 +318,7 @@ void NewRobot::updatePosX(float timeStep) {
 }
 
 void NewRobot::updatePosY(float timeStep) {
-	//std::cout << timeStep << std::endl;
+
 	if (!isDead) {
 		relY += getVelY() * timeStep;
 		updatePos();
@@ -443,7 +354,6 @@ int NewRobot::getHealth() {
 }
 
 void NewRobot::boostOn() {
-	std::cout << "BOOSTING" << std::endl;
 	boost = 600;
 }
 void NewRobot::boostOff() {
@@ -528,10 +438,8 @@ void NewRobot::nextWeapon() {
 	for (auto& varObj : children) {
 		if (NewWeapon* weapon = std::get_if<NewWeapon>(&varObj)) {
 			weapons.push_back(weapon);
-			std::cout << "Weapon activity = " << weapon->isActive << std::endl;
 		}
 	}
-	std::cout << "weapon count = " << weapons.size() << std::endl;
 	// Activate and deactivate based on index
 	if (weapons.size() <= 1) {  // dont think i need this check, but will keep for now
 		return;

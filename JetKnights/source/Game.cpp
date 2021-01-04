@@ -87,8 +87,6 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 
 void Game::pauseGame(SDL_Event e) {
 
-	//std::cout << "PAUSE" << std::endl;
-	//std::cout << std::endl;
 	for (auto robot : robots) {
 
 		robot->robotPaused(e);
@@ -172,7 +170,6 @@ void Game::updateObjects(float timeStep) {
 	despawn(&bullets);
 	despawn(&weapons);
 
-	//--cout info--
 
 }
 
@@ -297,15 +294,6 @@ void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
 	}
 }
 
-// Checks if a weapon is firing and spawns a bullet
-//void Game::spawnBullets() {
-//	for (auto weapon : weapons) {
-//		if (weapon->isFiring && weapon->canFire() && weapon->isActive) {
-//			weapon->attemptToFire();
-//			genTestBullets(weapon);
-//		}
-//	}
-//}
 
 std::string Game::findWorkingDir() {
 	char buf[256];

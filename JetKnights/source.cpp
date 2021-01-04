@@ -182,15 +182,11 @@ int main( int argc, char* args[] )
 						timeStep = stepTimer.getTicks() / 1000.f;
 					}
 
-					//std::cout << stepTimer.getTicks() / 1000.f << std::endl;
-
 					//Clear screen
 					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 					SDL_RenderClear(gRenderer);
 
 					//Updates all objects in the game for every loop
-					/*Currently updates on each loop (process).
-					Will change to update at a certain fps (60).*/
 
 					game->updateObjects(timeStep);
 
@@ -302,41 +298,4 @@ bool init()
 	
 /*
 NEED TO EXPAND ON THIS CLOSE FUNCTION
-*/
-
-//void close()
-//{
-//	//Free loaded images
-//	gRobotTexture.free();
-//	gWeapon1.free();
-//
-//
-//	//Close game controller
-//	SDL_GameControllerClose(gGameController);
-//	gGameController = NULL;
-//
-//	//Destroy window	
-//	SDL_DestroyRenderer(gRenderer);
-//	SDL_DestroyWindow(gWindow);
-//	gWindow = NULL;
-//	gRenderer = NULL;
-//
-//	//Quit SDL subsystems
-//	IMG_Quit();
-//	SDL_Quit();
-//}
-
-/*
-OTHER NOTES:
-1. Do we pass the assets (textures etc) into the Game object OR do we load these assets within Game object.
-	1a. Storing the textures into discriptively respective objects would make the program more atomic. but
-	would cost us memory.
-	1b. Given the size of the game memory usage is not a concern so the method in step 1a. is very viable.
-
-	- Current opinion on 1. is that we will move forward to make it more atomic and place textures into
-	respecitve object.
-
-
-2. Weapon will be initialized withing the Robot class. This way position information is correclty shared.
-
 */
