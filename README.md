@@ -1,36 +1,16 @@
 # JetKnights
 ---
 
-Version 0.0.1 ... i think... its pre alpha.
+Version 0.0.1
 
 ## Description
 
 This game is a pvp shooter with mecha.
 
 ## Game Requirements
-<<<<<<< HEAD
 
-Two X-box controllers are required to play this game.
-
-## Installation
-
-Download the devel branch to any folder you want.
-Use microsoft visual studio 2019 and open the project.
-Click "local windows debugger" to run the game.
-
-## controls
-
-left trigger: boost
-right trigger: shoot
-left joystick: movement
-right joystick: aim weapon
-B button: switch weapons
-menu button: takes you from the main-menu to the game and vise versa
-back button: takes you from the game to the pause-menu and vise versa
-=======
-
-* Two X-box controllers are required to play this game.
-* Visual Studio 2017 and up
+* Two wired X-box controllers are required to play this game. 
+* Microsoft Visual Studio 2017 and up
 
 ## Installation
 
@@ -38,7 +18,8 @@ back button: takes you from the game to the pause-menu and vise versa
 2. Use **Microsoft Visual Studio** and open the project.
 3. Click "Local Windows Debugger" to run the game.
 
-## controls
+## Controls
+
 
 * left trigger: boost
 * right trigger: shoot
@@ -47,4 +28,3 @@ back button: takes you from the game to the pause-menu and vise versa
 * B button: switch weapons
 * menu button: takes you from the main-menu to the game and vise versa
 * back button: takes you from the game to the pause-menu and vise versa
->>>>>>> 13c5dcc595b755f53f805c6392a0c666204917e9
