@@ -5,12 +5,20 @@ Version 0.0.1
 
 ## Description
 
-This game is a pvp shooter with mecha.
+* This game is currently in development.
+* The game play is a PVP bullet storm with different weapons
+* The them is chibi mech
 
 ## Game Requirements
 
-* Two wired X-box controllers are required to play this game. 
+1. **HARDWARE**
+* Two wired X-box controllers are required to play this game.
+* Pretty much any system can run this game
+
+2. **SOFTWARE**
+* Windows OS
 * Microsoft Visual Studio 2017 and up
+
 
 ## Installation
 
