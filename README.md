@@ -13,7 +13,7 @@ Version 0.0.1
 
 1. **HARDWARE**
 * Two wired X-box controllers are required to play this game.
-* Pretty much any system can run this game
+* PC
 
 2. **SOFTWARE**
 * Windows OS
