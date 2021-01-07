@@ -7,7 +7,7 @@ Version 0.0.1
 
 * This game is currently in development.
 * The game play is a PVP bullet storm with different weapons
-* The them is chibi mech
+* The theme is chibi mech
 
 ## Game Requirements
 
