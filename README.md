@@ -22,9 +22,11 @@ Version 0.0.1
 
 ## Installation
 
-1. Download the **master** branch to any folder you want.
-2. Use **Microsoft Visual Studio** and open the project.
-3. Click "Local Windows Debugger" to run the game.
+1. Download the **master** branch to any folder you want as a Zip file. The folder should be called **JetKnights-master**
+2. Right click the Zip folder and selec the **Extract All** option. Place the extraced file in any folder you can easily access. (preferably desktop for easier access)
+3. Open the newly extracted folder and **double click** the solution file. The file should be called **JetKnights.sln**
+4. **Micrsoft Visual Studio** should open up.   
+3. Click **Local Windows Debugger** to run the game.
 
 ## Controls
 
