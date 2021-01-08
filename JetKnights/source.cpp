@@ -1,7 +1,6 @@
-/*This source code copyrighted by Lazy Foo' Productions (2004-2020)
-and may not be redistributed without written permission.*/
 
 //Using SDL, SDL_image, standard IO, and strings
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -28,8 +27,6 @@ bool init();
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
 
-//
-
 
 //The window renderer
 SDL_Renderer* gRenderer = NULL;
@@ -39,22 +36,18 @@ SDL_GameController* gGameController0 = NULL;
 SDL_GameController* gGameController1 = NULL;
 
 
-enum gameState {
+/*
+Depending on which state the game is in the program will execute specific code.
+Instead of using arbitrary numbers to write program logic for specific game states we use an enumeration.
+*/
+enum class gameState {
 	MAIN_MENU, PLAYING, PAUSE_MENU
 };
+
+
 int main( int argc, char* args[] )
 {
 
-	gameState state = MAIN_MENU;
-
-	float timeStep, timeStepTwo;
-	bool isPlay = true, isMenu = true, isPaused = true;
-
-	bool wasGamePaused = false;
-
-	bool wasInMenu = true;
-
-	bool isPlaying = true;
 	//Start up SDL and create window
 	if( !init() )
 	{
@@ -62,157 +55,172 @@ int main( int argc, char* args[] )
 	}
 	else
 	{
-		int i = 0;
-			//Main loop flag
-			bool quit = false;
+		//Set the game state to main menu so the program starts at main menu
+		gameState state = gameState::MAIN_MENU;
 
-			//Event handler
-			SDL_Event e;
+		//time value tracked by the game to make all time sensitive events work
+		float timeStep, pausedTimeStamp;
 
-			LTimer stepTimer;
+		//tracks if the game has been paused
+		bool wasGamePaused = false;
+
+		//flag for when the user quits
+		bool quit = false;
+
+		//SDL Event Structure
+		SDL_Event e;
+
+		//Lazyfoo style timer class that has has info on timer
+		LTimer stepTimer;
 	
-			//Initialize Game object with gRenderer
+		//Dynamically created game so that we can delete it if we wish to start a new game 
+		std::unique_ptr<Game> game(new Game());
+		
+		//This game function acts as a constructor for the game objects
+		game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, gGameController0, gGameController1);
 
+		//Initialize the pause menu (will also make it dynamic later)
+		Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-			std::unique_ptr<Game> game(new Game());
-
-			//game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-			game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, gGameController0, gGameController1);
-
-			Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-			Main_Menu mainmenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+		//initialze the game menu (will also make it dynamic later)
+		Main_Menu mainmenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 			
 
-			/*
-			removes the events of adding devices before playing the game and some window events.
-			*/
+		
+		//the "init" function creates the events of adding devices and some window events take place.
+		//We need to get rid of these events before jumping into the main game loop that calls events
+		SDL_PumpEvents();
+		SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
+
+		//start the main menu theme music because the "state" is set to MAIN_MENU
+		game->playMenuTheme();
+
+		//Main game loop
+		while( !quit )
+		{
+			
+			//The event system in SDL is treating the controller events just like joystick events. So we get two events per input. 
+			//We don't want to register these because it will result in excessive calls to the event loop.
 			SDL_PumpEvents();
-			SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
+			SDL_FlushEvents(SDL_JOYAXISMOTION, SDL_JOYDEVICEREMOVED);
 
-			game->playMenuTheme();
-
-			//While application is running
-			while( !quit )
+			//Event loop. Depending on the event type different actions will occur that affect the game
+			while (SDL_PollEvent(&e) != 0)
 			{
-			
-
-				/*
-				The event system in SDL is treating the controller events just like joystick events. 
-				We don't want to register these because it will result in excessive calls to the event loop.
-				*/
-
-				SDL_PumpEvents();
-				SDL_FlushEvents(SDL_JOYAXISMOTION, SDL_JOYDEVICEREMOVED);
-
-				while (SDL_PollEvent(&e) != 0)
+				//If the player quits the program by clicking the exit button on the window
+				if (e.type == SDL_QUIT)
 				{
-					//If the player quits
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-						break;
-					}
+					quit = true;
+					break;
+				}
 
-					//If the player either wants to go to the main-menu, pause-menu, or play-state
-					//The player must have pressed the "back" button or the "main-menu" button
-					if (e.type == SDL_CONTROLLERBUTTONDOWN) {
-						if (e.cbutton.which == 0 || e.cbutton.which == 1) {
+				//If the player inputs the controller back button or controller start button.
+				//This is to navigate between the main menu, pause menu and playing the game
+				if (e.type == SDL_CONTROLLERBUTTONDOWN) {
+					if (e.cbutton.which == 0 || e.cbutton.which == 1) {
 
-							if (state == MAIN_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-								state = PLAYING;
-								game->stopMusic();
-								game->playFightTheme();
+						if (state == gameState::MAIN_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+							state = gameState::PLAYING;
+							game->stopMusic();
+							game->playFightTheme();
 
-							}
-							else if (state == PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-								state = PAUSE_MENU;
-								wasGamePaused = true;
-								timeStepTwo = stepTimer.getTicks() / 1000.f;
-								pausemenu.stopMusic();
-								pausemenu.playPauseTheme();
+						}
+						else if (state == gameState::PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+							state = gameState::PAUSE_MENU;
+							wasGamePaused = true;
+							pausedTimeStamp = stepTimer.getTicks() / 1000.f;
+							pausemenu.stopMusic();
+							pausemenu.playPauseTheme();
 
-							}
-							else if (state == PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-								state = MAIN_MENU;
-								game->stopMusic();
-								game->playMenuTheme();
-							}
-							else if (state == PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-								state = PLAYING;
-								game->unpauseGame();
+						}
+						else if (state == gameState::PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+							state = gameState::MAIN_MENU;
+							game->stopMusic();
+							game->playMenuTheme();
+						}
+						else if (state == gameState::PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+							state = gameState::PLAYING;
+							game->unpauseGame();
 
-								game->stopMusic();
-								game->playFightTheme();
-							}
+							game->stopMusic();
+							game->playFightTheme();
 						}
 					}
-
-
-					switch (state) {
-
-					case (MAIN_MENU):
-						//there is currently nothing done here
-						break;
-
-					case (PLAYING):
-
-						game->handleEvent(e);
-
-						break;
-
-					case (PAUSE_MENU):
-						game->pauseGame(e);
-						break;
-					}
-
 				}
 
 
+				//Depending on which state we are in the game then only one of these switch cases will activate
+				switch (state) {
 
-				if (state == PLAYING) {
-					//Creates a time stamp so that when the game unpauses the game timer "resets" to that positions 
+				case (gameState::MAIN_MENU):
+					//there is currently nothing done here (will need to develop the main menu section of the game
+					break;
 
-					if (wasGamePaused == true){
-						timeStep = timeStepTwo;
-						wasGamePaused = false;
-					}
-					else {
-						timeStep = stepTimer.getTicks() / 1000.f;
-					}
+				case (gameState::PLAYING):
 
-					//Clear screen
-					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-					SDL_RenderClear(gRenderer);
+					game->handleEvent(e);
 
-					//Updates all objects in the game for every loop
+					break;
 
-					game->updateObjects(timeStep);
-
-					//Restart step timer
-					stepTimer.start();
-
-					SDL_RenderPresent(gRenderer);
+				case (gameState::PAUSE_MENU):
+					game->pauseGame(e);
+					break;
 				}
-				else if (state == MAIN_MENU) {
 
+			}
+
+			/*NOW WE HAVE HANDLED ALL EVENTS AND IT IS TIME TO UPDATE THE OBJECTS IN THE PROGRAM*/
+
+			if (state == gameState::PLAYING) {
+				//Creates a time stamp so that when the game unpauses the game timer "resets" to that positions 
+
+				if (wasGamePaused == true){
+
+					//sets the timeStep to the time value of when the game was paused
+					timeStep = pausedTimeStamp; 
+					wasGamePaused = false;
+				}
+				else {
+					//set timeStep
 					timeStep = stepTimer.getTicks() / 1000.f;
-					//Clear screen
-					SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-					SDL_RenderClear(gRenderer);
+				}
 
-					mainmenu.updateObjects(timeStep);
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
 
-					SDL_RenderPresent(gRenderer);
+				//For each event this updates all objects in the game.
+				game->updateObjects(timeStep);
+
+				//Restart step timer
+				stepTimer.start();
+
+				//renders all updated objects
+				SDL_RenderPresent(gRenderer);
+			}
+			else if (state == gameState::MAIN_MENU) {
+
+				//set timeStep
+				timeStep = stepTimer.getTicks() / 1000.f;
+
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+
+				//updates all main menu objects
+				mainmenu.updateObjects(timeStep);
+
+				SDL_RenderPresent(gRenderer);
 					
 
-				}
-				else if (state == PAUSE_MENU) {
-					timeStep = stepTimer.getTicks() / 1000.f;
-					pausemenu.renderTransparentRect();
-				}
 			}
+			else if (state == gameState::PAUSE_MENU) {
+				//set timeStep
+				timeStep = stepTimer.getTicks() / 1000.f;
+
+				pausemenu.renderTransparentRect();
+			}
+		}
 	}
 
 	return 0;
