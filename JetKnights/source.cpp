@@ -136,7 +136,10 @@ int main( int argc, char* args[] )
 						}
 						else if (state == gameState::PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
 							state = gameState::MAIN_MENU;
+							
+							//deletes the game once the user goes from the Pause Menu to the Main Menu
 							delete game;
+
 							mainmenu.stopMusic();
 							mainmenu.playMainMenuTheme();
 						}
