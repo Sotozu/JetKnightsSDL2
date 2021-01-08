@@ -13,6 +13,7 @@
 
 #include "GameObject.h"
 #include "RelTexture.h"
+#include "MainMenu_Sounds.h"
 
 
 class Main_Menu {
@@ -25,18 +26,23 @@ public:
 	void genTestPanel();
 	void handleEvent(SDL_Event e);
 
-
+	void playMainMenuTheme();
+	void stopMusic();
 
 
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 
+	MainMenu_Sounds mainMenuMusic;
+
 	static const int TOTAL_IMAGES = 1;
 
 	SDL_Renderer* gRenderer;
 
 	std::vector<std::string> menuBackgroundImagesDir;
+	std::vector<std::string> pauseMenuMusicDir;
+
 
 	LTexture menuBackgroundImages[TOTAL_IMAGES];
 

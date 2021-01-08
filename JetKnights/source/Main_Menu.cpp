@@ -50,7 +50,10 @@ void Main_Menu::handleEvent(SDL_Event e) {
 
 
 void Main_Menu::updateObjects(float timeStep) {
+	
 	updateRenders(panel);
+
+	
 }
 
 /*SHOULD GENERATE MENU TEMPLATE AND FILL WITH BUTTONS*/
@@ -66,8 +69,19 @@ void  Main_Menu::genTestPanel () {
 
 }
 
-	std::string Main_Menu::findWorkingDir() {
-		char buf[256];
-		GetCurrentDirectoryA(256, buf);
-		return std::string(buf) + '\\';
-	}
+std::string Main_Menu::findWorkingDir() {
+	char buf[256];
+	GetCurrentDirectoryA(256, buf);
+	return std::string(buf) + '\\';
+}
+
+
+void Main_Menu::playMainMenuTheme() {
+
+	mainMenuMusic.playMainMenuMusicTheme();
+}
+
+void Main_Menu::stopMusic() {
+	mainMenuMusic.stopMusic();
+}
+	

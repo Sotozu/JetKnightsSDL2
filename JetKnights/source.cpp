@@ -74,10 +74,9 @@ int main( int argc, char* args[] )
 		LTimer stepTimer;
 	
 		//Dynamically created game so that we can delete it if we wish to start a new game 
-		std::unique_ptr<Game> game(new Game());
+		Game* game = nullptr;
 		
 		//This game function acts as a constructor for the game objects
-		game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, gGameController0, gGameController1);
 
 		//Initialize the pause menu (will also make it dynamic later)
 		Pause_Menu pausemenu(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -93,7 +92,7 @@ int main( int argc, char* args[] )
 		SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
 
 		//start the main menu theme music because the "state" is set to MAIN_MENU
-		game->playMenuTheme();
+		mainmenu.playMainMenuTheme();
 
 		//Main game loop
 		while( !quit )
@@ -119,8 +118,10 @@ int main( int argc, char* args[] )
 				if (e.type == SDL_CONTROLLERBUTTONDOWN) {
 					if (e.cbutton.which == 0 || e.cbutton.which == 1) {
 
-						if (state == gameState::MAIN_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
+						if (state == gameState::MAIN_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
 							state = gameState::PLAYING;
+							game = new Game;
+							game->initialize(gRenderer, SCREEN_WIDTH, SCREEN_HEIGHT, gGameController0, gGameController1);
 							game->stopMusic();
 							game->playFightTheme();
 
@@ -133,15 +134,15 @@ int main( int argc, char* args[] )
 							pausemenu.playPauseTheme();
 
 						}
-						else if (state == gameState::PLAYING && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
+						else if (state == gameState::PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
 							state = gameState::MAIN_MENU;
-							game->stopMusic();
-							game->playMenuTheme();
+							delete game;
+							mainmenu.stopMusic();
+							mainmenu.playMainMenuTheme();
 						}
 						else if (state == gameState::PAUSE_MENU && e.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
 							state = gameState::PLAYING;
 							game->unpauseGame();
-
 							game->stopMusic();
 							game->playFightTheme();
 						}
@@ -171,6 +172,9 @@ int main( int argc, char* args[] )
 
 			/*NOW WE HAVE HANDLED ALL EVENTS AND IT IS TIME TO UPDATE THE OBJECTS IN THE PROGRAM*/
 
+
+			
+
 			if (state == gameState::PLAYING) {
 				//Creates a time stamp so that when the game unpauses the game timer "resets" to that positions 
 
@@ -185,7 +189,7 @@ int main( int argc, char* args[] )
 					timeStep = stepTimer.getTicks() / 1000.f;
 				}
 
-				//Clear screen
+				//clear the screen
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 				SDL_RenderClear(gRenderer);
 
@@ -199,7 +203,7 @@ int main( int argc, char* args[] )
 				SDL_RenderPresent(gRenderer);
 			}
 			else if (state == gameState::MAIN_MENU) {
-
+				
 				//set timeStep
 				timeStep = stepTimer.getTicks() / 1000.f;
 
@@ -210,7 +214,6 @@ int main( int argc, char* args[] )
 				//updates all main menu objects
 				mainmenu.updateObjects(timeStep);
 
-				SDL_RenderPresent(gRenderer);
 					
 
 			}
@@ -219,7 +222,12 @@ int main( int argc, char* args[] )
 				timeStep = stepTimer.getTicks() / 1000.f;
 
 				pausemenu.renderTransparentRect();
+
 			}
+			//Renders all
+			SDL_RenderPresent(gRenderer);
+
+
 		}
 	}
 

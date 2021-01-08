@@ -71,7 +71,7 @@ void Pause_Menu::renderTransparentRect() {
 	SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(gRenderer, 64, 64, 64, 1);
 	SDL_RenderFillRect(gRenderer, &fillRect);
-	SDL_RenderPresent(gRenderer);
+
 }
 
 void Pause_Menu::playPauseTheme() {
