@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IGameObject.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Game.cpp" />
@@ -147,6 +148,8 @@
     <ClInclude Include="..\Dependencies\include\Sound.h" />
     <ClInclude Include="..\Dependencies\include\StatusBar.h" />
     <ClInclude Include="..\Dependencies\include\Weapon_Sounds.h" />
+    <ClInclude Include="Constants.h" />
+    <ClInclude Include="IGameObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Dependencies\include\SDL_config.h.cmake" />

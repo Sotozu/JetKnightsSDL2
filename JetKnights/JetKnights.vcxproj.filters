@@ -71,6 +71,9 @@
     <ClCompile Include="source\MainMenu_Sounds.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="IGameObject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h">
@@ -389,6 +392,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Dependencies\include\MainMenu_Sounds.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameObject.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
