@@ -21,7 +21,7 @@ public:
 	//Constructors
 	Main_Menu(SDL_Renderer* renderer, int SCREEN_WIDTH, int SCREEN_HEIGHT);
 
-	void updateObjects(float);
+	void update(float);
 
 	void genTestPanel();
 	void handleEvent(SDL_Event e);

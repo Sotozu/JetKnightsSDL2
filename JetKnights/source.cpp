@@ -197,7 +197,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear(gRenderer);
 
 				//For each event this updates all objects in the game.
-				game->updateObjects(timeStep);
+				game->update(timeStep);
 
 				//Restart step timer
 				stepTimer.start();
@@ -215,7 +215,7 @@ int main( int argc, char* args[] )
 				SDL_RenderClear(gRenderer);
 
 				//updates all main menu objects
-				mainmenu.updateObjects(timeStep);
+				mainmenu.update(timeStep);
 
 					
 

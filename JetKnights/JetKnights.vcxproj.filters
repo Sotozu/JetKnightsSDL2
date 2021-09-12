@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="source\StatusBar.cpp" />
-    <ClCompile Include="source\StatusBar.cpp" />
     <ClCompile Include="source\StatusBar.cpp">
       <Filter>include</Filter>
     </ClCompile>
@@ -71,7 +70,16 @@
     <ClCompile Include="source\MainMenu_Sounds.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="IGameObject.cpp">
+    <ClCompile Include="source\IGameObject.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Arena.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Obstacle.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\StatusBar.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -394,10 +402,16 @@
     <ClInclude Include="..\Dependencies\include\MainMenu_Sounds.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="IGameObject.h">
+    <ClInclude Include="..\Dependencies\include\IGameObject.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="Constants.h">
+    <ClInclude Include="..\Dependencies\include\Constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Arena.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\include\Obstacle.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

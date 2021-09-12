@@ -25,29 +25,33 @@ public:
 	virtual void setPosition(float x, float y, float angle) {};
 	virtual void setPositionRelative(float x, float y, float angle) {};
 
-	virtual void update(float timestep) {};
-	virtual void handleEvent(SDL_Event e) {};
+	virtual void handleUpdate(float timestep);
+	virtual void onUpdate(float timestep) {};
+	virtual void handleEvent(SDL_Event e);
+	virtual void onEvent(SDL_Event e) {};
 
 	virtual void addChild(IGameObject* childObj);
 
 	//Accessors
-	virtual jks::Position getPosition() {};
-	virtual Hitbox* getHitbox() {};
-	virtual RelTexture* getTexture() {};
+	//virtual jks::Position getPositionRelative() {}; // Get relative Position
+	virtual jks::Position getPositionAbsolute(); // Get absolute Position
+	//virtual Hitbox* getHitbox() {};
+	//virtual RelTexture* getTexture() {};
+	virtual jks::Type getType();
 
 	//Pocesses
-	virtual void render() {};
-	virtual void renderTextures() {};
-	virtual void renderHitboxes() {};
+	virtual void render();
+	//virtual void renderTextures();
+	//virtual void renderHitboxes();
 
-	virtual bool chkCollision(IGameObject* obj) {};
+	//virtual bool chkCollision(IGameObject* obj) {};
 
 	//Data
 	IGameObject * parent;
 	std::list<IGameObject*> childs;
 
-	bool isDead;
-	bool isActive;
+	bool isDead{false};
+	bool isActive{ true };
 	int team;
 
 protected:
@@ -57,7 +61,4 @@ protected:
 
 	std::list<RelTexture> textures;
 	std::list<Hitbox> hitboxes;
-
-	int hitboxOffsetX = 0;
-	int hitboxOffsetY = 0;
 };

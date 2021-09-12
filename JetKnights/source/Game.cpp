@@ -48,8 +48,10 @@ Game::Game(SDL_Renderer* renderer, int screenW, int screenH,
 
 	loadMedia();
 
-	genTestRobots();
-	genTestObstacles();
+	genTestArena();
+
+	//genTestRobots();
+	//genTestObstacles();
 	//genTestWeapon()
 
 }
@@ -79,14 +81,16 @@ void Game::initialize(SDL_Renderer* renderer, int screenW, int screenH,
 
 	loadMedia();
 
-	genTestRobots();
-	genTestObstacles();
+	genTestArena();
+	
+	//genTestRobots();
+	//genTestObstacles();
 	//genTestWeapon()
 
 }
 
 void Game::pauseGame(SDL_Event e) {
-
+	/*
 	for (auto robot : robots) {
 
 		robot->robotPaused(e);
@@ -97,12 +101,15 @@ void Game::pauseGame(SDL_Event e) {
 			weapon->handleEvent(e);
 		}
 	}
+	*/
 }
 
 void Game::unpauseGame() {
+	/*
 	for (auto robot : robots) {
 		robot->robotUnpause();
 	}
+	*/
 }
 
 
@@ -117,62 +124,15 @@ void Game::loadMedia() {
 
 // Passes SDL events to classes that use them
 void Game::handleEvent(SDL_Event e) {
-	for (auto robot : robots) {
-
-		//robot->robotUnpause();
-		robot->handleEvent(e);
-		robot->passOnEvent(e);
-	}
-	for (auto weapon : weapons) {
-		if (weapon != NULL) {
-			weapon->handleEvent(e);
-		}
-	}
+	mainObj->handleEvent(e);
 }
 
 // Update order of the game
-void Game::updateObjects(float timeStep) {
-
-	//---MOVE ALL OBJECTS---
-	//updateMovements(robots, timeStep);
-
-	updateRobotMovements(robots, timeStep);
-
-	updateMovements(weapons, timeStep);
-	updateMovements(bullets, timeStep);
-
-	//---COLLIDE ALL OBJECTS---
-	updateRobotBulletCollisions(robots, bullets, timeStep);
-	updateAllCollisions(bullets, timeStep);
-	
-	//---SPAWN NEW OBJECTS---
-
-	//spawnBullets();
-
-	for (auto robot : robots) {
-		spawnBulletsRecursive(*robot);
-	}
-	
-	//---Render All OBJECTS---
-	updateRenders(robots);
-	updateRenders(weapons);
-	updateRenders(bullets);
-	updateRenders(obstacles);
-
-	//---UPDATE VISUALS---
-	for (auto item : bars) {
-		item->update();
-		item->render();
-	}
-
-	//---DESPAWN DEAD OBJECTS---
-	despawn(&robots);
-	despawn(&bullets);
-	despawn(&weapons);
-
-
+void Game::update(float timeStep) {
+	mainObj->handleUpdate(timeStep);
 }
 
+/*
 // Explicitly generates Robots
 void Game::genTestRobots() {
 	RelTexture* roboTex = new RelTexture(textures[0].getWidth() / -2, textures[0].getHeight() / -2, 0, &textures[0], gRenderer);
@@ -198,7 +158,7 @@ void Game::genTestRobots() {
 	wep02->setParams(0, 250, false);
 	robot0->addChild(*wep02);
 	// Add robot to robot list
-	robots.push_back(robot0);
+	mainObj->addChild(robot0);
 
 	NewRobot* robot1 = new NewRobot(450, 325, 0, gRenderer, &*roboTex, gGameController1);
 	robot1->addHitbox();
@@ -217,14 +177,14 @@ void Game::genTestRobots() {
 	wep22->setParams(1, 250, false);
 	robot1->addChild(*wep22);
 	// Add robot to robot list
-	robots.push_back(robot1);
+	mainObj->addChild(robot1);
 	
 	// Creating Status Bars
 	StatusBar* health_bar1 = new StatusBar(25, 25, &robot1->health, gRenderer);
-	bars.push_back(health_bar1);
+	mainObj->addChild(health_bar1);
 	StatusBar* health_bar2 = new StatusBar(SCREEN_WIDTH - 25, 25, &robot0->health, gRenderer);
 	health_bar2->reverse();
-	bars.push_back(health_bar2);
+	mainObj->addChild(health_bar2);
 
 }
 
@@ -234,7 +194,7 @@ void Game::genTestBullets(NewWeapon* weapon) {
 	Bullet* new_bullet = new Bullet(weapon->getPosX(), weapon->getPosY(), weapon->getAngle(), 1200, gRenderer, &*bulletTex);
 	new_bullet->addHitbox();
 	new_bullet->setTeam(weapon->team);
-	bullets.push_back(new_bullet);
+	mainObj->addChild(new_bullet);
 
 	//play weapon sound
 	weapon->weaponSound();
@@ -246,52 +206,24 @@ void  Game::genTestObstacles() {
 
 	GameObject* obstacle0 = new GameObject(300, 300, 0, gRenderer, &*crateTex);
 	obstacle0->addHitbox();
-	obstacles.push_back(obstacle0);
+	mainObj->addChild(obstacle0);
 
 	GameObject* obstacle1 = new GameObject(600, 100, 0, gRenderer, &*crateTex);
 	obstacle1->addHitbox();
-	obstacles.push_back(obstacle1);
+	mainObj->addChild(obstacle1);
 }
+*/
 
+void Game::genTestArena() {
+	Arena* p_arena = new Arena();
+	
+	Obstacle* p_obstalce1 = new Obstacle(100, 100, 0);
+	Obstacle* p_obstalce2 = new Obstacle(200, 100, 0);
 
-// Updates entire robot array by checking if they collide with bullets
+	p_arena->addChild(p_obstalce1);
+	p_arena->addChild(p_obstalce2);
 
-void Game::updateRobotBulletCollisions(std::list<NewRobot*> robotlist, std::list<Bullet*> bulletlist, float timeStep) {
-	for (auto robot : robotlist) { //iterate through each robot, and for each robot...
-		for (auto bullet : bulletlist) {//iterate through each bullet in the game
-			robot->updateCollision(bullet, timeStep);
-		}
-	}
-}
-
-void Game::updateAllRobotCollisionsX(std::list<NewRobot*> robotlist, float timeStep) {
-	for (auto robot : robotlist) {
-		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-
-		updateCollisionsX(robot, robots, timeStep);
-
-		updateCollisionsX(robot, obstacles, timeStep);
-
-	}
-}
-
-void Game::updateAllRobotCollisionsY(std::list<NewRobot*> robotlist, float timeStep) {
-	for (auto robot : robotlist) {
-		robot->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT, timeStep);
-
-		updateCollisionsY(robot, robots, timeStep);
-
-		updateCollisionsY(robot, obstacles, timeStep);
-	}
-}
-
-// Updates entire bullet array by checking thigs they collide with
-void Game::updateAllCollisions(std::list<Bullet*> mybullets, float timeStep) {
-	for (auto bullet : bullets) {
-		bullet->updateBorderCollision(SCREEN_WIDTH, SCREEN_HEIGHT);
-		updateCollisions(bullet, robots, timeStep);
-		updateCollisions(bullet, obstacles, timeStep);
-	}
+	mainObj = p_arena;
 }
 
 

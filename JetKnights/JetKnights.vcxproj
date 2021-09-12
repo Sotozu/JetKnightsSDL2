@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="IGameObject.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="source\Bullet.cpp" />
     <ClCompile Include="source\Game.cpp" />
@@ -40,6 +39,9 @@
     <ClCompile Include="source\Weapons_Sounds.cpp" />
     <ClCompile Include="ThemeMusic.cpp" />
     <ClCompile Include="source\Sound.cpp" />
+    <ClCompile Include="source\IGameObject.cpp" />
+    <ClCompile Include="source\Arena.cpp" />
+    <ClCompile Include="source\Obstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Dependencies\include\begin_code.h" />
@@ -148,8 +150,10 @@
     <ClInclude Include="..\Dependencies\include\Sound.h" />
     <ClInclude Include="..\Dependencies\include\StatusBar.h" />
     <ClInclude Include="..\Dependencies\include\Weapon_Sounds.h" />
-    <ClInclude Include="Constants.h" />
-    <ClInclude Include="IGameObject.h" />
+    <ClInclude Include="..\Dependencies\include\Arena.h" />
+    <ClInclude Include="..\Dependencies\include\Constants.h" />
+    <ClInclude Include="..\Dependencies\include\IGameObject.h" />
+    <ClInclude Include="..\Dependencies\include\Obstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Dependencies\include\SDL_config.h.cmake" />

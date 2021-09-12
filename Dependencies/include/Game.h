@@ -10,15 +10,21 @@
 #include <windows.h>
 #include <variant>
 
+#include "IGameObject.h"
+#include "Arena.h"
+#include "Obstacle.h"
+
+#include "LTimer.h"
+#include "Sound.h"
+#include "RelTexture.h"
+/*
 #include "GameObject.h"
 #include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
 #include "StatusBar.h"
-#include "LTimer.h"
-#include "Sound.h"
-#include "RelTexture.h"
 
+*/
 
 
 class Game {
@@ -39,15 +45,16 @@ public:
 	void pauseGame(SDL_Event e);
 	void unpauseGame();
 
-
-
-	void updateObjects(float);
-
-	void genTestRobots();
-	void genTestBullets(NewWeapon*);
-	void genTestObstacles();
+	void update(float);
 	void handleEvent(SDL_Event e);
 
+	//void genTestRobots();
+	//void genTestBullets(NewWeapon*);
+	//void genTestObstacles();
+
+	void genTestArena();
+
+	
 	//Accessors
 	std::string findWorkingDir();
 
@@ -76,12 +83,9 @@ private:
 
 	Sound soundEffects;
 
-	std::list<NewRobot*> robots;
-	std::list<NewWeapon*> weapons;
-	std::list<Bullet*> bullets;
-	std::list<GameObject*> obstacles;
+	IGameObject* mainObj; // The "main" ojbect of the game, typically a map or screen
 
-	std::list<StatusBar*> bars;
+	//std::list<StatusBar*> bars;
 	
 	LTimer timeTracker;
 
@@ -94,80 +98,10 @@ private:
 	void loadMedia();
 	//void spawnBullets();
 
-	void updateAllCollisions(std::list<Bullet*> bullets, float timeStep);
-
-	//void updateRobotBulletCollisions(std::list<NewRobot*> robots, float timeStep);
-	void updateRobotBulletCollisions(std::list<NewRobot*> robots, std::list<Bullet*> bullets, float timeStep);
-
-
-	void updateAllRobotCollisionsX(std::list<NewRobot*> robots, float timeStep);
-	void updateAllRobotCollisionsY(std::list<NewRobot*> robots, float timeStep);
-
-
-	template<class T, class B>
-	void updateCollisions(T* b, B items, float timeStep) {
-		for (auto item : items) {
-			b->updateCollision(item, timeStep);
-		}
-	}
-
-	template<class T, class B>
-	void updateCollisionsX(T* b, B items, float timeStep) {
-		for (auto item : items) {
-			b->updateCollisionX(item, timeStep);
-		}
-	}
-
-	template<class T, class B>
-	void updateCollisionsY(T* b, B items, float timeStep) {
-		for (auto item : items) {
-			b->updateCollisionY(item, timeStep);
-		}
-	}
-
-
-	/*SEPERATES THE BULLET COLLISION FROM THE OBSTACLE AND ROBOT
-	THIS IS CALLED IN Game.cpp
-	"void Game::updateAllCollisions(std::list<NewRobot*> robotlist, float timeStep)"*/
-
-	template<class T, class B>
-	void updateBulletCollisions(T* b, B items, float timeStep) {
-		for (auto item : items) {
-			b->updateCollision(item, timeStep);
-		}
-	}
-
-	template<class B>
-	void updateMovements(B items, float timeStep) {
-		for (auto item : items) {
-			item->update(timeStep);
-		}
-	}
-
-	template<class B>
-	void updateRobotMovements(B items, float timeStep) {
-		for (auto item : items) {
-
-			item->updatePosX(timeStep);
-			/*Check for collision AND IF SO revert back to previous position*/
-			updateAllRobotCollisionsX(robots, timeStep);
-
-			item->updatePosY(timeStep);
-			/*Check for collision AND IF SO revert back to previous position*/
-			updateAllRobotCollisionsY(robots, timeStep);
-		}
-	}
-
-	template<class B>
-	void updateRenders(B items) {
-		for (auto item : items) {
-			item->render();
-		}
-	}
 
 	// Removes dead items from the list
-	template<class B>
-	void despawn(B* items) {
+	/*
+	void deleteDeadObjects() {
 		class B::iterator it = items->begin();
 		while (it != items->end()) {
 			if ( (*it)->isDead ) {
@@ -178,10 +112,12 @@ private:
 			}
 		}
 	}
+	*/
 
 	// Recursively checks objects for weapons and fires them
 	template<class T>
 	void spawnBulletsRecursive(T &object) {
+		/*
 		for (auto &varObj : object.children) {
 			if (auto weapon = std::get_if<NewWeapon>(&varObj)) {
 				// Fire Weapon check
@@ -196,6 +132,7 @@ private:
 				spawnBulletsRecursive(child);
 			}, varObj);
 		}
+		*/
 	}
 	
 	

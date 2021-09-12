@@ -49,7 +49,7 @@ void Main_Menu::handleEvent(SDL_Event e) {
 // Update order of the game
 
 
-void Main_Menu::updateObjects(float timeStep) {
+void Main_Menu::update(float timeStep) {
 	
 	updateRenders(panel);
 
