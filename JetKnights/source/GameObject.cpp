@@ -80,7 +80,7 @@ void GameObject::render() {
 
 void GameObject::renderHitboxes() {
 	for (auto& hitbox : hitboxes) {
-		hitbox.render();
+		//hitbox.render();
 	}
 }
 
@@ -101,9 +101,7 @@ void GameObject::renderTextures() {
 // Adds default hitbox to object
 void GameObject::addHitbox() {
 	for(auto &texture : textures) {
-		Hitbox hitbox = Hitbox(posX + texture.x, posY + texture.y, texture.getWidth(), texture.getHeight(), gRenderer);
-		hitbox.relX = texture.x;
-		hitbox.relY = texture.y;
+		Hitbox hitbox = Hitbox(texture.getWidth(), texture.getHeight());
 		hitboxes.push_back(hitbox);
 	}
 }
@@ -112,7 +110,7 @@ void GameObject::updatePos() {
 	posX = oriX + relX;
 	posY = oriY + relY;
 	for (auto& hitbox : hitboxes) {
-		hitbox.setPos(posX, posY);
+		//hitbox.setPos(posX, posY);
 	}
 }
 

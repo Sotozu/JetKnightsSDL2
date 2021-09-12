@@ -35,14 +35,15 @@ public:
 	//Accessors
 	//virtual jks::Position getPositionRelative() {}; // Get relative Position
 	virtual jks::Position getPositionAbsolute(); // Get absolute Position
-	//virtual Hitbox* getHitbox() {};
+	virtual Hitbox& getHitbox();
 	//virtual RelTexture* getTexture() {};
 	virtual jks::Type getType();
 
 	//Pocesses
 	virtual void render();
+	virtual void renderOrigin(float x, float y);
+	virtual void renderHitbox() {};
 	//virtual void renderTextures();
-	//virtual void renderHitboxes();
 
 	//virtual bool chkCollision(IGameObject* obj) {};
 

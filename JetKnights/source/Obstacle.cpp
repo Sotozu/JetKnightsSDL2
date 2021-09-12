@@ -18,3 +18,16 @@ void Obstacle::onUpdate(float timestep) {
 jks::Type Obstacle::getType() {
 	return jks::Type::OBSTACLE;
 }
+
+void Obstacle::renderHitbox() {
+	jks::Position posAbs = getPositionAbsolute();
+
+	for (Hitbox& hitbox : hitboxes) {
+		hitbox.renderAll(posAbs.x, posAbs.y);
+	}
+}
+
+void Obstacle::addDefaultHitbox() {
+	Hitbox hitbox = Hitbox(100,100);
+	hitboxes.push_back(hitbox);
+}

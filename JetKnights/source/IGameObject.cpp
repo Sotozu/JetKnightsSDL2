@@ -34,10 +34,9 @@ jks::Position IGameObject::getPositionAbsolute() {
 void IGameObject::render() {
 	if (!isDead && isActive) {
 		jks::Position pos_abs = getPositionAbsolute();
-		// Render blue Origin
-		SDL_Rect origin = { pos_abs.x - 2, pos_abs.y - 2, 5, 5 };
-		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
-		SDL_RenderFillRect(gRenderer, &origin);
+		
+		renderOrigin(pos_abs.x, pos_abs.y);
+		renderHitbox();
 
 		// Render Children
 		for (auto child : childs) {
@@ -50,7 +49,29 @@ void IGameObject::render() {
 	}
 }
 
+// Render blue origin for object at absolute position (x,y)
+void IGameObject::renderOrigin(float x, float y) {
+	
+	int offset = 4;
+
+	int pixX = static_cast<int>(x - offset);
+	int pixY = static_cast<int>(y - offset);
+	int pixW = offset * 2;
+	int pixH = offset * 2;
+
+	SDL_Rect origin = { pixX, pixY, pixW, pixH };
+
+	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF); // Set color blue
+	SDL_RenderFillRect(gRenderer, &origin);
+}
+
 jks::Type IGameObject::getType() {
 	return jks::Type::NONE;
+}
+
+Hitbox& IGameObject::getHitbox() {
+	for (auto& hitbox : hitboxes) {
+		return hitbox;
+	}
 }
 

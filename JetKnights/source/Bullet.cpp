@@ -24,7 +24,7 @@ void Bullet::update(float timeStep) {
 	posX = posX + getVelX() * timeStep;
 	posY = posY + getVelY() * timeStep;
 	for(auto &hitbox : hitboxes) {
-		hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
+		//hitbox.setPos(posX + hitboxOffsetX, posY + hitboxOffsetY);
 	}
 }
 

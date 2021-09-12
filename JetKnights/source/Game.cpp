@@ -218,7 +218,10 @@ void Game::genTestArena() {
 	Arena* p_arena = new Arena();
 	
 	Obstacle* p_obstalce1 = new Obstacle(100, 100, 0);
-	Obstacle* p_obstalce2 = new Obstacle(200, 100, 0);
+	Obstacle* p_obstalce2 = new Obstacle(300, 100, 0);
+
+	p_obstalce1->addDefaultHitbox();
+	p_obstalce2->addDefaultHitbox();
 
 	p_arena->addChild(p_obstalce1);
 	p_arena->addChild(p_obstalce2);
