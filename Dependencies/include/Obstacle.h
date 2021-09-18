@@ -3,7 +3,7 @@
 class Obstacle : public IGameObject {
 public:
 	Obstacle();
-	Obstacle(float x, float y, float ang);
+	Obstacle(float m_x, float m_y, float ang);
 
 	void onEvent(SDL_Event e) override;
 	void onUpdate(float timestep) override;

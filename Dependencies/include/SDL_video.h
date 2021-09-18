@@ -53,8 +53,8 @@ extern "C" {
 typedef struct
 {
     Uint32 format;              /**< pixel format */
-    int w;                      /**< width, in screen coordinates */
-    int h;                      /**< height, in screen coordinates */
+    int m_w;                      /**< width, in screen coordinates */
+    int m_h;                      /**< height, in screen coordinates */
     int refresh_rate;           /**< refresh rate (or zero for unspecified) */
     void *driverdata;           /**< driver-specific data, initialize to 0 */
 } SDL_DisplayMode;
@@ -512,8 +512,8 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetWindowPixelFormat(SDL_Window * window);
  *  \sa SDL_Vulkan_LoadLibrary()
  */
 extern DECLSPEC SDL_Window * SDLCALL SDL_CreateWindow(const char *title,
-                                                      int x, int y, int w,
-                                                      int h, Uint32 flags);
+                                                      int m_x, int m_y, int m_w,
+                                                      int m_h, Uint32 flags);
 
 /**
  *  \brief Create an SDL window from an existing native window.
@@ -609,7 +609,7 @@ extern DECLSPEC void *SDLCALL SDL_GetWindowData(SDL_Window * window,
  *  \sa SDL_GetWindowPosition()
  */
 extern DECLSPEC void SDLCALL SDL_SetWindowPosition(SDL_Window * window,
-                                                   int x, int y);
+                                                   int m_x, int m_y);
 
 /**
  *  \brief Get the position of a window.
@@ -623,7 +623,7 @@ extern DECLSPEC void SDLCALL SDL_SetWindowPosition(SDL_Window * window,
  *  \sa SDL_SetWindowPosition()
  */
 extern DECLSPEC void SDLCALL SDL_GetWindowPosition(SDL_Window * window,
-                                                   int *x, int *y);
+                                                   int *m_x, int *m_y);
 
 /**
  *  \brief Set the size of a window's client area.
@@ -643,8 +643,8 @@ extern DECLSPEC void SDLCALL SDL_GetWindowPosition(SDL_Window * window,
  *  \sa SDL_GetWindowSize()
  *  \sa SDL_SetWindowDisplayMode()
  */
-extern DECLSPEC void SDLCALL SDL_SetWindowSize(SDL_Window * window, int w,
-                                               int h);
+extern DECLSPEC void SDLCALL SDL_SetWindowSize(SDL_Window * window, int m_w,
+                                               int m_h);
 
 /**
  *  \brief Get the size of a window's client area.
@@ -662,8 +662,8 @@ extern DECLSPEC void SDLCALL SDL_SetWindowSize(SDL_Window * window, int w,
  *
  *  \sa SDL_SetWindowSize()
  */
-extern DECLSPEC void SDLCALL SDL_GetWindowSize(SDL_Window * window, int *w,
-                                               int *h);
+extern DECLSPEC void SDLCALL SDL_GetWindowSize(SDL_Window * window, int *m_w,
+                                               int *m_h);
 
 /**
  *  \brief Get the size of a window's borders (decorations) around the client area.
@@ -711,7 +711,7 @@ extern DECLSPEC void SDLCALL SDL_SetWindowMinimumSize(SDL_Window * window,
  *  \sa SDL_SetWindowMinimumSize()
  */
 extern DECLSPEC void SDLCALL SDL_GetWindowMinimumSize(SDL_Window * window,
-                                                      int *w, int *h);
+                                                      int *m_w, int *m_h);
 
 /**
  *  \brief Set the maximum size of a window's client area.
@@ -740,7 +740,7 @@ extern DECLSPEC void SDLCALL SDL_SetWindowMaximumSize(SDL_Window * window,
  *  \sa SDL_SetWindowMaximumSize()
  */
 extern DECLSPEC void SDLCALL SDL_GetWindowMaximumSize(SDL_Window * window,
-                                                      int *w, int *h);
+                                                      int *m_w, int *m_h);
 
 /**
  *  \brief Set the border state of a window.
@@ -1218,8 +1218,8 @@ extern DECLSPEC SDL_GLContext SDLCALL SDL_GL_GetCurrentContext(void);
  *  \sa SDL_GetWindowSize()
  *  \sa SDL_CreateWindow()
  */
-extern DECLSPEC void SDLCALL SDL_GL_GetDrawableSize(SDL_Window * window, int *w,
-                                                    int *h);
+extern DECLSPEC void SDLCALL SDL_GL_GetDrawableSize(SDL_Window * window, int *m_w,
+                                                    int *m_h);
 
 /**
  *  \brief Set the swap interval for the current OpenGL context.

@@ -3,17 +3,17 @@
 namespace jks {
 
 	struct Position {
-		float x   { 0 };
-		float y   { 0 };
+		float m_x   { 0 };
+		float m_y   { 0 };
 		float ang { 0 };
 
 		Position operator+(const Position& first) const {
-			return Position{ x + first.x, y + first.y, ang + first.ang };
+			return Position{ m_x + first.m_x, m_y + first.m_y, ang + first.ang };
 		}
 
 		Position& operator+=(const Position& first) {
-			x += first.x;
-			y += first.y;
+			m_x += first.m_x;
+			m_y += first.m_y;
 			ang += first.ang;
 			return *this;
 		}

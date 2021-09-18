@@ -47,8 +47,8 @@ extern "C" {
  */
 typedef struct SDL_Point
 {
-    int x;
-    int y;
+    int m_x;
+    int m_y;
 } SDL_Point;
 
 /**
@@ -59,8 +59,8 @@ typedef struct SDL_Point
  */
 typedef struct SDL_FPoint
 {
-    float x;
-    float y;
+    float m_x;
+    float m_y;
 } SDL_FPoint;
 
 
@@ -76,8 +76,8 @@ typedef struct SDL_FPoint
  */
 typedef struct SDL_Rect
 {
-    int x, y;
-    int w, h;
+    int m_x, m_y;
+    int m_w, m_h;
 } SDL_Rect;
 
 
@@ -86,10 +86,10 @@ typedef struct SDL_Rect
  */
 typedef struct SDL_FRect
 {
-    float x;
-    float y;
-    float w;
-    float h;
+    float m_x;
+    float m_y;
+    float m_w;
+    float m_h;
 } SDL_FRect;
 
 
@@ -98,8 +98,8 @@ typedef struct SDL_FRect
  */
 SDL_FORCE_INLINE SDL_bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
 {
-    return ( (p->x >= r->x) && (p->x < (r->x + r->w)) &&
-             (p->y >= r->y) && (p->y < (r->y + r->h)) ) ? SDL_TRUE : SDL_FALSE;
+    return ( (p->m_x >= r->m_x) && (p->m_x < (r->m_x + r->m_w)) &&
+             (p->m_y >= r->m_y) && (p->m_y < (r->m_y + r->m_h)) ) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**
@@ -107,7 +107,7 @@ SDL_FORCE_INLINE SDL_bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
  */
 SDL_FORCE_INLINE SDL_bool SDL_RectEmpty(const SDL_Rect *r)
 {
-    return ((!r) || (r->w <= 0) || (r->h <= 0)) ? SDL_TRUE : SDL_FALSE;
+    return ((!r) || (r->m_w <= 0) || (r->m_h <= 0)) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**
@@ -115,8 +115,8 @@ SDL_FORCE_INLINE SDL_bool SDL_RectEmpty(const SDL_Rect *r)
  */
 SDL_FORCE_INLINE SDL_bool SDL_RectEquals(const SDL_Rect *a, const SDL_Rect *b)
 {
-    return (a && b && (a->x == b->x) && (a->y == b->y) &&
-            (a->w == b->w) && (a->h == b->h)) ? SDL_TRUE : SDL_FALSE;
+    return (a && b && (a->m_x == b->m_x) && (a->m_y == b->m_y) &&
+            (a->m_w == b->m_w) && (a->m_h == b->m_h)) ? SDL_TRUE : SDL_FALSE;
 }
 
 /**

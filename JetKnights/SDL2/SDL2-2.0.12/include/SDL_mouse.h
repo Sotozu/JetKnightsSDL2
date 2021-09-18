@@ -84,7 +84,7 @@ extern DECLSPEC SDL_Window * SDLCALL SDL_GetMouseFocus(void);
  *  mouse cursor position relative to the focus window for the currently
  *  selected mouse.  You can pass NULL for either x or y.
  */
-extern DECLSPEC Uint32 SDLCALL SDL_GetMouseState(int *x, int *y);
+extern DECLSPEC Uint32 SDLCALL SDL_GetMouseState(int *m_x, int *m_y);
 
 /**
  *  \brief Get the current state of the mouse, in relation to the desktop
@@ -109,7 +109,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetMouseState(int *x, int *y);
  *
  *  \sa SDL_GetMouseState
  */
-extern DECLSPEC Uint32 SDLCALL SDL_GetGlobalMouseState(int *x, int *y);
+extern DECLSPEC Uint32 SDLCALL SDL_GetGlobalMouseState(int *m_x, int *m_y);
 
 /**
  *  \brief Retrieve the relative state of the mouse.
@@ -118,7 +118,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetGlobalMouseState(int *x, int *y);
  *  be tested using the SDL_BUTTON(X) macros, and x and y are set to the
  *  mouse deltas since the last call to SDL_GetRelativeMouseState().
  */
-extern DECLSPEC Uint32 SDLCALL SDL_GetRelativeMouseState(int *x, int *y);
+extern DECLSPEC Uint32 SDLCALL SDL_GetRelativeMouseState(int *m_x, int *m_y);
 
 /**
  *  \brief Moves the mouse to the given position within the window.
@@ -130,7 +130,7 @@ extern DECLSPEC Uint32 SDLCALL SDL_GetRelativeMouseState(int *x, int *y);
  *  \note This function generates a mouse motion event
  */
 extern DECLSPEC void SDLCALL SDL_WarpMouseInWindow(SDL_Window * window,
-                                                   int x, int y);
+                                                   int m_x, int m_y);
 
 /**
  *  \brief Moves the mouse to the given position in global screen space.
@@ -141,7 +141,7 @@ extern DECLSPEC void SDLCALL SDL_WarpMouseInWindow(SDL_Window * window,
  *
  *  \note This function generates a mouse motion event
  */
-extern DECLSPEC int SDLCALL SDL_WarpMouseGlobal(int x, int y);
+extern DECLSPEC int SDLCALL SDL_WarpMouseGlobal(int m_x, int m_y);
 
 /**
  *  \brief Set relative mouse mode.
@@ -219,7 +219,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GetRelativeMouseMode(void);
  */
 extern DECLSPEC SDL_Cursor *SDLCALL SDL_CreateCursor(const Uint8 * data,
                                                      const Uint8 * mask,
-                                                     int w, int h, int hot_x,
+                                                     int m_w, int m_h, int hot_x,
                                                      int hot_y);
 
 /**

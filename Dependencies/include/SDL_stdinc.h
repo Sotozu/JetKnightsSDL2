@@ -281,12 +281,12 @@ typedef uint64_t Uint64;
 #if defined(_MSC_VER) && (_MSC_VER >= 1600) /* VS 2010 and above */
 #include <sal.h>
 
-#define SDL_IN_BYTECAP(x) _In_bytecount_(x)
-#define SDL_INOUT_Z_CAP(x) _Inout_z_cap_(x)
-#define SDL_OUT_Z_CAP(x) _Out_z_cap_(x)
-#define SDL_OUT_CAP(x) _Out_cap_(x)
-#define SDL_OUT_BYTECAP(x) _Out_bytecap_(x)
-#define SDL_OUT_Z_BYTECAP(x) _Out_z_bytecap_(x)
+#define SDL_IN_BYTECAP(m_x) _In_bytecount_(m_x)
+#define SDL_INOUT_Z_CAP(m_x) _Inout_z_cap_(m_x)
+#define SDL_OUT_Z_CAP(m_x) _Out_z_cap_(m_x)
+#define SDL_OUT_CAP(m_x) _Out_cap_(m_x)
+#define SDL_OUT_BYTECAP(m_x) _Out_bytecap_(m_x)
+#define SDL_OUT_Z_BYTECAP(m_x) _Out_z_bytecap_(m_x)
 
 #define SDL_PRINTF_FORMAT_STRING _Printf_format_string_
 #define SDL_SCANF_FORMAT_STRING _Scanf_format_string_impl_
@@ -309,8 +309,8 @@ typedef uint64_t Uint64;
 #endif
 #endif /* SDL_DISABLE_ANALYZE_MACROS */
 
-#define SDL_COMPILE_TIME_ASSERT(name, x)               \
-       typedef int SDL_compile_time_assert_ ## name[(x) * 2 - 1]
+#define SDL_COMPILE_TIME_ASSERT(name, m_x)               \
+       typedef int SDL_compile_time_assert_ ## name[(m_x) * 2 - 1]
 /** \cond */
 #ifndef DOXYGEN_SHOULD_IGNORE_THIS
 SDL_COMPILE_TIME_ASSERT(uint8, sizeof(Uint8) == 1);
@@ -399,25 +399,25 @@ extern DECLSPEC int SDLCALL SDL_setenv(const char *name, const char *value, int 
 
 extern DECLSPEC void SDLCALL SDL_qsort(void *base, size_t nmemb, size_t size, int (*compare) (const void *, const void *));
 
-extern DECLSPEC int SDLCALL SDL_abs(int x);
+extern DECLSPEC int SDLCALL SDL_abs(int m_x);
 
 /* !!! FIXME: these have side effects. You probably shouldn't use them. */
 /* !!! FIXME: Maybe we do forceinline functions of SDL_mini, SDL_minf, etc? */
-#define SDL_min(x, y) (((x) < (y)) ? (x) : (y))
-#define SDL_max(x, y) (((x) > (y)) ? (x) : (y))
+#define SDL_min(m_x, m_y) (((m_x) < (m_y)) ? (m_x) : (m_y))
+#define SDL_max(m_x, m_y) (((m_x) > (m_y)) ? (m_x) : (m_y))
 
-extern DECLSPEC int SDLCALL SDL_isdigit(int x);
-extern DECLSPEC int SDLCALL SDL_isspace(int x);
-extern DECLSPEC int SDLCALL SDL_isupper(int x);
-extern DECLSPEC int SDLCALL SDL_islower(int x);
-extern DECLSPEC int SDLCALL SDL_toupper(int x);
-extern DECLSPEC int SDLCALL SDL_tolower(int x);
+extern DECLSPEC int SDLCALL SDL_isdigit(int m_x);
+extern DECLSPEC int SDLCALL SDL_isspace(int m_x);
+extern DECLSPEC int SDLCALL SDL_isupper(int m_x);
+extern DECLSPEC int SDLCALL SDL_islower(int m_x);
+extern DECLSPEC int SDLCALL SDL_toupper(int m_x);
+extern DECLSPEC int SDLCALL SDL_tolower(int m_x);
 
 extern DECLSPEC void *SDLCALL SDL_memset(SDL_OUT_BYTECAP(len) void *dst, int c, size_t len);
 
-#define SDL_zero(x) SDL_memset(&(x), 0, sizeof((x)))
-#define SDL_zerop(x) SDL_memset((x), 0, sizeof(*(x)))
-#define SDL_zeroa(x) SDL_memset((x), 0, sizeof((x)))
+#define SDL_zero(m_x) SDL_memset(&(m_x), 0, sizeof((m_x)))
+#define SDL_zerop(m_x) SDL_memset((m_x), 0, sizeof(*(m_x)))
+#define SDL_zeroa(m_x) SDL_memset((m_x), 0, sizeof((m_x)))
 
 /* Note that memset() is a byte assignment and this is a 32-bit assignment, so they're not directly equivalent. */
 SDL_FORCE_INLINE void SDL_memset4(void *dst, Uint32 val, size_t dwords)
@@ -509,42 +509,42 @@ extern DECLSPEC int SDLCALL SDL_vsnprintf(SDL_OUT_Z_CAP(maxlen) char *text, size
 #endif
 #endif
 
-extern DECLSPEC double SDLCALL SDL_acos(double x);
-extern DECLSPEC float SDLCALL SDL_acosf(float x);
-extern DECLSPEC double SDLCALL SDL_asin(double x);
-extern DECLSPEC float SDLCALL SDL_asinf(float x);
-extern DECLSPEC double SDLCALL SDL_atan(double x);
-extern DECLSPEC float SDLCALL SDL_atanf(float x);
-extern DECLSPEC double SDLCALL SDL_atan2(double x, double y);
-extern DECLSPEC float SDLCALL SDL_atan2f(float x, float y);
-extern DECLSPEC double SDLCALL SDL_ceil(double x);
-extern DECLSPEC float SDLCALL SDL_ceilf(float x);
-extern DECLSPEC double SDLCALL SDL_copysign(double x, double y);
-extern DECLSPEC float SDLCALL SDL_copysignf(float x, float y);
-extern DECLSPEC double SDLCALL SDL_cos(double x);
-extern DECLSPEC float SDLCALL SDL_cosf(float x);
-extern DECLSPEC double SDLCALL SDL_exp(double x);
-extern DECLSPEC float SDLCALL SDL_expf(float x);
-extern DECLSPEC double SDLCALL SDL_fabs(double x);
-extern DECLSPEC float SDLCALL SDL_fabsf(float x);
-extern DECLSPEC double SDLCALL SDL_floor(double x);
-extern DECLSPEC float SDLCALL SDL_floorf(float x);
-extern DECLSPEC double SDLCALL SDL_fmod(double x, double y);
-extern DECLSPEC float SDLCALL SDL_fmodf(float x, float y);
-extern DECLSPEC double SDLCALL SDL_log(double x);
-extern DECLSPEC float SDLCALL SDL_logf(float x);
-extern DECLSPEC double SDLCALL SDL_log10(double x);
-extern DECLSPEC float SDLCALL SDL_log10f(float x);
-extern DECLSPEC double SDLCALL SDL_pow(double x, double y);
-extern DECLSPEC float SDLCALL SDL_powf(float x, float y);
-extern DECLSPEC double SDLCALL SDL_scalbn(double x, int n);
-extern DECLSPEC float SDLCALL SDL_scalbnf(float x, int n);
-extern DECLSPEC double SDLCALL SDL_sin(double x);
-extern DECLSPEC float SDLCALL SDL_sinf(float x);
-extern DECLSPEC double SDLCALL SDL_sqrt(double x);
-extern DECLSPEC float SDLCALL SDL_sqrtf(float x);
-extern DECLSPEC double SDLCALL SDL_tan(double x);
-extern DECLSPEC float SDLCALL SDL_tanf(float x);
+extern DECLSPEC double SDLCALL SDL_acos(double m_x);
+extern DECLSPEC float SDLCALL SDL_acosf(float m_x);
+extern DECLSPEC double SDLCALL SDL_asin(double m_x);
+extern DECLSPEC float SDLCALL SDL_asinf(float m_x);
+extern DECLSPEC double SDLCALL SDL_atan(double m_x);
+extern DECLSPEC float SDLCALL SDL_atanf(float m_x);
+extern DECLSPEC double SDLCALL SDL_atan2(double m_x, double m_y);
+extern DECLSPEC float SDLCALL SDL_atan2f(float m_x, float m_y);
+extern DECLSPEC double SDLCALL SDL_ceil(double m_x);
+extern DECLSPEC float SDLCALL SDL_ceilf(float m_x);
+extern DECLSPEC double SDLCALL SDL_copysign(double m_x, double m_y);
+extern DECLSPEC float SDLCALL SDL_copysignf(float m_x, float m_y);
+extern DECLSPEC double SDLCALL SDL_cos(double m_x);
+extern DECLSPEC float SDLCALL SDL_cosf(float m_x);
+extern DECLSPEC double SDLCALL SDL_exp(double m_x);
+extern DECLSPEC float SDLCALL SDL_expf(float m_x);
+extern DECLSPEC double SDLCALL SDL_fabs(double m_x);
+extern DECLSPEC float SDLCALL SDL_fabsf(float m_x);
+extern DECLSPEC double SDLCALL SDL_floor(double m_x);
+extern DECLSPEC float SDLCALL SDL_floorf(float m_x);
+extern DECLSPEC double SDLCALL SDL_fmod(double m_x, double m_y);
+extern DECLSPEC float SDLCALL SDL_fmodf(float m_x, float m_y);
+extern DECLSPEC double SDLCALL SDL_log(double m_x);
+extern DECLSPEC float SDLCALL SDL_logf(float m_x);
+extern DECLSPEC double SDLCALL SDL_log10(double m_x);
+extern DECLSPEC float SDLCALL SDL_log10f(float m_x);
+extern DECLSPEC double SDLCALL SDL_pow(double m_x, double m_y);
+extern DECLSPEC float SDLCALL SDL_powf(float m_x, float m_y);
+extern DECLSPEC double SDLCALL SDL_scalbn(double m_x, int n);
+extern DECLSPEC float SDLCALL SDL_scalbnf(float m_x, int n);
+extern DECLSPEC double SDLCALL SDL_sin(double m_x);
+extern DECLSPEC float SDLCALL SDL_sinf(float m_x);
+extern DECLSPEC double SDLCALL SDL_sqrt(double m_x);
+extern DECLSPEC float SDLCALL SDL_sqrtf(float m_x);
+extern DECLSPEC double SDLCALL SDL_tan(double m_x);
+extern DECLSPEC float SDLCALL SDL_tanf(float m_x);
 
 /* The SDL implementation of iconv() returns these error codes */
 #define SDL_ICONV_ERROR     (size_t)-1

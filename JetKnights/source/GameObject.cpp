@@ -20,14 +20,14 @@ GameObject::GameObject() {
 }
 
 
-GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
+GameObject::GameObject(int m_x, int m_y, float angle, SDL_Renderer* renderer) {
 	gRenderer = renderer;
 	oriX = 0;
 	oriY = 0;
-	relX = x;
-	relY = y;
-	posX = x;
-	posY = y;
+	relX = m_x;
+	relY = m_y;
+	posX = m_x;
+	posY = m_y;
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
@@ -37,15 +37,15 @@ GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer) {
 	team = 0;
 }
 
-GameObject::GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
+GameObject::GameObject(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
 	gRenderer = renderer;
 	textures.push_back(*texture);
 	oriX = 0;
 	oriY = 0;
-	relX = x;
-	relY = y;
-	posX = x;
-	posY = y;
+	relX = m_x;
+	relY = m_y;
+	posX = m_x;
+	posY = m_y;
 	ang = angle;
 	hitboxOffsetX = 0;
 	hitboxOffsetY = 0;
@@ -86,12 +86,12 @@ void GameObject::renderTextures() {
 		texture.render(posX, posY, ang);
 
 		// These are all for rendering relations
-		SDL_Rect textureOrigin = { posX + texture.x - 2, posY + texture.y - 2, 5, 5 };
-		SDL_Rect textureBounds = { posX + texture.x, posY + texture.y, texture.getWidth(), texture.getHeight() };
+		SDL_Rect textureOrigin = { posX + texture.m_x - 2, posY + texture.m_y - 2, 5, 5 };
+		SDL_Rect textureBounds = { posX + texture.m_x, posY + texture.m_y, texture.getWidth(), texture.getHeight() };
 		SDL_SetRenderDrawColor(gRenderer, 0x00, 0xFF, 0x00, 0xFF);
 		SDL_RenderFillRect(gRenderer, &textureOrigin);
 		SDL_RenderDrawRect(gRenderer, &textureBounds);
-		SDL_RenderDrawLine(gRenderer, posX, posY, posX + texture.x, posY + texture.y);
+		SDL_RenderDrawLine(gRenderer, posX, posY, posX + texture.m_x, posY + texture.m_y);
 	}
 }
 
@@ -111,15 +111,15 @@ void GameObject::updatePos() {
 	}
 }
 
-void GameObject::setOrigin(float x, float y) {
-	oriX = x;
-	oriY = y;
+void GameObject::setOrigin(float m_x, float m_y) {
+	oriX = m_x;
+	oriY = m_y;
 	updatePos();
 }
 
-void GameObject::setPos(int x, int y, float angle=0.0) {
-	relX = x;
-	relY = y;
+void GameObject::setPos(int m_x, int m_y, float angle=0.0) {
+	relX = m_x;
+	relY = m_y;
 	ang = angle;
 	updatePos();
 }
@@ -160,8 +160,8 @@ void GameObject::setTeam(int a) {
 	}
 }
 
-void GameObject::setPosRelative(int x, int y, float angle) {
-	setPos(x + posX, y + posY, ang + angle);
+void GameObject::setPosRelative(int m_x, int m_y, float angle) {
+	setPos(m_x + posX, m_y + posY, ang + angle);
 }
 
 void GameObject::update(float timestep) {

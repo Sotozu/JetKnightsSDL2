@@ -1,9 +1,9 @@
 #include "Arena.h"
 
 Arena::Arena() {
-	x = 0;
-	y = 0;
-	ang = 0;
+	m_x = 0;
+	m_y = 0;
+	m_ang = 0;
 }
 
 void Arena::onEvent(SDL_Event e) {

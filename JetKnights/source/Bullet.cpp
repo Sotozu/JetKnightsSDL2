@@ -7,13 +7,13 @@ Bullet::Bullet() : GameObject() {
 }
 
 
-Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer) : GameObject( x, y, angle, renderer) {
+Bullet::Bullet(int m_x, int m_y, float angle, int speed, SDL_Renderer* renderer) : GameObject( m_x, m_y, angle, renderer) {
 	duration = 100;
 	mSpeed = speed;
 	damage = 1;
 }
 
-Bullet::Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture) : GameObject(x, y, angle, renderer, texture) {
+Bullet::Bullet(int m_x, int m_y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture) : GameObject(m_x, m_y, angle, renderer, texture) {
 	duration = 100;
 	mSpeed = speed;
 	damage = 1;

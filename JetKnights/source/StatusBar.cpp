@@ -3,8 +3,8 @@
 StatusBar::StatusBar() {
 	renderer = NULL;
 	status = NULL;
-	x = 0;
-	y = 0;
+	m_x = 0;
+	m_y = 0;
 	status_rect = { 0, 0, WIDTH, HEIGHT };
 	casing_rect = { 0, 0, WIDTH, HEIGHT };
 	max_bar = 1;
@@ -14,13 +14,13 @@ StatusBar::StatusBar() {
 
 // Warning: This pointer based data access is prone to garbage data once the object in question is deleted
 // It is a dirty way to get relative objects, create nested objects instead.
-StatusBar::StatusBar(int x, int y, int* st, SDL_Renderer* renderer){
+StatusBar::StatusBar(int m_x, int m_y, int* st, SDL_Renderer* renderer){
 	this->status = st;
 	this->renderer = renderer;
-	this->x = x;
-	this->y = y;
-	status_rect = { x, y, direction * WIDTH, HEIGHT };
-	casing_rect = { x, y, direction * WIDTH, HEIGHT };
+	this->m_x = m_x;
+	this->m_y = m_y;
+	status_rect = { m_x, m_y, direction * WIDTH, HEIGHT };
+	casing_rect = { m_x, m_y, direction * WIDTH, HEIGHT };
 	max_bar = *st;
 
 	val = *st;
@@ -35,7 +35,7 @@ void StatusBar::update() {
 		val = 0;
 	}
 
-	status_rect.w = direction * val;
+	status_rect.m_w = direction * val;
 }
 
 void StatusBar::render() {
@@ -49,11 +49,11 @@ void StatusBar::render() {
 }
 
 int StatusBar::getX() {
-	return status_rect.x;
+	return status_rect.m_x;
 }
 
 int StatusBar::getY() {
-	return status_rect.y;
+	return status_rect.m_y;
 }
 
 // Reverse the direction of the bar
@@ -64,5 +64,5 @@ void StatusBar::reverse() {
 	else {
 		direction = 1;
 	}
-	casing_rect = { x, y, direction * WIDTH, HEIGHT };
+	casing_rect = { m_x, m_y, direction * WIDTH, HEIGHT };
 }

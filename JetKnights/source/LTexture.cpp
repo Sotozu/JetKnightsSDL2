@@ -45,8 +45,8 @@ bool LTexture::loadFromFile(std::string path, SDL_Renderer* gRenderer)
 		else
 		{
 			//Get image dimensions
-			mWidth = loadedSurface->w;
-			mHeight = loadedSurface->h;
+			mWidth = loadedSurface->m_w;
+			mHeight = loadedSurface->m_h;
 		}
 
 		//Get rid of old loaded surface
@@ -125,16 +125,16 @@ void LTexture::setAlpha(Uint8 alpha)
 	SDL_SetTextureAlphaMod(mTexture, alpha);
 }
 
-void LTexture::render(int x, int y, SDL_Rect* clip, SDL_Renderer* gRenderer, double angle, SDL_Point* center, SDL_RendererFlip flip)
+void LTexture::render(int m_x, int m_y, SDL_Rect* clip, SDL_Renderer* gRenderer, double angle, SDL_Point* center, SDL_RendererFlip flip)
 {
 	//Set rendering space and render to screen
-	SDL_Rect renderQuad = { x, y, mWidth, mHeight };
+	SDL_Rect renderQuad = { m_x, m_y, mWidth, mHeight };
 
 	//Set clip rendering dimensions
 	if (clip != NULL)
 	{
-		renderQuad.w = clip->w;
-		renderQuad.h = clip->h;
+		renderQuad.m_w = clip->m_w;
+		renderQuad.m_h = clip->m_h;
 	}
 
 	//Render to screen

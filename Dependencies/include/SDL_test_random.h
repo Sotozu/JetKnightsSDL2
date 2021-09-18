@@ -58,7 +58,7 @@ extern "C" {
  */
   typedef struct {
     unsigned int a;
-    unsigned int x;
+    unsigned int m_x;
     unsigned int c;
     unsigned int ah;
     unsigned int al;

@@ -265,7 +265,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_Vulkan_CreateSurface(
  *  \sa SDL_CreateWindow()
  */
 extern DECLSPEC void SDLCALL SDL_Vulkan_GetDrawableSize(SDL_Window * window,
-                                                        int *w, int *h);
+                                                        int *m_w, int *m_h);
 
 /* @} *//* Vulkan support functions */
 

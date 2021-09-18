@@ -225,14 +225,14 @@ void Game::genTestArena() {
 	mainObj = p_arena;
 }
 
-void Game::addObstacle(IGameObject* parent, float x, float y) {
-	Obstacle* p_obstalce = new Obstacle(x, y, 0);
+void Game::addObstacle(IGameObject* parent, float m_x, float m_y) {
+	Obstacle* p_obstalce = new Obstacle(m_x, m_y, 0);
 	p_obstalce->addDefaultHitbox();
 	parent->addChild(p_obstalce);
 }
 
-void Game::addRobot(IGameObject* parent, float x, float y) {
-	NewRobot* robot = new NewRobot(x, y, 0, nullptr);
+void Game::addRobot(IGameObject* parent, float m_x, float m_y) {
+	NewRobot* robot = new NewRobot(m_x, m_y, 0, nullptr);
 	//robot->addHitbox();
 	robot->team = 1;
 	robot->setPlayer(0);

@@ -54,8 +54,8 @@ public:
 	//void genTestObstacles();
 
 	void genTestArena();
-	void addObstacle(IGameObject* parent, float x, float y);
-	void addRobot(IGameObject* parent, float x, float y);
+	void addObstacle(IGameObject* parent, float m_x, float m_y);
+	void addRobot(IGameObject* parent, float m_x, float m_y);
 
 	
 	//Accessors

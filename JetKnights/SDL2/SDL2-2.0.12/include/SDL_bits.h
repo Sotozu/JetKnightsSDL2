@@ -58,21 +58,21 @@ extern _inline int _SDL_clz_watcom (Uint32);
 #endif
 
 SDL_FORCE_INLINE int
-SDL_MostSignificantBitIndex32(Uint32 x)
+SDL_MostSignificantBitIndex32(Uint32 m_x)
 {
 #if defined(__GNUC__) && (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
     /* Count Leading Zeroes builtin in GCC.
      * http://gcc.gnu.org/onlinedocs/gcc-4.3.4/gcc/Other-Builtins.html
      */
-    if (x == 0) {
+    if (m_x == 0) {
         return -1;
     }
-    return 31 - __builtin_clz(x);
+    return 31 - __builtin_clz(m_x);
 #elif defined(__WATCOMC__) && defined(__386__)
-    if (x == 0) {
+    if (m_x == 0) {
         return -1;
     }
-    return 31 - _SDL_clz_watcom(x);
+    return 31 - _SDL_clz_watcom(m_x);
 #else
     /* Based off of Bit Twiddling Hacks by Sean Eron Anderson
      * <seander@cs.stanford.edu>, released in the public domain.
@@ -84,15 +84,15 @@ SDL_MostSignificantBitIndex32(Uint32 x)
     int msbIndex = 0;
     int i;
 
-    if (x == 0) {
+    if (m_x == 0) {
         return -1;
     }
 
     for (i = 4; i >= 0; i--)
     {
-        if (x & b[i])
+        if (m_x & b[i])
         {
-            x >>= S[i];
+            m_x >>= S[i];
             msbIndex |= S[i];
         }
     }
@@ -102,9 +102,9 @@ SDL_MostSignificantBitIndex32(Uint32 x)
 }
 
 SDL_FORCE_INLINE SDL_bool
-SDL_HasExactlyOneBitSet32(Uint32 x)
+SDL_HasExactlyOneBitSet32(Uint32 m_x)
 {
-    if (x && !(x & (x - 1))) {
+    if (m_x && !(m_x & (m_x - 1))) {
         return SDL_TRUE;
     }
     return SDL_FALSE;

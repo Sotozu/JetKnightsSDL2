@@ -6,8 +6,8 @@ public:
 
 	//Constructors
 	Bullet();
-	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer);
-	Bullet(int x, int y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture);
+	Bullet(int m_x, int m_y, float angle, int speed, SDL_Renderer* renderer);
+	Bullet(int m_x, int m_y, float angle, int speed, SDL_Renderer* renderer, RelTexture* texture);
 
 	//Mutators
 	void update(float);

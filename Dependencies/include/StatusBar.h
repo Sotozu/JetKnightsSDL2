@@ -7,7 +7,7 @@ class StatusBar{
 public:
 	// Constructors
 	StatusBar();
-	StatusBar(int x, int y, int* status, SDL_Renderer* renderer);
+	StatusBar(int m_x, int m_y, int* status, SDL_Renderer* renderer);
 	
 	// Modifiers
 	void update();
@@ -23,7 +23,7 @@ private:
 	static const int WIDTH = 300;
 	static const int HEIGHT = 10;
 
-	int x, y;
+	int m_x, m_y;
 	int* status;
 	int max_bar;
 	int val;

@@ -15,7 +15,7 @@ NewWeapon::NewWeapon() : GameObject() {
 	stepTimer.start();
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameObject(x, y, angle, renderer) {
+NewWeapon::NewWeapon(int m_x, int m_y, float angle, SDL_Renderer* renderer) : GameObject(m_x, m_y, angle, renderer) {
 	
 	//'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
@@ -33,7 +33,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer) : GameOb
 	stepTimer.start();
 }
 
-NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) : GameObject(x, y, angle, renderer, texture) {
+NewWeapon::NewWeapon(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture) : GameObject(m_x, m_y, angle, renderer, texture) {
 
 	//'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
@@ -138,7 +138,7 @@ bool NewWeapon::inDeadCircle() {
 	}
 }
 
-void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
+void NewWeapon::setAllParameters(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture) {
 
 	//NewWeapon variables
 	joyX = 0;
@@ -150,8 +150,8 @@ void NewWeapon::setAllParameters(int x, int y, float angle, SDL_Renderer* render
 	radius = 40;
 
 	//GameObject Variables
-	posX = x;
-	posY = y;
+	posX = m_x;
+	posY = m_y;
 	ang = angle;
 	renderer = gRenderer;
 	textures.push_back(*texture);

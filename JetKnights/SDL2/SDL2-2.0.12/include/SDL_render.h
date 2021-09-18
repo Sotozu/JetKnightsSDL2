@@ -228,7 +228,7 @@ extern DECLSPEC int SDLCALL SDL_GetRendererInfo(SDL_Renderer * renderer,
  *  \brief Get the output size in pixels of a rendering context.
  */
 extern DECLSPEC int SDLCALL SDL_GetRendererOutputSize(SDL_Renderer * renderer,
-                                                      int *w, int *h);
+                                                      int *m_w, int *m_h);
 
 /**
  *  \brief Create a texture for a rendering context.
@@ -251,8 +251,8 @@ extern DECLSPEC int SDLCALL SDL_GetRendererOutputSize(SDL_Renderer * renderer,
  */
 extern DECLSPEC SDL_Texture * SDLCALL SDL_CreateTexture(SDL_Renderer * renderer,
                                                         Uint32 format,
-                                                        int access, int w,
-                                                        int h);
+                                                        int access, int m_w,
+                                                        int m_h);
 
 /**
  *  \brief Create a texture from an existing surface.
@@ -284,7 +284,7 @@ extern DECLSPEC SDL_Texture * SDLCALL SDL_CreateTextureFromSurface(SDL_Renderer 
  */
 extern DECLSPEC int SDLCALL SDL_QueryTexture(SDL_Texture * texture,
                                              Uint32 * format, int *access,
-                                             int *w, int *h);
+                                             int *m_w, int *m_h);
 
 /**
  *  \brief Set an additional color value used in render copy operations.
@@ -551,7 +551,7 @@ extern DECLSPEC SDL_Texture * SDLCALL SDL_GetRenderTarget(SDL_Renderer *renderer
  *  \sa SDL_RenderSetScale()
  *  \sa SDL_RenderSetViewport()
  */
-extern DECLSPEC int SDLCALL SDL_RenderSetLogicalSize(SDL_Renderer * renderer, int w, int h);
+extern DECLSPEC int SDLCALL SDL_RenderSetLogicalSize(SDL_Renderer * renderer, int m_w, int m_h);
 
 /**
  *  \brief Get device independent resolution for rendering
@@ -562,7 +562,7 @@ extern DECLSPEC int SDLCALL SDL_RenderSetLogicalSize(SDL_Renderer * renderer, in
  *
  *  \sa SDL_RenderSetLogicalSize()
  */
-extern DECLSPEC void SDLCALL SDL_RenderGetLogicalSize(SDL_Renderer * renderer, int *w, int *h);
+extern DECLSPEC void SDLCALL SDL_RenderGetLogicalSize(SDL_Renderer * renderer, int *m_w, int *m_h);
 
 /**
  *  \brief Set whether to force integer scales for resolution-independent rendering
@@ -764,7 +764,7 @@ extern DECLSPEC int SDLCALL SDL_RenderClear(SDL_Renderer * renderer);
  *  \return 0 on success, or -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_RenderDrawPoint(SDL_Renderer * renderer,
-                                                int x, int y);
+                                                int m_x, int m_y);
 
 /**
  *  \brief Draw multiple points on the current rendering target.
@@ -906,7 +906,7 @@ extern DECLSPEC int SDLCALL SDL_RenderCopyEx(SDL_Renderer * renderer,
  *  \return 0 on success, or -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_RenderDrawPointF(SDL_Renderer * renderer,
-                                                 float x, float y);
+                                                 float m_x, float m_y);
 
 /**
  *  \brief Draw multiple points on the current rendering target.

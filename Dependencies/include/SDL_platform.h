@@ -121,7 +121,7 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__CYGWIN__) || defined(__MINGW32__)
 /* Try to find out if we're compiling for WinRT or non-WinRT */
 #if defined(_MSC_VER) && defined(__has_include)
-#if __has_include(<winapifamily.h>)
+#if __has_include(<winapifamily.m_h>)
 #define HAVE_WINAPIFAMILY_H 1
 #else
 #define HAVE_WINAPIFAMILY_H 0

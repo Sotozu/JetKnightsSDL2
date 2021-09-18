@@ -72,13 +72,13 @@ typedef Uint16 SDL_AudioFormat;
 #define SDL_AUDIO_MASK_DATATYPE      (1<<8)
 #define SDL_AUDIO_MASK_ENDIAN        (1<<12)
 #define SDL_AUDIO_MASK_SIGNED        (1<<15)
-#define SDL_AUDIO_BITSIZE(x)         (x & SDL_AUDIO_MASK_BITSIZE)
-#define SDL_AUDIO_ISFLOAT(x)         (x & SDL_AUDIO_MASK_DATATYPE)
-#define SDL_AUDIO_ISBIGENDIAN(x)     (x & SDL_AUDIO_MASK_ENDIAN)
-#define SDL_AUDIO_ISSIGNED(x)        (x & SDL_AUDIO_MASK_SIGNED)
-#define SDL_AUDIO_ISINT(x)           (!SDL_AUDIO_ISFLOAT(x))
-#define SDL_AUDIO_ISLITTLEENDIAN(x)  (!SDL_AUDIO_ISBIGENDIAN(x))
-#define SDL_AUDIO_ISUNSIGNED(x)      (!SDL_AUDIO_ISSIGNED(x))
+#define SDL_AUDIO_BITSIZE(m_x)         (m_x & SDL_AUDIO_MASK_BITSIZE)
+#define SDL_AUDIO_ISFLOAT(m_x)         (m_x & SDL_AUDIO_MASK_DATATYPE)
+#define SDL_AUDIO_ISBIGENDIAN(m_x)     (m_x & SDL_AUDIO_MASK_ENDIAN)
+#define SDL_AUDIO_ISSIGNED(m_x)        (m_x & SDL_AUDIO_MASK_SIGNED)
+#define SDL_AUDIO_ISINT(m_x)           (!SDL_AUDIO_ISFLOAT(m_x))
+#define SDL_AUDIO_ISLITTLEENDIAN(m_x)  (!SDL_AUDIO_ISBIGENDIAN(m_x))
+#define SDL_AUDIO_ISUNSIGNED(m_x)      (!SDL_AUDIO_ISSIGNED(m_x))
 
 /**
  *  \name Audio format flags

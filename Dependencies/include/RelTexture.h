@@ -5,16 +5,16 @@
 class RelTexture {
 public:
     RelTexture();
-    RelTexture(float x, float y, float ang, LTexture* texture, SDL_Renderer* renderer);
+    RelTexture(float m_x, float m_y, float ang, LTexture* texture, SDL_Renderer* renderer);
 
-    void render(float x, float y, float ang);
+    void render(float m_x, float m_y, float ang);
 
     // Accesors
     int getWidth();
     int getHeight();
 
     // Data
-    float x, y, ang;
+    float m_x, m_y, ang;
 
 private:
     LTexture texture;

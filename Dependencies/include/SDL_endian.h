@@ -107,9 +107,9 @@ extern _inline Uint16 SDL_Swap16(Uint16);
   modify [ax];
 #else
 SDL_FORCE_INLINE Uint16
-SDL_Swap16(Uint16 x)
+SDL_Swap16(Uint16 m_x)
 {
-    return SDL_static_cast(Uint16, ((x << 8) | (x >> 8)));
+    return SDL_static_cast(Uint16, ((m_x << 8) | (m_x >> 8)));
 }
 #endif
 
@@ -162,10 +162,10 @@ extern _inline Uint32 SDL_Swap32(Uint32);
 #endif
 #else
 SDL_FORCE_INLINE Uint32
-SDL_Swap32(Uint32 x)
+SDL_Swap32(Uint32 m_x)
 {
-    return SDL_static_cast(Uint32, ((x << 24) | ((x << 8) & 0x00FF0000) |
-                                    ((x >> 8) & 0x0000FF00) | (x >> 24)));
+    return SDL_static_cast(Uint32, ((m_x << 24) | ((m_x << 8) & 0x00FF0000) |
+                                    ((m_x >> 8) & 0x0000FF00) | (m_x >> 24)));
 }
 #endif
 
@@ -196,31 +196,31 @@ SDL_Swap64(Uint64 x)
 }
 #else
 SDL_FORCE_INLINE Uint64
-SDL_Swap64(Uint64 x)
+SDL_Swap64(Uint64 m_x)
 {
     Uint32 hi, lo;
 
     /* Separate into high and low 32-bit values and swap them */
-    lo = SDL_static_cast(Uint32, x & 0xFFFFFFFF);
-    x >>= 32;
-    hi = SDL_static_cast(Uint32, x & 0xFFFFFFFF);
-    x = SDL_Swap32(lo);
-    x <<= 32;
-    x |= SDL_Swap32(hi);
-    return (x);
+    lo = SDL_static_cast(Uint32, m_x & 0xFFFFFFFF);
+    m_x >>= 32;
+    hi = SDL_static_cast(Uint32, m_x & 0xFFFFFFFF);
+    m_x = SDL_Swap32(lo);
+    m_x <<= 32;
+    m_x |= SDL_Swap32(hi);
+    return (m_x);
 }
 #endif
 
 
 SDL_FORCE_INLINE float
-SDL_SwapFloat(float x)
+SDL_SwapFloat(float m_x)
 {
     union
     {
         float f;
         Uint32 ui32;
     } swapper;
-    swapper.f = x;
+    swapper.f = m_x;
     swapper.ui32 = SDL_Swap32(swapper.ui32);
     return swapper.f;
 }

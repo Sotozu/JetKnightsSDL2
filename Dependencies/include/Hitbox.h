@@ -1,7 +1,13 @@
 #pragma once
+
+#include "Constants.h"
+#include "IGameObject.h"
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+
+class IGameObject;
 
 class Hitbox {
 public:
@@ -10,10 +16,10 @@ public:
 	Hitbox(int width, int height);
 
 	// Mutators
-	void setParameters(int x, int y, int width, int height);
+	void setParameters(int m_x, int m_y, int width, int height);
 
 	// Accessors
-	bool chkCollision(Hitbox* b);
+	bool chkCollision(Hitbox& b);
 	bool chkBorderCollisionX(int);
 	bool chkBorderCollisionY(int);
 
@@ -27,9 +33,11 @@ public:
 	void renderAll(float posX, float posY);
 	void renderOrigin(float posX, float posY);
 
+	IGameObject* parentObj;
+
 private:
-	float x;
-	float y;
-	float w; // Width
-	float h; // Height
+	float m_x;
+	float m_y;
+	float m_w; // Width
+	float m_h; // Height
 };

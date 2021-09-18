@@ -257,8 +257,8 @@ typedef struct SDL_MouseMotionEvent
     Uint32 windowID;    /**< The window with mouse focus, if any */
     Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
     Uint32 state;       /**< The current button state */
-    Sint32 x;           /**< X coordinate, relative to window */
-    Sint32 y;           /**< Y coordinate, relative to window */
+    Sint32 m_x;           /**< X coordinate, relative to window */
+    Sint32 m_y;           /**< Y coordinate, relative to window */
     Sint32 xrel;        /**< The relative motion in the X direction */
     Sint32 yrel;        /**< The relative motion in the Y direction */
 } SDL_MouseMotionEvent;
@@ -276,8 +276,8 @@ typedef struct SDL_MouseButtonEvent
     Uint8 state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
     Uint8 clicks;       /**< 1 for single-click, 2 for double-click, etc. */
     Uint8 padding1;
-    Sint32 x;           /**< X coordinate, relative to window */
-    Sint32 y;           /**< Y coordinate, relative to window */
+    Sint32 m_x;           /**< X coordinate, relative to window */
+    Sint32 m_y;           /**< Y coordinate, relative to window */
 } SDL_MouseButtonEvent;
 
 /**
@@ -289,8 +289,8 @@ typedef struct SDL_MouseWheelEvent
     Uint32 timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
     Uint32 windowID;    /**< The window with mouse focus, if any */
     Uint32 which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
-    Sint32 x;           /**< The amount scrolled horizontally, positive to the right and negative to the left */
-    Sint32 y;           /**< The amount scrolled vertically, positive away from the user and negative toward the user */
+    Sint32 m_x;           /**< The amount scrolled horizontally, positive to the right and negative to the left */
+    Sint32 m_y;           /**< The amount scrolled vertically, positive away from the user and negative toward the user */
     Uint32 direction;   /**< Set to one of the SDL_MOUSEWHEEL_* defines. When FLIPPED the values in X and Y will be opposite. Multiply by -1 to change them back */
 } SDL_MouseWheelEvent;
 
@@ -437,8 +437,8 @@ typedef struct SDL_TouchFingerEvent
     Uint32 timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
     SDL_TouchID touchId; /**< The touch device id */
     SDL_FingerID fingerId;
-    float x;            /**< Normalized in the range 0...1 */
-    float y;            /**< Normalized in the range 0...1 */
+    float m_x;            /**< Normalized in the range 0...1 */
+    float m_y;            /**< Normalized in the range 0...1 */
     float dx;           /**< Normalized in the range -1...1 */
     float dy;           /**< Normalized in the range -1...1 */
     float pressure;     /**< Normalized in the range 0...1 */
@@ -456,8 +456,8 @@ typedef struct SDL_MultiGestureEvent
     SDL_TouchID touchId; /**< The touch device id */
     float dTheta;
     float dDist;
-    float x;
-    float y;
+    float m_x;
+    float m_y;
     Uint16 numFingers;
     Uint16 padding;
 } SDL_MultiGestureEvent;
@@ -474,8 +474,8 @@ typedef struct SDL_DollarGestureEvent
     SDL_GestureID gestureId;
     Uint32 numFingers;
     float error;
-    float x;            /**< Normalized center of gesture */
-    float y;            /**< Normalized center of gesture */
+    float m_x;            /**< Normalized center of gesture */
+    float m_y;            /**< Normalized center of gesture */
 } SDL_DollarGestureEvent;
 
 

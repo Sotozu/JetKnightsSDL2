@@ -24,7 +24,7 @@ NewRobot::NewRobot() {
 	gameController = NULL;
 }
 
-NewRobot::NewRobot(int x, int y, float angle, SDL_GameController* CONTROLLER) {
+NewRobot::NewRobot(int m_x, int m_y, float angle, SDL_GameController* CONTROLLER) {
 	// 'joyX' and 'joyY' hold the all the value of the joystick +-320000
 	joyX = 0;
 	joyY = 0;
@@ -46,9 +46,13 @@ NewRobot::NewRobot(int x, int y, float angle, SDL_GameController* CONTROLLER) {
 
 	gameController = CONTROLLER;
 
-	x = x;
-	y = y;
-	ang = angle;
+	m_x = m_x;
+	m_y = m_y;
+	m_ang = angle;
+}
+
+jks::Type NewRobot::getType() {
+	return jks::Type::ROBOT;
 }
 
 void NewRobot::pauseRobotSounds() {
@@ -272,27 +276,39 @@ int NewRobot::getVelY() {
 void NewRobot::onUpdate(float timestep) {
 	updatePosX(timestep);
 	updatePosY(timestep);
+	
+	updateCollision(timestep);
 
 	render();
+}
+
+void NewRobot::updateCollision(float timestep) {
+	std::list<IGameObject*> allObjs = getAllObjects();
+
+	for (auto otherObj : allObjs) {
+		if (isColliding(otherObj)) {
+			onCollision(otherObj, timestep);
+		}
+	}
 }
 
 void NewRobot::renderHitbox() {
 	jks::Position posAbs = getPositionAbsolute();
 
 	for (Hitbox& hitbox : hitboxes) {
-		hitbox.renderAll(posAbs.x, posAbs.y);
+		hitbox.renderAll(posAbs.m_x, posAbs.m_y);
 	}
 }
 
 void NewRobot::updatePosX(float timeStep) {
 	if (!isDead) {
-		x += getVelX() * timeStep;
+		m_x += getVelX() * timeStep;
 	}
 }
 
 void NewRobot::updatePosY(float timeStep) {
 	if (!isDead) {
-		y += getVelY() * timeStep;
+		m_y += getVelY() * timeStep;
 	}
 }
 
@@ -303,10 +319,10 @@ void NewRobot::setPlayer(int p) {
 void NewRobot::updateBorderCollision(int screenWidth, int screenHeight, float stepTimer) {
 	for (auto hitbox : hitboxes) {
 		if (hitbox.chkBorderCollisionX(screenWidth)) {
-			x -= getVelX() * stepTimer;
+			m_x -= getVelX() * stepTimer;
 		}
 		if (hitbox.chkBorderCollisionY(screenHeight)) {
-			y -= getVelY() * stepTimer;
+			m_y -= getVelY() * stepTimer;
 		}
 	}
 }
@@ -324,37 +340,36 @@ void NewRobot::boostOff() {
 
 void NewRobot::addDefaultHitbox() {
 	Hitbox hitbox = Hitbox(50, 50);
-	hitboxes.push_back(hitbox);
-}
-
-/*
-void NewRobot::updateCollision(GameObject* b, float timeStep) {
-	if (chkCollision(b)) {
-		relX -= getVelX() * timeStep;
-		relY -= getVelY() * timeStep;
-		updatePos();
-	}
+	addHitbox(hitbox);
 }
 
 
-// When the robot collides with another robot
-void NewRobot::updateCollision(NewRobot* b, float timeStep) {
-	if (chkCollision(b)) {
-		relX -= getVelX() * timeStep;
-		relY -= getVelY() * timeStep;
-		updatePos();
-	}
-}
-
-// When the robot collides with a bullet
-void NewRobot::updateCollision(Bullet* b, float timeStep) {
-	if (chkCollision(b)) {
-		health -= b->getDamage();
+void NewRobot::onCollision(IGameObject* otherObj, float timestep) {
+	// Perform behavior based on object type
+	switch (otherObj->getType()) {
+	case jks::Type::OBSTACLE:
+		m_x -= getVelX() * timestep;
+		m_y -= getVelY() * timestep;
+		break;
+	case jks::Type::ROBOT:
+		m_x -= getVelX() * timestep;
+		m_y -= getVelY() * timestep;
+		break;
+	case jks::Type::BULLET:
+		//health -= otherObj.getDamage();
 		if (health <= 0) {
 			isDead = true;
 		}
+		break;
+	default:
+		// Do nothing
+		break;
 	}
 }
+
+
+
+/*
 
 
 

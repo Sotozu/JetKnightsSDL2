@@ -2,9 +2,9 @@
 
 // Generate obstacle with relative positioning
 Obstacle::Obstacle(float relX, float relY, float relAng) {
-	x = relX;
-	y = relY;
-	ang = relAng;
+	m_x = relX;
+	m_y = relY;
+	m_ang = relAng;
 }
 
 void Obstacle::onEvent(SDL_Event e) {
@@ -23,11 +23,11 @@ void Obstacle::renderHitbox() {
 	jks::Position posAbs = getPositionAbsolute();
 
 	for (Hitbox& hitbox : hitboxes) {
-		hitbox.renderAll(posAbs.x, posAbs.y);
+		hitbox.renderAll(posAbs.m_x, posAbs.m_y);
 	}
 }
 
 void Obstacle::addDefaultHitbox() {
 	Hitbox hitbox = Hitbox(100,100);
-	hitboxes.push_back(hitbox);
+	addHitbox(hitbox);
 }

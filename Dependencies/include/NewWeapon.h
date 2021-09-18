@@ -12,14 +12,14 @@ class NewWeapon : public GameObject {
 public:
 	//Constructors
 	NewWeapon();
-	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer);
-	NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
+	NewWeapon(int m_x, int m_y, float angle, SDL_Renderer* renderer);
+	NewWeapon(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture);
 
 
 	//Mutators
 	void handleEvent(SDL_Event e);
 	void update(float);
-	void setAllParameters(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture);
+	void setAllParameters(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture);
 	void setPlayer(int);
 	void setBulletInterval(int value);
 	void setParams(int player, int interval, bool isActive);

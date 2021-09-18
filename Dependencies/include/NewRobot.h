@@ -15,15 +15,15 @@ class NewRobot : public IGameObject{
 public:
 	//Constructors
 	NewRobot();
-	NewRobot(int x, int y, float angle, SDL_GameController* CONTROLLER);
+	NewRobot(int m_x, int m_y, float angle, SDL_GameController* CONTROLLER);
 
 	//Mutators
 	void onEvent(SDL_Event e);
 	void onUpdate(float timestep) override;
 	void renderHitbox() override;
+	jks::Type getType() override;
 
 	void updatePosX(float);
-
 	void updatePosY(float);
 
 	void pauseRobotSounds();
@@ -38,6 +38,9 @@ public:
 	void updateBorderCollision(int, int, float);
 
 	void addDefaultHitbox();
+	
+	void onCollision(IGameObject* otherObj, float timestep);
+	void updateCollision(float timestep);
 	/*
 	void updateCollision(GameObject*, float);
 	void updateCollision(NewRobot*, float);

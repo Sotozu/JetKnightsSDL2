@@ -24,16 +24,16 @@ public:
 
 	//Constructors
 	GameObject();
-	GameObject(int x, int y, float angle, SDL_Renderer* renderer);
-	GameObject(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* texture );
+	GameObject(int m_x, int m_y, float angle, SDL_Renderer* renderer);
+	GameObject(int m_x, int m_y, float angle, SDL_Renderer* renderer, RelTexture* texture );
 
 	//Mutators
 	void addHitbox();
 	void setTeam(int);
 
-	void setOrigin(float x, float y);
-	void setPos(int x, int y, float angle);
-	void setPosRelative(int x, int y, float angle);
+	void setOrigin(float m_x, float m_y);
+	void setPos(int m_x, int m_y, float angle);
+	void setPosRelative(int m_x, int m_y, float angle);
 	void updatePos();
 
 	void update(float timestep);

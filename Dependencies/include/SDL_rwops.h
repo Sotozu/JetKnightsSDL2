@@ -110,7 +110,7 @@ typedef struct SDL_RWops
         struct
         {
             SDL_bool append;
-            void *h;
+            void *m_h;
             struct
             {
                 void *data;

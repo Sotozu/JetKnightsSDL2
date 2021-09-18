@@ -168,9 +168,9 @@ extern DECLSPEC int SDLCALL TTF_GlyphMetrics(TTF_Font *font, Uint16 ch,
                                      int *miny, int *maxy, int *advance);
 
 /* Get the dimensions of a rendered string of text */
-extern DECLSPEC int SDLCALL TTF_SizeText(TTF_Font *font, const char *text, int *w, int *h);
-extern DECLSPEC int SDLCALL TTF_SizeUTF8(TTF_Font *font, const char *text, int *w, int *h);
-extern DECLSPEC int SDLCALL TTF_SizeUNICODE(TTF_Font *font, const Uint16 *text, int *w, int *h);
+extern DECLSPEC int SDLCALL TTF_SizeText(TTF_Font *font, const char *text, int *m_w, int *m_h);
+extern DECLSPEC int SDLCALL TTF_SizeUTF8(TTF_Font *font, const char *text, int *m_w, int *m_h);
+extern DECLSPEC int SDLCALL TTF_SizeUNICODE(TTF_Font *font, const Uint16 *text, int *m_w, int *m_h);
 
 /* Create an 8-bit palettized surface and render the given text at
    fast quality with the given font and color.  The 0 pixel is the

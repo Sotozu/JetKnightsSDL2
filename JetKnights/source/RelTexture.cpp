@@ -1,24 +1,24 @@
 #include "RelTexture.h"
 
 RelTexture::RelTexture() {
-	x = 0;
-	y = 0;
+	m_x = 0;
+	m_y = 0;
 	ang = 0;
 	texture = LTexture();
 	renderer = NULL;
 }
 
-RelTexture::RelTexture(float x, float y, float ang, LTexture* texture, SDL_Renderer* renderer) {
-	this->x = x;
-	this->y = y;
+RelTexture::RelTexture(float m_x, float m_y, float ang, LTexture* texture, SDL_Renderer* renderer) {
+	this->m_x = m_x;
+	this->m_y = m_y;
 	this->ang = ang;
 	this->texture = *texture;
 	this->renderer = renderer;
 }
 
-void RelTexture::render(float x, float y, float ang) {
-	int posX = this->x + x;
-	int posY = this->y + y;
+void RelTexture::render(float m_x, float m_y, float ang) {
+	int posX = this->m_x + m_x;
+	int posY = this->m_y + m_y;
 	double posAng = this->ang + ang;
 	texture.render(posX, posY, NULL, renderer, posAng);
 }
