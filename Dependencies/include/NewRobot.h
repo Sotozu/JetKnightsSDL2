@@ -5,22 +5,22 @@
 #include <typeinfo>
 #include <vector>
 
-#include "GameObject.h"
+#include "IGameObject.h"
 #include "Bullet.h"
 #include "Robot_Sounds.h"
 
 
 
-class NewRobot : public GameObject{
+class NewRobot : public IGameObject{
 public:
 	//Constructors
 	NewRobot();
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, SDL_GameController* CONTROLLER);
-	NewRobot(int x, int y, float angle, SDL_Renderer* renderer, RelTexture* ltexture, SDL_GameController* CONTROLLER);
+	NewRobot(int x, int y, float angle, SDL_GameController* CONTROLLER);
 
 	//Mutators
-	void handleEvent(SDL_Event e);
-	//void update(float);
+	void onEvent(SDL_Event e);
+	void onUpdate(float timestep) override;
+	void renderHitbox() override;
 
 	void updatePosX(float);
 
@@ -36,6 +36,9 @@ public:
 	void setPlayer(int);
 
 	void updateBorderCollision(int, int, float);
+
+	void addDefaultHitbox();
+	/*
 	void updateCollision(GameObject*, float);
 	void updateCollision(NewRobot*, float);
 	void updateCollision(Bullet*, float);
@@ -47,7 +50,7 @@ public:
 	void updateCollisionY(NewRobot*, float);
 
 	void nextWeapon();
-
+	*/
 
 	//Accessors
 	int getJoyX();
@@ -93,9 +96,9 @@ private:
 
 	SDL_GameController* gameController;
 
-	void onJoyXevent(SDL_Event e);
-	void onJoyYevent(SDL_Event e);
-	void onLeftTriggerEvent(SDL_Event e);
-	void onButtonBevent(SDL_Event e);
+	void onEventJoyX(SDL_Event e);
+	void onEventJoyY(SDL_Event e);
+	void onEventLeftTrigger(SDL_Event e);
+	void onEventButtonB(SDL_Event e);
 };
 

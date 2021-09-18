@@ -17,9 +17,10 @@
 #include "LTimer.h"
 #include "Sound.h"
 #include "RelTexture.h"
+#include "NewRobot.h"
+
 /*
 #include "GameObject.h"
-#include "NewRobot.h"
 #include "NewWeapon.h"
 #include "Bullet.h"
 #include "StatusBar.h"
@@ -53,6 +54,8 @@ public:
 	//void genTestObstacles();
 
 	void genTestArena();
+	void addObstacle(IGameObject* parent, float x, float y);
+	void addRobot(IGameObject* parent, float x, float y);
 
 	
 	//Accessors

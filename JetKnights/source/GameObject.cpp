@@ -70,9 +70,6 @@ void GameObject::render() {
 		for (auto& variantObject : children) {
 			std::visit([&](auto& child) {
 				child.render();
-				// Render blue connecting lines
-				SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0xFF, 0xFF);
-				SDL_RenderDrawLine(gRenderer, posX, posY, posX + child.relX, posY + child.relY);
 			}, variantObject);
 		}
 	}
@@ -190,8 +187,6 @@ void GameObject::passOnEvent(SDL_Event e) {
 void GameObject::updateChildren(float timestep) {
 	for (auto& variantObject : children) {
 		std::visit([&](auto& child) {
-			child.setOrigin(getPosX(), getPosY());
-			child.update(timestep);
 		}, variantObject);
 
 	}

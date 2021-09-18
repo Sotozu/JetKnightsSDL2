@@ -217,18 +217,29 @@ void  Game::genTestObstacles() {
 void Game::genTestArena() {
 	Arena* p_arena = new Arena();
 	
-	Obstacle* p_obstalce1 = new Obstacle(100, 100, 0);
-	Obstacle* p_obstalce2 = new Obstacle(300, 100, 0);
+	addObstacle(p_arena, 100, 100);
+	addObstacle(p_arena, 300, 100);
 
-	p_obstalce1->addDefaultHitbox();
-	p_obstalce2->addDefaultHitbox();
-
-	p_arena->addChild(p_obstalce1);
-	p_arena->addChild(p_obstalce2);
+	addRobot(p_arena, 100, 300);
 
 	mainObj = p_arena;
 }
 
+void Game::addObstacle(IGameObject* parent, float x, float y) {
+	Obstacle* p_obstalce = new Obstacle(x, y, 0);
+	p_obstalce->addDefaultHitbox();
+	parent->addChild(p_obstalce);
+}
+
+void Game::addRobot(IGameObject* parent, float x, float y) {
+	NewRobot* robot = new NewRobot(x, y, 0, nullptr);
+	//robot->addHitbox();
+	robot->team = 1;
+	robot->setPlayer(0);
+	robot->addDefaultHitbox();
+
+	parent->addChild(robot);
+}
 
 std::string Game::findWorkingDir() {
 	char buf[256];

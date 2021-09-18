@@ -52,8 +52,8 @@ private:
 
 	Weapon_Sounds weaponSounds;
 
-	void onJoyXevent(SDL_Event e);
-	void onJoyYevent(SDL_Event e);
+	void onEventJoyX(SDL_Event e);
+	void onEventJoyY(SDL_Event e);
 	void onRightTriggerEvent(SDL_Event e);
 };
 

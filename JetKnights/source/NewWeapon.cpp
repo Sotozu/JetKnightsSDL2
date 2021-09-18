@@ -51,7 +51,7 @@ NewWeapon::NewWeapon(int x, int y, float angle, SDL_Renderer* renderer, RelTextu
 	stepTimer.start();
 }
 
-void NewWeapon::onJoyXevent(SDL_Event e) {
+void NewWeapon::onEventJoyX(SDL_Event e) {
 	if (e.caxis.axis == 2) {
 		joyX = e.caxis.value;
 		if (!inDeadCircle()) {
@@ -60,7 +60,7 @@ void NewWeapon::onJoyXevent(SDL_Event e) {
 	}
 }
 
-void NewWeapon::onJoyYevent(SDL_Event e) {
+void NewWeapon::onEventJoyY(SDL_Event e) {
 	if (e.caxis.axis == 3) {
 		joyY = e.caxis.value;
 		if (!inDeadCircle()) {
@@ -87,9 +87,9 @@ void NewWeapon::handleEvent( SDL_Event e ) {
 		//If event matches player
 		if (e.caxis.which == player) {
 			//X axis motion
-			onJoyXevent(e);
+			onEventJoyX(e);
 			//Y axis motion
-			onJoyYevent(e);
+			onEventJoyY(e);
 			//Right Trigger press
 			onRightTriggerEvent(e);
 		}
